@@ -1,4 +1,4 @@
-pipeline {
+ipeline {
     agent {
         label 'nodejsfarrukh'
     }
@@ -35,7 +35,7 @@ pipeline {
                 script {
                     def nexusUrl = 'http://nexus:8081'  // Replace with your Nexus 3 URL
                     def repository = 'customer_frontend_web_dev'  // Replace with your Nexus repository name
-                    def zipFilePath = "/root/workspace/customer_frontend_web_dev/build_${timestamp}.zip"
+                    def zipFilePath = "/root/workspace/customer_frontend_web_dev/build_${zipFileName}"
 
                     sh "curl -v -u admin:dar3@3rad --upload-file ${zipFilePath} ${nexusUrl}/${repository}/${zipFilePath}"
                 }
