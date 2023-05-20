@@ -22,8 +22,8 @@ pipeline {
             steps {
                 script {
                     def buildDirectory = '/root/workspace/customer_frontend_web_dev'  // Replace with the path to your build directory
-                    def timestamp = sh(returnStdout: true, script: 'date +%s', returnStderr: true).trim()
-                    def zipFileName = "build_${timestamp}.zip"
+                    //def timestamp = sh(returnStdout: true, script: 'date +%s', returnStderr: true).trim()
+                    def zipFileName = "build_test1.zip"
 
                     sh "cd ${buildDirectory} && zip -r ${zipFileName} ."
                 }
