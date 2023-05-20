@@ -24,31 +24,43 @@
     color: $color-text-secondary;
 
     @media screen and (max-width:430px) {
-        display: none;
+        font-size: 18px;
+        font-weight: 500;
+
     }
 }
 
 .heading {
     font-size: 16px;
-    color: #565656;
+    color: #8A8A8A;
     font-weight: 400;
+
+    @media screen and (max-width:430px) {
+        font-size: 14px;
+
+    }
 }
 
 .heading2 {
     font-size: 16px;
-    color: #565656;
+    color: #8A8A8A;
     font-weight: 400;
     width: 70%;
 
+    @media screen and (max-width:430px) {
+        font-size: 14px;
+
+    }
 }
 
 .text {
     font-size: 18px;
-    color: #565656;
+    color: #323232;
     font-weight: 300;
 
     @media screen and (max-width:430px) {
         font-size: 16px;
+        font-weight: 400;
 
     }
 }
@@ -62,6 +74,8 @@
     @media screen and (max-width:430px) {
         font-size: 16px;
         width: 100%;
+        font-weight: 400;
+
 
     }
 }
@@ -71,6 +85,15 @@
     color: #1BC967;
     font-weight: 300;
     margin-right: 10px;
+}
+
+.filestxtNone {
+    font-size: 16px;
+    color: $color-text-secondary;
+    font-weight: 300;
+    margin-right: 10px;
+    font-weight: 400;
+
 }
 
 .seperator {
@@ -88,20 +111,25 @@
 }
 
 .sigContainer {
-    width: 50%;
+    width: 100%;
     height: 90%;
     margin: 0 auto;
-    background-color: #E0E0E0;
+    // background-color: #E0E0E0;
     justify-content: center;
+    align-items: center;
 
     @media screen and (max-width:770px) {
-        width: 90%;
+        width: 100%;
         height: 100%
     }
 }
 
+.signContactChild {
+    // place-content: center;
+}
+
 .submitButton {
-    width: 30%;
+    width: 25%;
     align-items: center;
     justify-content: center;
     display: flex;
@@ -110,4 +138,7 @@
     @media screen and (max-width: 770px) {
         width: 100%;
     }
+}
+.iAgreeTxt {
+    color: #565656;
 }

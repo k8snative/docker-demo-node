@@ -1,15 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
 import { connect, useDispatch, useSelector } from 'react-redux'
-import SignaturePad from 'react-signature-canvas'
 import Api from 'src/lib/api'
 import { setAllowedTab, setLockedTab } from 'src/lib/redux/auth/action'
 import { FormatDate, formatTime } from 'src/lib/utils'
 import currencyFormat from 'src/utils/currencyFormat'
 import GradientBtn from '~components/GradientBtn/GradientBtn'
-
 import styles from './ReviewDetails.module.scss'
-
 const PersonalDetailsData = ({ customerInfo, nationality }: { customerInfo: any; nationality: string }) => (
   <div>
     <p className={`${styles['PersonalDetailsheading']}`}>Personal Details</p>
@@ -32,8 +29,6 @@ const PersonalDetailsData = ({ customerInfo, nationality }: { customerInfo: any;
           <p className={`m-0 ${styles['text']}`}>{customerInfo?.OrderDetailAuto?.contact}</p>
         </div>
       </Col>
-    </Row>
-    <Row className={`gy-3 ${styles['txtFieldsRow']}`}>
       <Col lg={4}>
         <div className={`d-flex flex-column`}>
           <p className={`m-0 ${styles['heading']}`}>Date of Birth</p>
@@ -52,12 +47,10 @@ const PersonalDetailsData = ({ customerInfo, nationality }: { customerInfo: any;
       </Col>
       <Col lg={4}>
         <div className={`d-flex flex-column`}>
-          <p className={`m-0 ${styles['heading']}`}>Place of Birth</p>
-          <p className={`m-0 ${styles['text']}`}>{customerInfo?.OrderDetailAuto?.place_of_birth}</p>
+          <p className={`m-0 ${styles['heading']}`}>Nationality</p>
+          <p className={`m-0 ${styles['text']}`}>{nationality}</p>
         </div>
       </Col>
-    </Row>
-    <Row className={`gy-3 ${styles['txtFieldsRow']}`}>
       <Col lg={4}>
         <div className={`d-flex flex-column`}>
           <p className={`m-0 ${styles['heading']}`}>Father/ Spouse Name</p>
@@ -74,12 +67,12 @@ const PersonalDetailsData = ({ customerInfo, nationality }: { customerInfo: any;
       </Col>
       <Col lg={4}>
         <div className={`d-flex flex-column`}>
-          <p className={`m-0 ${styles['heading']}`}>Nationality</p>
-          <p className={`m-0 ${styles['text']}`}>{nationality}</p>
+          <p className={`m-0 ${styles['heading']}`}>Occupation</p>
+          <p className={`m-0 ${styles['text']}`}>
+            {customerInfo?.OrderDetailAuto?.occupation === null ? '-' : customerInfo?.OrderDetailAuto?.occupation}
+          </p>
         </div>
       </Col>
-    </Row>
-    <Row className={`gy-3 ${styles['txtFieldsRow']}`}>
       <Col lg={4}>
         <div className={`d-flex flex-column`}>
           <p className={`m-0 ${styles['heading']}`}>CNIC/ Passport Number</p>
@@ -106,58 +99,22 @@ const PersonalDetailsData = ({ customerInfo, nationality }: { customerInfo: any;
           )}
         </div>
       </Col>
-    </Row>
-    <Row className={`gy-3 ${styles['txtFieldsRow']}`}>
-      <Col lg={4}>
-        <div className={`d-flex flex-column`}>
-          <p className={`m-0 ${styles['heading']}`}>Occupation</p>
-          <p className={`m-0 ${styles['text']}`}>
-            {customerInfo?.OrderDetailAuto?.occupation === null ? '-' : customerInfo?.OrderDetailAuto?.occupation}
-          </p>
-        </div>
-      </Col>
-      <Col lg={4}>
-        <div className={`d-flex flex-column`}>
-          <p className={`m-0 ${styles['heading']}`}>Source of Income</p>
-          <p className={`m-0 ${styles['text2']}`}>{customerInfo?.OrderDetailAuto?.source_of_income}</p>
-        </div>
-      </Col>
       <Col lg={4}>
         <div className={`d-flex flex-column`}>
           <p className={`m-0 ${styles['heading']}`}>Beneficiary Name</p>
-          <p className={`m-0 ${styles['text']}`}>{customerInfo?.OrderDetailAuto?.benificiary_name}</p>
+          <p className={`m-0 ${styles['text']}`}>{customerInfo?.OrderDetailAuto?.benificiary_name || '-'}</p>
         </div>
       </Col>
-    </Row>
-    <Row className={`gy-3 ${styles['txtFieldsRow']}`}>
       <Col lg={4}>
         <div className={`d-flex flex-column`}>
           <p className={`m-0 ${styles['heading']}`}>Beneficiary Relation</p>
-          <p className={`m-0 ${styles['text']}`}>{customerInfo?.OrderDetailAuto?.benificiary_relation}</p>
+          <p className={`m-0 ${styles['text']}`}>{customerInfo?.OrderDetailAuto?.benificiary_relation || '-'}</p>
         </div>
       </Col>
       <Col lg={4}>
         <div className={`d-flex flex-column`}>
-          <p className={`m-0 ${styles['heading']}`}>Beneficiary CNIC Number</p>
-          <p className={`m-0 ${styles['text2']}`}>{customerInfo?.OrderDetailAuto?.benificiary_cnic_number}</p>
-        </div>
-      </Col>
-      <Col lg={4}>
-        <div className={`d-flex flex-column`}>
-          <p className={`m-0 ${styles['heading']}`}>Beneficiary Address</p>
-          <p className={`m-0 ${styles['text2']}`}>
-            {customerInfo?.OrderDetailAuto?.benificiary_address === null
-              ? '-'
-              : customerInfo?.OrderDetailAuto?.benificiary_address}
-          </p>
-        </div>
-      </Col>
-    </Row>
-    <Row className={`gy-3 ${styles['txtFieldsRow']}`}>
-      <Col lg={4}>
-        <div className={`d-flex flex-column`}>
-          <p className={`m-0 ${styles['heading']}`}>Income Tax Status</p>
-          <p className={`m-0 ${styles['text']}`}>{customerInfo?.OrderDetailAuto?.is_filer ? 'Filer' : 'Non-filer'}</p>
+          <p className={`m-0 ${styles['heading']}`}>Beneficiary Contact</p>
+          <p className={`m-0 ${styles['text2']}`}>{customerInfo?.OrderDetailAuto?.benificiary_contact === '+92' ? '-' : customerInfo?.OrderDetailAuto?.benificiary_contact}</p>
         </div>
       </Col>
       <Col lg={4}>
@@ -169,11 +126,11 @@ const PersonalDetailsData = ({ customerInfo, nationality }: { customerInfo: any;
         </div>
       </Col>
     </Row>
-    <div className={`mt-5 mb-3 ${styles['seperator']} `} />
+    <div className={`mt-2 mb-3 ${styles['seperator']} `} />
   </div>
 )
 
-const VehicleDetailsData = ({ customerInfo }: { customerInfo: any }) => (
+const VehicleDetailsData = ({ customerInfo, serviceNetwork }: { customerInfo: any; serviceNetwork: any }) => (
   <div>
     <p className={`${styles['PersonalDetailsheading']}`}>Vehicle Details</p>
     <Row className={`gy-3 ${styles['txtFieldsRow']}`}>
@@ -195,8 +152,6 @@ const VehicleDetailsData = ({ customerInfo }: { customerInfo: any }) => (
           <p className={`m-0 ${styles['text']}`}>{customerInfo?.OrderDetailAuto?.year}</p>
         </div>
       </Col>
-    </Row>
-    <Row className={`gy-3 ${styles['txtFieldsRow']}`}>
       <Col lg={4}>
         <div className={`d-flex flex-column`}>
           <p className={`m-0 ${styles['heading']}`}>Value</p>
@@ -208,27 +163,25 @@ const VehicleDetailsData = ({ customerInfo }: { customerInfo: any }) => (
       <Col lg={4}>
         <div className={`d-flex flex-column`}>
           <p className={`m-0 ${styles['heading']}`}>Color</p>
-          <p className={`m-0 ${styles['text']}`}>{customerInfo?.OrderDetailAuto?.color}</p>
+          <p className={`m-0 ${styles['text']}`}>{customerInfo?.OrderDetailAuto?.color || '-'}</p>
         </div>
       </Col>
       <Col lg={4}>
         <div className={`d-flex flex-column`}>
           <p className={`m-0 ${styles['heading']}`}>Engine Number</p>
-          <p className={`m-0 ${styles['text']}`}>{customerInfo?.OrderDetailAuto?.engine_number}</p>
+          <p className={`m-0 ${styles['text']}`}>{customerInfo?.OrderDetailAuto?.engine_number || '-'}</p>
         </div>
       </Col>
-    </Row>
-    <Row className={`gy-3 ${styles['txtFieldsRow']}`}>
       <Col lg={4}>
         <div className={`d-flex flex-column`}>
           <p className={`m-0 ${styles['heading']}`}>Chassis Number</p>
-          <p className={`m-0 ${styles['text']}`}>{customerInfo?.OrderDetailAuto?.chassis_number}</p>
+          <p className={`m-0 ${styles['text']}`}>{customerInfo?.OrderDetailAuto?.chassis_number || '-'}</p>
         </div>
       </Col>
       <Col lg={4}>
         <div className={`d-flex flex-column`}>
           <p className={`m-0 ${styles['heading']}`}>Registration Number</p>
-          <p className={`m-0 ${styles['text']}`}>{customerInfo?.OrderDetailAuto?.registration_number}</p>
+          <p className={`m-0 ${styles['text']}`}>{customerInfo?.OrderDetailAuto?.registration_number || '-'}</p>
         </div>
       </Col>
       <Col lg={4}>
@@ -237,16 +190,56 @@ const VehicleDetailsData = ({ customerInfo }: { customerInfo: any }) => (
           <p className={`m-0 ${styles['text']}`}>{customerInfo?.OrderDetailAuto?.is_brand_new ? 'Yes' : 'No'}</p>
         </div>
       </Col>
-    </Row>
-    <Row className={`gy-3 ${styles['txtFieldsRow']}`}>
       <Col lg={4}>
         <div className={`d-flex flex-column`}>
           <p className={`m-0 ${styles['heading']}`}>Modifications</p>
           <p className={`m-0 ${styles['text']}`}>{customerInfo?.OrderDetailAuto?.modification ? 'Yes' : 'No'}</p>
         </div>
       </Col>
+      {
+        customerInfo?.OrderDetailAuto?.is_brand_new && (
+          <>
+            <Col lg={4}>
+              <div className={`d-flex flex-column`}>
+                <p className={`m-0 ${styles['heading']}`}>Register Dealer Name</p>
+                <p className={`m-0 ${styles['text']}`}>{customerInfo?.OrderDetailAuto?.service_network_id === null ? 'Other' :
+                  serviceNetwork?.filter(item => item?.id == customerInfo?.OrderDetailAuto?.service_network_id).map(item => item?.option)[0]
+                }</p>
+              </div>
+            </Col>
+            {customerInfo?.OrderDetailAuto?.service_network_id === null && (
+              <>
+                <Col lg={4}>
+                  <div className={`d-flex flex-column`}>
+                    <p className={`m-0 ${styles['heading']}`}>Dealer Name</p>
+                    <p className={`m-0 ${styles['text']}`}>{customerInfo?.OrderDetailAuto?.three_s_dealer_name}</p>
+                  </div>
+                </Col>
+                <Col lg={4}>
+                  <div className={`d-flex flex-column`}>
+                    <p className={`m-0 ${styles['heading']}`}>Dealer Contact</p>
+                    <p className={`m-0 ${styles['text']}`}>+{customerInfo?.OrderDetailAuto?.three_s_dealer_contact}</p>
+                  </div>
+                </Col>
+                <Col lg={4}>
+                  <div className={`d-flex flex-column`}>
+                    <p className={`m-0 ${styles['heading']}`}>Dealer City</p>
+                    <p className={`m-0 ${styles['text']}`}>{customerInfo?.OrderDetailAuto?.three_s_dealer_city}</p>
+                  </div>
+                </Col>
+                <Col lg={4}>
+                  <div className={`d-flex flex-column`}>
+                    <p className={`m-0 ${styles['heading']}`}>Dealer Address</p>
+                    <p className={`m-0 ${styles['text']}`}>{customerInfo?.OrderDetailAuto?.three_s_dealer_address}</p>
+                  </div>
+                </Col>
+              </>
+            )}
+          </>
+        )
+      }
     </Row>
-    <div className={`mt-5 mb-3 ${styles['seperator']} `} />
+    <div className={`mt-2 mb-3 ${styles['seperator']} `} />
   </div>
 )
 
@@ -259,7 +252,7 @@ const SurveyDetailsData = ({ customerInfo, city }: { customerInfo: any; city: st
           <p className={`m-0 ${styles['heading']}`}>Survey Request Date</p>
           <p className={`m-0 ${styles['text']}`}>
             {customerInfo?.OrderDetailAuto?.survey_request_date !== null &&
-            customerInfo?.OrderDetailAuto?.survey_request_date.length
+              customerInfo?.OrderDetailAuto?.survey_request_date.length
               ? FormatDate(customerInfo?.OrderDetailAuto?.survey_request_date, 'DD/MM/YYYY')
               : '-'}
           </p>
@@ -281,8 +274,6 @@ const SurveyDetailsData = ({ customerInfo, city }: { customerInfo: any; city: st
           <p className={`m-0 ${styles['text']}`}>{customerInfo?.OrderDetailAuto?.city_id === null ? '-' : city}</p>
         </div>
       </Col>
-    </Row>
-    <Row className={`gy-3 ${styles['txtFieldsRow']}`}>
       <Col lg={4}>
         <div className={`d-flex flex-column`}>
           <p className={`m-0 ${styles['heading']}`}>Survey Address</p>
@@ -294,7 +285,7 @@ const SurveyDetailsData = ({ customerInfo, city }: { customerInfo: any; city: st
         </div>
       </Col>
     </Row>
-    <div className={`mt-5 mb-3 ${styles['seperator']} `} />
+    <div className={`mt-2 mb-3 ${styles['seperator']} `} />
   </div>
 )
 
@@ -305,29 +296,39 @@ const DocumentDetailsData = ({
   setIsLocked,
   renewPolicyData,
   sigPad,
+  errorCheck,
+  setErrorCheck,
+  termChecked,
+  setTermChecked
 }: {
   customerInfo: any
   signature: any
   isLocked: boolean | undefined
   setIsLocked: Function
   renewPolicyData: any
-  sigPad: any
+  sigPad: any,
+  errorCheck: any
+  setErrorCheck: any
+  termChecked: any,
+  setTermChecked: any
 }) => {
-  const convertImageToDataURL = (url: string) =>
-    new Promise((resolve, reject) => {
-      const img = new Image()
-      img.crossOrigin = 'Anonymous'
-      img.onload = () => {
-        const ctx = sigPad.current?.getCanvas().getContext('2d')
-        ctx?.drawImage(img, 0, 0)
-        const data = sigPad.current?.getCanvas().toDataURL('image/png')
-        resolve(data)
-      }
-      img.onerror = () => {
-        reject('Unable to load image')
-      }
-      img.src = url
-    })
+
+
+  // const convertImageToDataURL = (url: string) =>
+  //   new Promise((resolve, reject) => {
+  //     const img = new Image()
+  //     img.crossOrigin = 'Anonymous'
+  //     img.onload = () => {
+  //       const ctx = sigPad.current?.getCanvas().getContext('2d')
+  //       ctx?.drawImage(img, 0, 0)
+  //       const data = sigPad.current?.getCanvas().toDataURL('image/png')
+  //       resolve(data)
+  //     }
+  //     img.onerror = () => {
+  //       reject('Unable to load image')
+  //     }
+  //     img.src = url
+  //   })
 
   useEffect(() => {
     const signaturePath = customerInfo?.OrderDetailAuto.signature_path
@@ -335,10 +336,10 @@ const DocumentDetailsData = ({
       : renewPolicyData?.signature_path
     if (sigPad.current) {
       const url = `${process.env['NEXT_PUBLIC_IMAGE_ORIGIN']}${signaturePath}`
-      convertImageToDataURL(url).then(data => {
-        sigPad.current.fromDataURL(data)
-        // setIsLocked(true)
-      })
+      // convertImageToDataURL(url).then(data => {
+      //   sigPad.current.fromDataURL(data)
+      //   // setIsLocked(true)
+      // })
     }
   }, [sigPad.current, customerInfo?.OrderDetailAuto?.signature_path])
   return (
@@ -349,56 +350,63 @@ const DocumentDetailsData = ({
           <div className={`d-flex flex-column`}>
             <p className={`m-0 ${styles['heading']}`}>ID Proof</p>
             <div className={`d-flex flex-column`}>
-              <p className={` ${styles['filestxt']}`}>
-                {customerInfo?.OrderDetailAuto?.id_proof_front_path?.split('-').at(-1).length > 10
-                  ? customerInfo?.OrderDetailAuto?.id_proof_front_path?.split('-').at(-1).substring(0, 7) + '...'
-                  : customerInfo?.OrderDetailAuto?.id_proof_front_path?.split('-').at(-1)}
-              </p>
-              <p className={` ${styles['filestxt']}`}>
-                {customerInfo?.OrderDetailAuto?.id_proof_back_path?.split('-').at(-1).length > 10
-                  ? customerInfo?.OrderDetailAuto?.id_proof_back_path?.split('-').at(-1).substring(0, 7) + '...'
-                  : customerInfo?.OrderDetailAuto?.id_proof_back_path?.split('-').at(-1)}
-              </p>
+              {!customerInfo?.OrderDetailAuto?.id_proof_front_path ? <p className={`m-0 ${styles['filestxtNone']}`}>None</p> :
+                <>
+                  <p className={` ${styles['filestxt']}`}>
+                    {customerInfo?.OrderDetailAuto?.id_proof_front_path?.split('-').at(-1).length > 10
+                      ? customerInfo?.OrderDetailAuto?.id_proof_front_path?.split('-').at(-1).substring(0, 7) + '...'
+                      : customerInfo?.OrderDetailAuto?.id_proof_front_path?.split('-').at(-1)}
+                  </p>
+                  <p className={` ${styles['filestxt']}`}>
+                    {customerInfo?.OrderDetailAuto?.id_proof_back_path?.split('-').at(-1).length > 10
+                      ? customerInfo?.OrderDetailAuto?.id_proof_back_path?.split('-').at(-1).substring(0, 7) + '...'
+                      : customerInfo?.OrderDetailAuto?.id_proof_back_path?.split('-').at(-1)}
+                  </p>
+                </>
+              }
             </div>
           </div>
         </Col>
         <Col lg={4}>
           <div className={`d-flex flex-column`}>
             <p className={`m-0 ${styles['heading']}`}>Income Proof</p>
-            <p className={`m-0 ${styles['filestxt']}`}>
-              {customerInfo?.OrderDetailAuto?.income_proof_path?.split('-').at(-1).length > 10
-                ? customerInfo?.OrderDetailAuto?.income_proof_path?.split('-').at(-1).substring(0, 7) + '...'
-                : customerInfo?.OrderDetailAuto?.income_proof_path?.split('-').at(-1)}
-            </p>
+            {!customerInfo?.OrderDetailAuto?.income_proof_path ? <p className={`m-0 ${styles['filestxtNone']}`}>None</p> :
+
+              <p className={`m-0 ${styles['filestxt']}`}>
+                {customerInfo?.OrderDetailAuto?.income_proof_path?.split('-').at(-1).length > 10
+                  ? customerInfo?.OrderDetailAuto?.income_proof_path?.split('-').at(-1).substring(0, 7) + '...'
+                  : customerInfo?.OrderDetailAuto?.income_proof_path?.split('-').at(-1)}
+              </p>}
           </div>
         </Col>
         <Col lg={4}>
           <div className={`d-flex flex-column`}>
             <p className={`m-0 ${styles['heading']}`}>Running Paper</p>
-            <p className={`m-0 ${styles['filestxt']}`}>
-              {customerInfo?.OrderDetailAuto?.running_paper_path?.split('-').at(-1).length > 10
-                ? customerInfo?.OrderDetailAuto?.running_paper_path?.split('-').at(-1).substring(0, 7) + '...'
-                : customerInfo?.OrderDetailAuto?.running_paper_path?.split('-').at(-1)}
-            </p>
+            {!customerInfo?.OrderDetailAuto?.running_paper_path ? <p className={`m-0 ${styles['filestxtNone']}`}>None</p> :
+              <p className={`m-0 ${styles['filestxt']}`}>
+                {customerInfo?.OrderDetailAuto?.running_paper_path?.split('-').at(-1).length > 10
+                  ? customerInfo?.OrderDetailAuto?.running_paper_path?.split('-').at(-1).substring(0, 7) + '...'
+                  : customerInfo?.OrderDetailAuto?.running_paper_path?.split('-').at(-1)}
+              </p>}
           </div>
         </Col>
-      </Row>
-      <Row className={`gy-3 ${styles['txtFieldsRow']}`}>
         <Col lg={4}>
           <div className={`d-flex flex-column`}>
             <p className={`m-0 ${styles['heading']}`}>Invoice</p>
-            <p className={`m-0 ${styles['filestxt']}`}>
-              {customerInfo?.OrderDetailAuto?.invoice_path?.split('-').at(-1).length > 10
-                ? customerInfo?.OrderDetailAuto?.invoice_path?.split('-').at(-1).substring(0, 7) + '...'
-                : customerInfo?.OrderDetailAuto?.invoice_path?.split('-').at(-1)}
-            </p>
+            {!customerInfo?.OrderDetailAuto?.invoice_path ? <p className={`m-0 ${styles['filestxtNone']}`}>None</p>
+              :
+              <p className={`m-0 ${styles['filestxt']}`}>
+                {customerInfo?.OrderDetailAuto?.invoice_path?.split('-').at(-1).length > 10
+                  ? customerInfo?.OrderDetailAuto?.invoice_path?.split('-').at(-1).substring(0, 7) + '...'
+                  : customerInfo?.OrderDetailAuto?.invoice_path?.split('-').at(-1)}
+              </p>}
           </div>
         </Col>
         <Col lg={4}>
           <div className={`d-flex flex-column`}>
             <p className={`m-0 ${styles['heading']}`}>Additional Documents</p>
             {customerInfo?.AdditionalDocuments.length === 0 ? (
-              <p className={`m-0 ${styles['filestxt']}`}>None</p>
+              <p className={`m-0 ${styles['filestxtNone']}`}>None</p>
             ) : (
               customerInfo?.AdditionalDocuments.map((item: any, index: any) => (
                 <p key={index} className={`m-0 ${styles['filestxt']}`}>
@@ -411,17 +419,41 @@ const DocumentDetailsData = ({
           </div>
         </Col>
       </Row>
+      <div className={`mt-2 mb-3 ${styles['seperator']} `} />
+
       <Row>
         <div className={styles['sigContainer']}>
-          <SignaturePad
+          <p className={`${styles['PersonalDetailsheading']}`}>Signature</p>
+          <div
+            className={`d-flex align-items-center mt-3 ${styles['signContactChild']}`}>
+            {/* <div
+              onClick={() => {setTermChecked(!termChecked), setErrorCheck(termChecked ? true : false)}}
+            >
+              <Image alt="" src={termChecked ? formRadioChecked : formRadioUnchecked} width={20} height={20} style={{ top: -10 }}/>
+              </div> */}
+            <p className={` ${styles['iAgreeTxt']}`}
+              style={{
+                marginBottom: 0,
+                // marginLeft: 10
+                justifyContent: 'left',
+              }}
+            >
+              I agree that all the information provided is correct and complete.
+              {/* I agree that all the information given in this form, including (documents and personal & travel details) which have been signed by me in\nconnection with the selected Takaful, is correct and complete. Further, I authenticate that all the data provided or to be provided by me in\nconnection with the selected Takaful is correct and complete. */}
+              {/* I agree to the {''} */}
+              {/* <span className={` ${styles['iAgreeTxtRed']}`}>Terms and Conditions </span> */}
+            </p>
+            {/* {errorCheck && <p style={{ position: "absolute", marginTop: '3%', color: '#e91431'}} className="pt-4">Kindly agree with out terms and conditions</p>} */}
+          </div>
+          {/* <SignaturePad
             clearOnResize={false}
             canvasProps={{ className: styles['sigPad'] }}
             onEnd={() => {
               setIsLocked(true)
             }}
             ref={sigPad}
-          />
-          <div className={`d-flex flex-column justify-content-center align-items-center`}>
+          /> */}
+          {/* <div className={`d-flex flex-column justify-content-center align-items-center`}>
             <GradientBtn
               onClick={() => {
                 setIsLocked(true)
@@ -429,7 +461,7 @@ const DocumentDetailsData = ({
               }}
               label="Clear Signature"
             />
-            {/* <GradientBtn
+            <GradientBtn
               onClick={() => {
                 if (sigPad.current.isEmpty()) {
                   alert('Signature is required')
@@ -438,8 +470,8 @@ const DocumentDetailsData = ({
                 }
               }}
               label="Save Signature"
-            /> */}
-          </div>
+            />
+          </div> */}
         </div>
       </Row>
     </div>
@@ -467,6 +499,9 @@ const ReviewDetails = ({
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const dispatch = useDispatch()
   const sigPad = useRef({})
+  const [serviceNetwork, setServiceNetwork] = useState([])
+  const [errorCheck, setErrorCheck] = useState(false)
+  const [termChecked, setTermChecked] = useState(true)
 
   useEffect(() => {
     if (isLocked === true) {
@@ -508,11 +543,30 @@ const ReviewDetails = ({
     fetchCity()
   }, [customerInfo])
 
-  const UploadSign = () => {
-    if (sigPad.current.isEmpty()) {
-      alert('Signature is required')
-      return
+  useEffect(() => {
+    const fetchServiceNetwork = async () => {
+      const fetchServiceNetworkList = await Api('GET', `make_service_network/${customerInfo?.OrderDetailAuto?.make_id}`)
+      let arr = []
+      arr = fetchServiceNetworkList?.data?.map((item: any) => {
+        return { id: item?.id, option: item?.name }
+      }),
+        arr?.push({ id: 0, option: "Other" })
+      // setServiceNetwork(
+      //   fetchServiceNetworkList?.data?.map((item: any) => {
+      //     return { id: item?.id, option: item?.name }
+      //   }),
+      // )
+      setServiceNetwork(arr)
     }
+
+    fetchServiceNetwork()
+  }, [customerInfo])
+
+  const UploadSign = () => {
+    // if (sigPad.current.isEmpty()) {
+    //   alert('Signature is required')
+    //   return
+    // }
     // else {
     //   signature(sigPad.current.toDataURL('image/png'))
     // }
@@ -526,48 +580,48 @@ const ReviewDetails = ({
       }
       return new Blob([ab], { type: 'image/png' })
     }
-    if (sigPad.current.toDataURL('image/png')) {
-      const blob = b64toBlob(sigPad.current.toDataURL('image/png'))
+    if (termChecked) {
+      //const blob = b64toBlob(sigPad.current.toDataURL('image/png'))
       // var blob = b64toBlob(signatureUrl)
-      const body = new FormData()
-      body.append('file', blob)
+      //const body = new FormData()
+      //body.append('file', blob)
       setIsLoading(true)
-      Api('POST', `order/file`, body, false, true).then(res => {
-        if (res?.success) {
-          Api('PUT', `order/update/document_signature`, {
-            order_detail_id: order_detail_id,
-            signature_path: res?.filename,
-          })
-            .then(res => {
-              if (res?.success) {
-                setIsLoading(false)
-                if (allowedTabIndex <= 4) {
-                  dispatch(setAllowedTab(4))
-                  dispatch(setLockedTab(-1))
-                }
-                updateState(currentStep)
-                return
-              }
-              setIsLoading(false)
-            })
-            .catch(e => {
-              setIsLoading(false)
-              console.log(e)
-            })
-          return
-        }
-        setIsLoading(false)
+      Api('PUT', `order/update/document_signature`, {
+        order_detail_id: order_detail_id,
+        agree_on_terms: true
       })
+        .then(res => {
+          if (res?.success) {
+            setIsLoading(false)
+            if (allowedTabIndex <= 4) {
+              dispatch(setAllowedTab(4))
+              dispatch(setLockedTab(-1))
+            }
+            updateState(currentStep)
+            return
+          }
+          setIsLoading(false)
+        })
+        .catch(e => {
+          setIsLoading(false)
+          console.log(e)
+        })
+      return
+      setIsLoading(false)
     } else {
-      alert('Signature is required')
+      setErrorCheck(true)
     }
   }
   return (
     <Container className={`${styles['maincontainer']}`}>
       <PersonalDetailsData customerInfo={customerInfo} nationality={nationality} />
-      <VehicleDetailsData customerInfo={customerInfo} />
+      <VehicleDetailsData customerInfo={customerInfo} serviceNetwork={serviceNetwork} />
       <SurveyDetailsData customerInfo={customerInfo} city={city} />
       <DocumentDetailsData
+        errorCheck={errorCheck}
+        setErrorCheck={setErrorCheck}
+        termChecked={termChecked}
+        setTermChecked={setTermChecked}
         customerInfo={customerInfo}
         signature={setSignatureUrl}
         isLocked={isLocked}
@@ -575,8 +629,8 @@ const ReviewDetails = ({
         renewPolicyData={renewPolicyData}
         sigPad={sigPad}
       />
-      <div className={`mt-3 ${styles['submitButton']}`}>
-        <GradientBtn disabled={isLoading} loading={isLoading} onClick={UploadSign} label="Save and continue" />
+      <div className={`mt-0 mt-md-3 ${styles['submitButton']}`}>
+        <GradientBtn disabled={isLoading} loading={isLoading} onClick={UploadSign} label="I Agree and continue" />
       </div>
     </Container>
   )

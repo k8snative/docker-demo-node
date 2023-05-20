@@ -11,35 +11,54 @@
 }
 
 .cardContainer {
-    width: 24rem;
-    height: 20rem;
+    width: 26rem;
+    height: 16rem;
     margin: 3% 0;
     border: 0.57px solid #777777;
     border-radius: 5px;
     background-color: #FFF;
+    margin: 8px;
 
     &:hover {
+        transition: .3s all ease;
         // cursor: pointer;
         // transform: scale(1.05);
         box-shadow: 1.5px 1.5px 5px 0px rgba(0, 0, 0, 0.25);
         -webkit-box-shadow: 1.5px 1.5px 5px 0px rgba(0, 0, 0, 0.25);
         -moz-box-shadow: 1.5px 1.5px 5px 0px rgba(0, 0, 0, 0.25);
 
+        .hoverDiv {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            background: #E8E8E8;
+            overflow: hidden;
+            opacity: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 16px;
+            transition: .3s all ease;
+            padding: 20px;
+        }
+
     }
 
     @media screen and (max-width: 430px) {
-        width: 24rem;
-        height: 19rem;
-        border-radius: 0;
+        width: 22rem;
+        // height: 19rem;
+        height: 220px;
+
         border: 0.57px solid #777777;
 
 
     }
-    
+
     @media screen and (max-width: 380px) {
         width: 21rem;
-        height: 17rem;
-        border-radius: 0;
+        // height: 17rem;
+        height: 220px;
         border: 0.57px solid #777777;
 
     }
@@ -53,6 +72,7 @@
     justify-content: center;
     padding: 3% 7%;
     align-items: center;
+    border-radius: 10px !important;
 
 
 }
@@ -60,13 +80,18 @@
 
 .title {
     color: $color-primary;
-    font-size: 20.6;
+    font-size: 18px;
     text-align: center;
-    margin-top: 4%;
+    top: 20px;
+    position: relative;
 }
 
 .paragraph {
     color: $color-primary;
     font-size: 16;
     text-align: center;
+}
+
+.hoverDiv {
+    display: none;
 }

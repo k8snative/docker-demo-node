@@ -1,3 +1,5 @@
+@import "../../styles/colors.scss";
+
 .mainModal {
     background-color: rgba(49, 49, 49, 0.8);
 }
@@ -27,4 +29,12 @@
     border-radius: 5px;
     margin-bottom: -5px;
     padding: 0 15px;
+}
+
+.notOTPTxt {
+    font-size: 12px;
+    color: $color-text-secondary;
+    margin: 0;
+    margin-left: 5px;
+    margin-bottom: 15px;
 }

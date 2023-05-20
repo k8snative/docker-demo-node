@@ -35,7 +35,7 @@
     }
 
     @media screen and (max-width: 600px) {
-        font-size: 25px;
+        font-size: 20px;
         text-align: center;
     }
 }
@@ -68,7 +68,7 @@
 
 .mainTxt2 {
     color: $color-primary;
-    font-size: 17px;
+    font-size: 16px;
     text-align: center;
     margin: 0 5%;
     margin-bottom: 5%;
@@ -108,8 +108,8 @@
     font-size: 20px;
     font-weight: 500;
 
-    @media screen and (max-width: 600px) {
-        font-size: 18px;
+    @media screen and (max-width: 450px) {
+        font-size: 16px;
     }
 }
 
@@ -118,6 +118,10 @@
     color: $color-primary;
     font-size: 18px;
     font-weight: 300;
+
+    @media screen and (max-width: 450px) {
+        font-size: 16px;
+    }
 
     &:hover {
         cursor: context-menu;
@@ -129,6 +133,10 @@
     color: $color-text-secondary;
     font-size: 18px;
     text-decoration: underline;
+
+    @media screen and (max-width: 450px) {
+        font-size: 16px;
+    }
 
     &:hover {
         cursor: pointer;
@@ -146,4 +154,8 @@
     font-size: 17px;
     color: $color-text-secondary;
     cursor: pointer;
+
+    @media screen and (max-width: 450px) {
+        font-size: 16px;
+    }
 }

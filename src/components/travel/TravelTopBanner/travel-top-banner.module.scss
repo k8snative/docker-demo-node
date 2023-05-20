@@ -1,0 +1,37 @@
+@import "../../../styles/colors.scss";
+
+.wrapper {
+    background-position: center;
+    background-size: cover;
+    position: relative;
+    background-image: url('../../../../public/assets/leadGenerationTopBackground.png');
+
+    @media screen and (max-width: 430px) {
+        display: none;
+        // border: 10px solid;
+    }
+}
+
+.heading {
+    color: $color-primary;
+    margin: 10px 0;
+    font-size: 25px;
+
+    @media screen and (max-width: 770px) {
+        font-size: 21px;
+    }
+
+    .headingRed {
+        color: $color-text-secondary;
+    }
+}
+
+.txt {
+    color: $color-primary;
+    // margin: 0;
+    font-size: 18px;
+
+    @media screen and (max-width: 770px) {
+        font-size: 15px;
+    }
+}

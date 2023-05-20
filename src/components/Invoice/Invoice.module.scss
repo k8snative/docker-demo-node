@@ -46,7 +46,7 @@
 }
 
 .normaltext {
-    font-size: 31px;
+    font-size: 28px;
     color: #58595B;
     display: inline;
 
@@ -352,17 +352,25 @@
     background-position: stretch;
     background-repeat: no-repeat;
     background-size: cover;
-    padding: 10px;
+    padding: 25px;
     background-color: #FFF;
-
-
-
 }
 
 .invoicelogoContainer {
+    // display: flex;
+    justify-content: space-between;
+    width: 135px;
+    height: 44.2px;
+    background-image: url('~public/assets/takafullogoblack.png');
+    background-repeat: no-repeat;
+    background-size: 135px 44.2px;
+    object-fit: contain;
+}
+
+.logoContainer {
     display: flex;
     justify-content: space-between;
-
+    padding-top: 25px;
 }
 
 .takafullogo {
@@ -371,7 +379,14 @@
 }
 
 .invoicelogo {
-    width: 256px;
+    // padding-top: 20px;
+    width: 156px;
+    justify-content: space-between;
+    height: 49px;
+    background-image: url('~public/assets/invoicelogo.png');
+    background-repeat: no-repeat;
+    background-size: 156px 49px;
+    object-fit: contain;
 
 }
 
@@ -406,6 +421,10 @@
     color: $color-primary;
     font-weight: 600;
     margin: 0
+}
+
+.invoiceBigTextSub {
+    margin-left: 15px;
 }
 
 .invoiceplainBigText {

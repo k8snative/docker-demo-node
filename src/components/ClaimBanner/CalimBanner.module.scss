@@ -16,7 +16,7 @@
         background-image: url('../../../public/assets/banner-background.png');
         background-repeat: no-repeat;
         background-attachment: fixed;
-        background-size: contain
+        background-size: cover
     }
 
     .slider-wrapper {
@@ -24,7 +24,7 @@
     }
 
     .image-wrapper {
-        height: 600px;
+        height: 490px;
         display: flex;
         align-items: flex-end;
 
@@ -115,9 +115,9 @@
 }
 
 .raise-claim {
-    display: flex;
+    //display: flex;
     flex-direction: column;
-    width: 70%;
+    //width: 70%;
     z-index: 2;
     margin-top: 20px;
     align-items: center;
@@ -145,5 +145,19 @@
             width: 10px;
             height: 10px;
         }
+    }
+}
+
+.raise-claim-btn {
+    background: transparent linear-gradient(180deg, #EE1633 0%, #A7202E 100%) 0% 0% no-repeat padding-box;
+    border-radius: 5px;
+    height: 48px;
+    border: none;
+    color: #fff;
+    padding: 0px 20px;
+    display: flex;
+    align-items: center;
+    >span {
+        margin-right: 10px !important;
     }
 }

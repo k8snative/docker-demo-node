@@ -7,7 +7,7 @@
     justify-content: space-between;
     position: relative;
     z-index: 1;
-    padding: 25px 0;
+    padding: 10px 0;
 
 
     @media screen and (max-width: 580px) {
@@ -121,7 +121,7 @@
 
 .btnContainer {
     // border: 3px solid purple;
-    width: 10%;
+    width: 15%;
 
     &:hover {
         cursor: pointer;
@@ -147,3 +147,55 @@
 .textContainer[type=number] {
     -moz-appearance: textfield;
 }
+
+.form__input-group {
+    height: 38px;
+    margin: 15px 0;
+    width: 100%;
+    position: relative;
+    display: flex;
+    div.react-datepicker__input-container {
+        height: inherit;
+    }
+}
+.form__input {
+    width: 100%;
+    padding: 10px;
+    border: 0.7px solid #939393;
+    border-radius: 5px;
+    transition: border 0.25s ease-in-out;
+    font-size: 16px;
+    height: 100%;
+
+    input:focus {
+        box-shadow: none;
+        border: none;
+    }
+
+    &:not(:placeholder-shown) {
+        outline: none;
+        border: 0.7px solid #939393;
+    }
+    &:focus {
+        outline: none;
+        border: 0.7px solid #939393;
+    }
+  }
+  
+  .form__input-label {
+    color: $border;
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    font-size: 16px;
+    transform: translateY(-50%);
+    transition: all 0.25s ease-in-out;
+  }
+  
+  .form__input-label {
+    top: 0;
+    background-color: #fff;
+    font-size: 12px;
+    padding: 0 10px;
+  }
+    

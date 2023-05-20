@@ -16,9 +16,10 @@
     font-size: 22px;
     color: $color-primary;
 
-    // @media screen and (max-width:430px) {
-    //     display: none;
-    // }
+    @media screen and (max-width:430px) {
+        font-size: 18px;
+        font-weight: 500;
+    }
 }
 
 .txtFieldsRow {
@@ -218,7 +219,6 @@
 }
 
 .tabs {
-
     display: flex;
     align-items: center;
     margin-right: 20px;
@@ -276,6 +276,24 @@
     }
 
 
+}
+
+.paymentNote {
+    font-size: 16px;
+
+    @media screen and (max-width:430px) {
+        font-size: 14px;
+
+    }
+}
+
+.paymentTotal {
+    font-size: 16px;
+    font-weight: bold;
+
+    @media screen and (max-width:430px) {
+        font-weight: 500;
+    }
 }
 
 .ibftwrapper {
@@ -343,4 +361,15 @@
     @media screen and (max-width: 770px) {
         width: 100%;
     }
+}
+
+.disableAddress {
+    background-color: #DCDCDC;
+    color: #6c757d
+}
+
+.inputError {
+    color: #ff3333;
+    font-size: 12px;
+    padding-left: 2px
 }

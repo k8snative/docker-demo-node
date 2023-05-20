@@ -6,6 +6,14 @@
     margin: 0;
     padding: 0;
     background-color: #1C1B1B;
+    
+}
+.wrapperPayment {
+
+    width: 100%;
+    padding: 18px 40px 20px 40px;
+    margin: 0;
+    background-color: #323131;
 }
 
 .footerLeft {
@@ -19,11 +27,16 @@
 
 
 }
+.mobileContainer {
+    width: 80%;
+    margin: 20px;
+    padding: 3px;
+}
 
 .footerLogo {
 
-    width: 80px;
-    height: 108px;
+    width: 200px;
+    height: 100px;
     display: flex;
     align-items: center;
 
@@ -39,7 +52,7 @@
 }
 
 .footerLogo2 {
-    width: 94px;
+    // width: 94px;
     height: 22px;
     display: flex;
     align-items: center;
@@ -86,7 +99,7 @@
 .footerRight {
     // border: 10px solid blue;
     width: 75%;
-    margin: 5% 0;
+    margin: 3% 10%;
 
     @media screen and (max-width: 1440px) {
         width: 72%;
@@ -94,12 +107,29 @@
 }
 
 .eachHeading {
-    color: #fff;
+    color: #8F8F8F;
     font-size: 17px;
-    margin: 0 0 20px 0;
+    margin: 0 0 16px 0;
+    min-height: 30px;
+
 
     @media screen and (max-width: 772px) {
         font-size: 14px;
+        
+    }
+
+
+}
+
+.eachHeadingMob {
+    color: #8F8F8F;
+    font-size: 17px;
+    margin: 10px 0 10px 0;
+
+
+    @media screen and (max-width: 772px) {
+        font-size: 14px;
+        
     }
 
 
@@ -123,8 +153,7 @@
 .containerMob {
     //border: 10px solid white;
     width: 100%;
-    margin: 20px;
-    padding: 3px;
+  
 }
 
 .mobFooterTopRow2 {
@@ -133,13 +162,13 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    margin: 20px;
     margin-bottom: 10px;
+    padding: 3px;
 }
 
 .footerMobSocailContainer {
-    height: 30px;
     width: 35%;
-
     justify-content: space-around;
 
 }
@@ -186,7 +215,6 @@
 
 
 
-
 }
 
 .footerMobEachTxt {
@@ -213,4 +241,15 @@
 .iconhover:hover {
     filter: invert(27%) sepia(88%) saturate(7323%) hue-rotate(345deg) brightness(93%) contrast(97%);
     cursor: pointer;
+}
+
+.footerAddress {
+    text-align: center;
+    color: #fff;
+    font-size: 13px;
+    margin-bottom: 0;
+    @media screen and (max-width: 772px) {
+        font-size: 10px;
+        margin: 1% 2%;
+    }
 }

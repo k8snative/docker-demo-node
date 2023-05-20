@@ -2,7 +2,7 @@ import ProductPlanFilters from '../ProductPlanFilters/ProductPlanFilters'
 import styles from './ProductPlanMobileFilters.module.scss'
 
 const filterData = {
-  heading: 'Insurance Companies',
+  heading: 'Takaful Providers',
   insurances: [
     { name: 'jubilee General' },
     { name: 'Askari Insurance' },
@@ -16,7 +16,7 @@ const filterData = {
   ],
 }
 const insuranceTypeData = {
-  heading: 'Insurance Type',
+  heading: 'Policy Type',
   types: [{ name: 'Comprehensive' }, { name: '3T (Total Loss, Theft & Third Party)' }],
 }
 const addOnsData = {

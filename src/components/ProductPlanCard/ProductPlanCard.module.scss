@@ -346,6 +346,10 @@
     @media screen and (max-width: 992px) {
         font-size: 16px;
     }
+
+    @media screen and (max-width: 512px) {
+        font-size: 12px;
+    }
 }
 
 .newRateTxtSmallBig {

@@ -12,14 +12,14 @@
 }
 
 .heading {
-    font-size: 21.71px;
+    font-size: 24px;
     color: $color-primary;
     text-align: center;
     margin: 5% 2% 2% 2%;
     font-weight: bold;
 
     @media screen and (max-width: 430px) {
-        font-size: 25px;
+        font-size: 20px;
     }
 }
 
@@ -39,8 +39,8 @@
 
     color: $color-primary;
     margin: 0 5%;
-    font-size: 18px;
-
+    font-size: 16px;
+    text-align: center;
     // margin:30px 10px;
     @media screen and (max-width: 430px) {
         text-align: center;

@@ -64,6 +64,7 @@ const SeoHead: React.FC<SEOProps> = memo(
     const tags = []
 
     tags.push(<meta name="viewport" content="width=device-width, initial-scale=1.0" />)
+    tags.push(<meta name="color-scheme" content="only light" />)
     tags.push(<link rel="icon" href="/favIcon.png"></link>)
 
     if (title) {

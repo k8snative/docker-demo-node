@@ -57,7 +57,6 @@ const InvoicePage: NextPage = () => {
     }
     getOrderDetails()
   }, [invoiceID])
-  // console.log('invoice data',invoiceData)
 
   return (
     <div className={`position-relative ${styles['container']}`}>
@@ -102,9 +101,9 @@ const InvoicePage: NextPage = () => {
           <Footer />
         </>
       ) : (
-        <div style={{ bottom: 0 }} className="w-100 position-fixed">
+        <div style={{ bottom: 0 }} className="w-100 ">
           <SignInUpButton
-            btnTxt="Track Your Policy"
+            btnTxt="To Track Your Policy Go To Your Dashboard"
             onClick={() => window.open(`${process.env['NEXT_PUBLIC_DASHBOARD_ORIGIN']}my-policies`)}
           />
         </div>

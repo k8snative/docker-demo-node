@@ -155,7 +155,7 @@ const RegistorClaimTabs = () => {
       img: MotorCircle,
       faq: [],
       isActive: true,
-      link: '/products/health',
+      link: '/',
     },
     {
       txt: 'Call Center ',
@@ -163,7 +163,7 @@ const RegistorClaimTabs = () => {
       img: MotorCircle,
       faq: [],
       isActive: false,
-      link: '/products/auto',
+      link: '/auto',
     },
     {
       txt: 'SMS',
@@ -171,7 +171,7 @@ const RegistorClaimTabs = () => {
       img: MotorCircle,
       faq: [],
       isActive: false,
-      link: '/products/auto',
+      link: '/auto',
     },
 
     {
@@ -180,12 +180,65 @@ const RegistorClaimTabs = () => {
       img: MotorCircle,
       faq: [],
       isActive: false,
-      link: '/products/auto',
+      link: '/auto',
     },
   ])
   const [selectedType, setSelectedType] = useState('General')
   const [selectedFAQ, setSelectedFAQ] = useState(allFAQ[1]?.faq)
   const [resetOpenedFaq, setResetOpenedFaq] = useState(false)
+  const [selectedTab, setSelectedTab] = useState('Online')
+  const [tabContent, setTabContent] = useState(<div className={`d-flex w-100 flex-column ms-{20} h-100`}>
+  <p className={styles['documentDamageList']}>Auto Takaful </p>
+  <p className={styles['documentDamageList']}>Health Takaful</p>
+  <p className={styles['documentDamageList']}>Travel Takaful</p>
+  <p className={styles['documentDamageList']}>Life Takaful</p>
+</div>)
+
+  const handleTabs = (val) => {
+    setSelectedTab(val?.tabName)
+    let content = ''
+    if (val?.tabName === 'Online') {
+      content = <div className={`d-flex w-100 flex-column ms-{20} h-100`}>
+        <p className={styles['documentDamageList']}>Auto Takaful </p>
+        <p className={styles['documentDamageList']}>Health Takaful</p>
+        <p className={styles['documentDamageList']}>Travel Takaful</p>
+        <p className={styles['documentDamageList']}>Life Takaful</p>
+      </div> 
+  } else if (val?.tabName === 'Call Center') {
+      content = <div className={`d-flex w-100 flex-column ms-{20} h-100`}>
+          <p className={styles['documentDamageList']}>To raise a claim, connect with our 24/7 available TB representative at 111-832-682.</p>
+        </div> 
+    } else if (val?.tabName === 'SMS') {
+      content = <div className={`d-flex w-100 flex-column ms-{20} h-100`}>
+          <p className={styles['documentDamageList']}>Just drop us a free msg at 111-832-682 & our representative will assist you in claim intimation.</p>
+        </div> 
+    } else if (val?.tabName === 'Email') {
+      content = <div className={`d-flex w-100 flex-column ms-{20} h-100`}>
+          <p className={styles['documentDamageList']}>Write us your claim queries at hello@Takafulbazaar.pk</p>
+        </div> 
+    }
+    setTabContent(content) 
+  }
+  
+  // const handletabContent = () => {
+  //   let content = ''
+  //   if (selectedTab === 'Online') {
+  //       content = <div className={`d-flex w-100 flex-column ms-{20} h-100`}>
+  //         <p className={styles['documentDamageList']}>Auto Takaful Claim Intimation</p>
+  //         <p className={styles['documentDamageList']}>Health Takaful</p>
+  //         <p className={styles['documentDamageList']}>Travel Takaful</p>
+  //         <p className={styles['documentDamageList']}>Life Takaful</p>
+  //       </div> 
+  //   } else if (selectedTab === 'Call Center') {
+  //     content = <div className={`d-flex w-100 flex-column ms-{20} h-100`}>
+  //         <p className={styles['documentDamageList']}>Auto ooTakaful Claim Intimation</p>
+  //         <p className={styles['documentDamageList']}>Health Takaful</p>
+  //         <p className={styles['documentDamageList']}>Travel Takaful</p>
+  //         <p className={styles['documentDamageList']}>Life Takaful</p>
+  //       </div> 
+  //   }
+  //   return content
+  // }
 
   useEffect(() => {
     if (tab) {
@@ -207,26 +260,22 @@ const RegistorClaimTabs = () => {
             {allFAQ.map((each, index) => (
               <div
                 className={`d-flex w-75 align-items-center justify-content-center ${
-                  styles[each?.isActive ? 'activeTab' : 'inActiveTab']
+                  styles[each?.tabName === selectedTab ? 'activeTab' : 'inActiveTab']
                 }`}
                 key={index}
                 onClick={() => {
-                  setResetOpenedFaq(true)
+                  handleTabs(each)
                 }}
               >
-                <p className={`${styles[each?.isActive ? 'tabTxtActive' : 'tabTxtInactive']}`}>{each?.tabName}</p>
+                <p className={`${styles[each?.tabName === selectedTab ? 'tabTxtActive' : 'tabTxtInactive']}`}>{each?.tabName}</p>
               </div>
             ))}
           </Container>
           <Container className={`w-75 ${styles['borderBottomTab']}`} />
         </div>
 
-        <div className={`d-flex w-100 flex-column ms-{20} h-100`}>
-          <p className={styles['documentDamageList']}>Auto Takaful Claim Intimation</p>
-          <p className={styles['documentDamageList']}>Health Takaful</p>
-          <p className={styles['documentDamageList']}>Travel Takaful</p>
-          <p className={styles['documentDamageList']}>Life Takaful</p>
-        </div>
+        {tabContent}
+
       </MediaQuery>
       <MediaQuery maxWidth={450}>
         <Card style={{ top: 60 }}>
@@ -235,24 +284,19 @@ const RegistorClaimTabs = () => {
               {allFAQ.map((each, index) => (
                 <div
                   className={`d-flex w-100 align-items-center justify-content-center ${
-                    styles[each?.isActive ? 'activeTab' : 'inActiveTab']
+                    styles[each?.tabName === selectedTab ? 'activeTab' : 'inActiveTab']
                   }`}
                   key={index}
                   onClick={() => {
-                    setResetOpenedFaq(true)
+                    handleTabs(each)
                   }}
                 >
-                  <p className={`${styles[each?.isActive ? 'tabTxtActive' : 'tabTxtInactive']}`}>{each?.tabName}</p>
+                  <p className={`${styles[each?.tabName === selectedTab ? 'tabTxtActive' : 'tabTxtInactive']}`}>{each?.tabName}</p>
                 </div>
               ))}
             </Container>
             <Container className={`w-100 ${styles['borderBottomTab']}`} />
-            <div className={`d-flex w-100 mt-2 flex-column h-100`}>
-              <p className={styles['documentDamageList']}>Auto Takaful Claim Intimation</p>
-              <p className={styles['documentDamageList']}>Health Takaful</p>
-              <p className={styles['documentDamageList']}>Travel Takaful</p>
-              <p className={styles['documentDamageList']}>Life Takaful</p>
-            </div>
+            {tabContent}
           </Card.Body>
         </Card>
       </MediaQuery>

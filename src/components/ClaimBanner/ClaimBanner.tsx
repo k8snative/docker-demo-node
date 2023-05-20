@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Col, Container } from 'react-bootstrap'
 import Row from 'react-bootstrap/Row'
 import { useSelector } from 'react-redux'
@@ -12,9 +12,12 @@ import AutoBannerImage from '../../../public/assets/autoBannerClaim.png'
 // import Api from 'src/lib/api'
 import SliderImage from '../../../public/assets/person1.png'
 import SliderImage2 from '../../../public/assets/person2.png'
+import ClaimBanner from '../../../public/assets/claimBanner.png'
+import Notes from '../../../public/assets/notes.png'
 import BannerForm from '../BannerForm/BannerForm'
 import CategoriesBottons from '../CategoriesBottons/CategoriesBottons'
 import styles from './CalimBanner.module.scss'
+import Api from 'src/lib/api'
 
 export type BannerProps = {
   sampleTextProp: string
@@ -27,8 +30,19 @@ const Selector = ({ activeSlide, id, onClick }: { activeSlide: number; id: numbe
 )
 
 const CalimBanner: React.FC<BannerProps> = () => {
-  const [activeSlide, setActiveSlide] = useState(0)
+  const [image, setImage] = useState('')
   const userdata = useSelector(state => state?.auth.data?.user)
+
+
+  const getImage = async () => {
+    const response = await Api('GET', `banner-show-on-page?show_on_page=${encodeURIComponent('/auto/claim')}`)
+    if (response?.data?.length) {
+      setImage(response?.data[0]?.desktop_image_url);
+    }
+  }
+  useEffect(() => {
+    getImage()
+  }, [])
 
   const raisedClaim = () => {
     if (!userdata) {
@@ -45,25 +59,34 @@ const CalimBanner: React.FC<BannerProps> = () => {
           <div className={styles['background']}></div>
           <Container>
             <Row>
-              <Col md={8}>
-                <Row>
+              <Col md={6}>
+              {image && <img src={image} alt="" objectFit="contain" />}
+                {/* <Row>
                   <Col md={10}>
                     <div className={styles['image-wrapper']}>
-                      <Image priority={true} src={AutoBannerImage} alt="" objectFit="contain" />
+                      {image ?  (
+                        <Image layout='fill' priority={true} src={image} alt="" objectFit="contain" />
+                      ) : null}
                     </div>
                   </Col>
-                </Row>
+                </Row> */}
               </Col>
-              <Col md={4} className="p-0 d-flex flex-column justify-content-center align-items-center">
+              <Col md={6} className="p-0 d-flex flex-column justify-content-center">
                 <div className={`${styles['raise-claim']}`}>
-                  <Image priority={true} src={ClaimIcon} alt="" objectFit="contain" />
-                  <div className="w-50 mt-3">
+                  <p style={{fontSize: 30, margin: 0}}><b>With</b><b style={{marginLeft: 10, color: 'red'}}>Takaful Bazaar</b></p>
+                  <p style={{fontSize: 18}}>Claims are always Simple & Easy</p>
+                  {/* <Image priority={true} src={Notes} alt="" objectFit="contain" /> */}
+                  <button className={`${styles['raise-claim-btn']}`} onClick={raisedClaim}>
+                  <Image priority={true} src={Notes} alt="" objectFit="contain" width={20}/> 
+                    Raise a Claim
+                  </button>
+                  {/* <div className="mt-3">
                     <ClaimButton
                       // link={!!userdata ? '/claims/auto-claims' : 'auth/auth'}
                       btnTxt="Raise a Claim"
                       onClick={raisedClaim}
                     />
-                  </div>
+                  </div> */}
                 </div>
               </Col>
             </Row>

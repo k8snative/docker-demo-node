@@ -1,80 +1,63 @@
 @import "../../styles/colors.scss";
 
 .formstyles {
-    margin-bottom: 10px;
-    display: flex;
-
-
-
+  margin-bottom: 10px;
+  display: flex;
 }
 
 .formstyles input {
-
-    height: 14px;
-    width: 14px;
-    border-radius: calc(14px/2);
-    border: 1px solid $color-primary;
-    cursor: pointer;
-
-
-
-
-
+  height: 14px;
+  width: 14px;
+  border-radius: calc(14px / 2);
+  border: 1px solid $color-primary;
+  cursor: pointer;
 }
 
-.formstyles input:checked[type=radio] {
-    background-color: #FFF !important;
-    border: 1px solid $color-primary  !important;
-    background-image: url('../../../public/assets/mdot2.png') !important;
-    background-size: 6px;
-    background-position: 3px 3px;
-
-
-
+.formstyles input:checked[type="radio"] {
+  //   background-color: #fff !important;
+  //   border: 1px solid $color-primary !important;
+  //   background-image: url("../../../public/assets/mdot2.png") !important;
+  //   background-size: 6px;
+  //   background-position: 3px 3px;
+  background-color: $color-text-secondary !important;
+  border: 1px solid $color-border !important;
+  background-size: 10px;
 }
 
 .formstyles input:focus {
-
-
-    background-color: #FFF !important;
-    border: 1px solid $color-primary !important;
-    outline: 0;
-    box-shadow: none;
-    -moz-box-shadow: none;
-    -webkit-box-shadow: none;
-
+  background-color: $color-text-secondary !important;
+  border: 1px solid $color-border !important;
+  outline: 0;
+  box-shadow: none;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
 }
 
 .radiotxt {
-    margin-right: 10px !important;
-
+  margin-right: 10px !important;
 }
-
 
 .radiotxt label {
-    margin: 0;
-    margin-top: -10px;
-    font-size: 16px;
-    color: $color-primary;
+  margin: 0;
+  margin-top: -10px;
+  font-size: 16px;
+  color: $color-primary;
 
-    @media screen and (max-width: 430px) {
-        font-size: 17px;
-
-    }
+  @media screen and (max-width: 430px) {
+    font-size: 17px;
+  }
 }
 .radiotxtred {
-    margin-right: 10px !important;
-
+  margin-right: 10px !important;
 }
 
 .radiotxtred label {
-    margin: 0;
-    margin-top: -10px;
-    font-size: 16px;
-    color: $color-text-secondary;
+  margin: 0;
+  margin-top: -10px;
+  font-size: 16px;
+  color: $color-text-secondary;
 
-    @media screen and (max-width: 430px) {
-        font-size: 17px;
-
-    }
+  @media screen and (max-width: 430px) {
+    font-size: 17px;
+  }
 }

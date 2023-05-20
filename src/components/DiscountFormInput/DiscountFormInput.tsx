@@ -168,9 +168,11 @@ const DiscountFormInput = ({
           ) : (
             <PhoneInput
               placeholder={placeholder}
+              limitMaxLength={true}
               international
               value={value}
               name={name}
+              maxLength={15} // max length with flag and mask spaces considered
               countryCallingCodeEditable={false}
               defaultCountry="PK"
               onChange={onChange}

@@ -18,6 +18,7 @@ import whyChoose4 from '../../public/assets/whyChoose4.png'
 import whyChoose5 from '../../public/assets/whyChoose5.png'
 import whyChoose6 from '../../public/assets/whyChoose6.png'
 import styles from '../styles/WhyChooseUs.module.scss'
+import Cross from '../../public/assets/cardcross.png'
 
 type CustomModalProps = {
   open: boolean
@@ -73,7 +74,6 @@ const EachColumn = ({
   })
   const router = useRouter()
   const user = useSelector((state: any) => state.auth.data.user)
-  console.log('user details', user)
   return (
     <Col
       className={`d-flex flex-column align-items-center justify-content-between ${styles['col']}`}
@@ -93,7 +93,7 @@ const EachColumn = ({
       <p className={styles['whychooseHeadingtxt']}>{heading}</p>
       <div className="h-25 w-100 d-flex flex-column align-items-center justify-content-between">
         <p className={`${styles['whychoosetxt']}`}>{paraTxt}</p>
-        <p
+        {/* <p
           className={divOpen && isDesktopOrLaptop ? styles['empty'] : styles['whychoosetxtRed']}
           onClick={
             isDesktopOrLaptop
@@ -104,7 +104,7 @@ const EachColumn = ({
           }
         >
           {divOpen && isDesktopOrLaptop ? '' : 'Read More..'}
-        </p>
+        </p> */}
       </div>
       {divOpen && isDesktopOrLaptop ? (
         <div className={styles['modalContainer2']}>
@@ -115,7 +115,7 @@ const EachColumn = ({
             {user ? (
               ''
             ) : (
-              <p className={styles['signUpText']} onClick={() => router.push('/auth/auth')}>
+              <p className={styles['signUpText']} onClick={() => router.push('/auth')}>
                 Sign Up Now!
               </p>
             )}
@@ -132,14 +132,14 @@ const EachColumn = ({
         setOpen={() => setModalOpen(false)}
         renderComponent={
           <div className={styles['modalContainer']}>
-            <p className={styles['modalHeading']}>{modalHeading}</p>
+            <p className={styles['modalHeading']} style={{display: 'flex', justifyContent: 'space-between'}}>{modalHeading} <span className={styles['crossBtn']} onClick={() => setModalOpen(false)}><Image src={Cross} alt="" width={10} height={10} /></span></p>
             <div>
               <p className={styles['modalTxt']}>{modalText}</p>
             </div>
             {user ? (
               ''
             ) : (
-              <p className={styles['signUpText']} onClick={() => router.push('/auth/auth')}>
+              <p className={styles['signUpText']} onClick={() => router.push('/auth')}>
                 Sign Up Now!
               </p>
             )}
@@ -156,67 +156,67 @@ const WhyChooseUs = () => {
   })
   const ColumnData = [
     {
-      heading: 'Super-Simple Claims',
-      paraTxt: 'We keep it simple by speaking your language and avoiding',
+      heading: 'Claims Support',
+      paraTxt: 'Each Takaful Plan comes with complete claims assistance at every step, to ensure that it is always there when you need it',
       img: isDesktopOrLaptop ? whyChoose1c : whyChoose1,
       image: 'WhyChoose1c.png',
-      modalHeading: 'Super-Simple Claims',
+      modalHeading: 'Claims Support',
       modalText: isDesktopOrLaptop
-        ? 'complicated  insurance  terms so,  you  know  exactly  what you’re  paying  for.  Takaful Bazaar  brings  you  simple,easy  and  user-friendly  claims management.  Enjoy  exclusive discounts  and  more  in  2  easy steps '
-        : 'We keep it simple by speaking your  language  and  avoiding  complicated  insurance  terms so,  you  know  exactly  what you’re  paying  for.  Takaful Bazaar  brings  you  simple,easy  and  user-friendly  claims management.  Enjoy  exclusive discounts  and  more  in  2  easy steps',
+        ? 'complicated islamic insurance  terms so,  you  know  exactly  what you’re  paying  for.  Takaful Bazaar  brings  you  simple,easy  and  user-friendly  claims management.  Enjoy  exclusive discounts  and  more  in  3  easy steps '
+        : 'Each Takaful Plan comes with complete claims assistance at every step, to ensure that it is always there when you need it',
     },
     {
-      heading: 'Zero Documentation',
-      paraTxt: 'Forget about searching for the list of documents and worrying',
+      heading: 'Minimal Documentation',
+      paraTxt: 'Our Takaful process focuses on your ease and convenience, with minimal documents',
       img: isDesktopOrLaptop ? whyChoose2c : whyChoose2,
       image: 'WhyChoose2c.png',
-      modalHeading: 'Zero Documentation',
+      modalHeading: 'Minimal Documentation',
       modalText: isDesktopOrLaptop
         ? 'about paper loss. Now, with Takaful bazaar, you can scan and upload all important information and documents with just a few clicks'
-        : 'Forget about searching for the list of documents and worrying about paper loss. Now, with Takaful bazaar, you can scan and upload all important information and documents with just a few clicks',
+        : 'Our Takaful process focuses on your ease and convenience, with minimal documents',
     },
     {
-      heading: '24/7 Available',
-      paraTxt: 'Team-TB is here for you in the toughest of times. Weathers it’s a...',
+      heading: '24/7 Support',
+      paraTxt: ' Through our website and helpline team, we are always there to answer your questions and offer help',
       img: isDesktopOrLaptop ? whyChoose3c : whyChoose3,
       image: 'WhyChoose3c.png',
       modalHeading: '24/7 Available',
 
       modalText: isDesktopOrLaptop
-        ? 'claim or inquiry – We provide 24-hour assistance through Calls, emails & WhatsApp for our customers. Our incredible Team-TB is always at your service.'
-        : 'Team-TB is here for you in the toughest of times. Weathers it’s a claim or inquiry – We provide 24-hour assistance through Calls, emails & WhatsApp for our customers. Our incredible Team-TB is always at your service.',
+        ? 'claim or inquiry – We provide 24-hour assistance through Calls, emails & WhatsApp for our customers. Our incredible Team-TB is always at your service'
+        : ' Through our website and helpline team, we are always there to answer your questions and offer help',
     },
     {
-      heading: 'Transparency and Reliability',
-      paraTxt: 'Transparency is TB philosophy. You won’t be hit with hidden',
+      heading: 'Transparency',
+      paraTxt: 'We provide clear, concise and complete information to our customers',
       img: isDesktopOrLaptop ? whyChoose4c : whyChoose4,
       image: 'WhyChoose4c.png',
       modalHeading: 'Transparency and Reliability',
       modalText: isDesktopOrLaptop
-        ? 'fees or  additional  charges.  The takaful bazaar paves the way for digital  trust  and  ensures  a seamless  customer  experience with  full  transparency  and accountability  through  simpler processes  and  comprehensive takaful products.'
-        : 'Transparency  is  TB  philosophy. You won’t be hit with hidden fees or  additional  charges.  The takaful bazaar paves the way for digital  trust  and  ensures  a seamless  customer  experience with  full  transparency  and accountability  through  simpler processes  and  comprehensive takaful products.',
+        ? 'fees or  additional  charges.  The takaful bazaar paves the way for digital  trust  and  ensures  a seamless  customer  experience with  full  transparency  and accountability  through  simpler processes  and  comprehensive takaful products'
+        : 'We provide clear, concise and complete information to our customers',
     },
     {
-      heading: 'Unbiased Advice',
-      paraTxt: 'Incomparable  Fairness  and  Expertise,  with Takaful bazaar, ',
+      heading: 'Simple & Accessible',
+      paraTxt: 'Our quick and simple process is designed to ensure that you get your policy with the least amount of hassle',
       img: isDesktopOrLaptop ? whyChoose5c : whyChoose5,
       image: 'WhyChoose5c.png',
       modalHeading: 'Unbiased Advice ',
 
       modalText: isDesktopOrLaptop
-        ? 'matching to your perfect adviser is easy,  fast  and  free.  Enriched  with  immense  industry  experience, advisors from Team-TB can help you  choose the best products for your circumstances,  so you cover yourself to the right level of risk and  dont  waste  money  on  unsuitable  policies.  Make  insurance decisions with confidence and peace of  mind.  100%  unbiased  comparisons,  reviews  and  recommendations you can trust'
-        : 'Incomparable Fairness and Expertise, with Takaful bazaar, matching to your perfect adviser is easy,  fast  and  free.  Enriched  with  immense  industry  experience, advisors from Team-TB can help you  choose the best products for your circumstances,  so you cover yourself to the right level of risk and  dont  waste  money  on  unsuitable  policies.  Make  insurance decisions with confidence and peace of  mind.  100%  unbiased  comparisons,  reviews  and  recommendations you can trust',
+        ? 'matching to your perfect adviser is easy,  fast  and  free.  Enriched  with  immense  industry  experience, advisors from Team-TB can help you  choose the best products for your circumstances,  so you cover yourself to the right level of risk and  dont  waste  money  on  unsuitable  policies.  Make takaful decisions with confidence and peace of  mind.  100%  unbiased  comparisons,  reviews  and  recommendations you can trust'
+        : 'Our quick and simple process is designed to ensure that you get your policy with the least amount of hassle',
     },
     {
-      heading: 'Lowest Contribution Rates',
-      paraTxt: 'Bringing the best deals and discounts from across the industry ',
+      heading: 'Competitive Rates',
+      paraTxt: 'Easy comparisons and the best market rates ensure that our customers get their money’s worth',
       img: isDesktopOrLaptop ? whyChoose6c : whyChoose6,
       image: 'WhyChoose6c.png',
       modalHeading: 'Lowest Contribution Rates',
 
       modalText: isDesktopOrLaptop
-        ? ' We’re on a mission to make Takaful accessible,  affordable, and ultimately a household brand. Now with takaful bazaar, you can not only compare rates, track your  expenses, but also get a birds eye view of the most discounted rates for Takaful products.'
-        : 'Bringing the best deals and discounts from across the industry - We’re on a mission to make Takaful accessible,  affordable, and ultimately a household brand. Now with takaful bazaar, you can not only compare rates, track your  expenses, but also get a birds eye view of the most discounted rates for Takaful products.',
+        ? ' We’re on a mission to make Takaful accessible,  affordable, and ultimately a household brand. Now with takaful bazaar, you can not only compare rates, track your  expenses, but also get a birds eye view of the most discounted rates for Takaful products'
+        : 'Easy comparisons and the best market rates ensure that our customers get their money’s worth' ,
     },
   ]
 
@@ -224,9 +224,9 @@ const WhyChooseUs = () => {
     <div className={styles['wrapper']}>
       <Container className={styles['container']}>
         <p className={styles['whyChooseHeading']}>
-          Why <span className={styles['TakafulRedText']}>Takaful Bazaar</span> ?{' '}
+          Why <span className={styles['TakafulRedText']}>Takaful Bazaar</span>?{' '}
         </p>
-        <p className={styles['factsText']}>Fast Facts About Takaful Bazaar</p>
+        {/* <p className={styles['factsText']}>Takafulbazaar.pk acts as a free and independent guidance platform for all takaful products. Is it important to understand that takaful is a subject matter or mutual contribution funds.</p> */}
         <Row className={styles['row']}>
           {ColumnData.map((data, index) => (
             <EachColumn

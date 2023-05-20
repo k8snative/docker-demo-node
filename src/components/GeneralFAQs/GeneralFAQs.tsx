@@ -24,6 +24,9 @@ const EachQuestion = ({
   length: number
   redtxt: Boolean
 }) => {
+  function createMarkup() {
+    return {__html: faq?.answer};
+  }
   return (
     <>
       <div
@@ -55,8 +58,8 @@ const EachQuestion = ({
       {/* {isOpen && <p className={styles['eachAnswer']}>{faq?.answer}</p>} */}
       {showFAQ === index && (
         <p className={styles['eachAnswer']}>
-          {faq?.answer}
-          {redtxt === true && <span className={styles['eachAnswer2']}>(Direct to claims page)</span>}
+          <div dangerouslySetInnerHTML={createMarkup()} />
+          {/* {redtxt === true && <span className={styles['eachAnswer2']}>(Direct to claims page)</span>} */}
         </p>
       )}
 
@@ -75,7 +78,7 @@ const GeneralFAQs = ({
   showMore,
   backGroundColor,
   topSeparator,
-  showMoreLink = '/products/faq',
+  showMoreLink = '/faq',
   resetOpenedFaq,
   setResetOpenedFaq,
   linkText,
@@ -160,7 +163,7 @@ const GeneralFAQs = ({
           <div className="d-flex align-items-center justify-content-center w-100">
             <Link
               href={{
-                pathname: '/products/faq',
+                pathname: '/faq',
                 query: {
                   tab: showMoreLink,
                 },

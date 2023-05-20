@@ -1,12 +1,10 @@
 import Image from 'next/image'
-import Link from 'next/link'
-import Router, { useRouter } from 'next/router'
+import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import MediaQuery, { useMediaQuery } from 'react-responsive'
 import Api from 'src/lib/api'
-import { clearPurchaseInfo } from 'src/lib/redux/auth/action'
 import currencyFormat from 'src/utils/currencyFormat'
 import DocumentsUpload from '~components/DocumentsUpload/DocumentsUpload'
 import MultiStepForm from '~components/MultiStepForm/MultiStepForm'
@@ -19,12 +17,14 @@ import GoBack from '~public/assets/arrowBack.png'
 import GoBackRed from '~public/assets/arrowBackred.png'
 import Gradient from '~public/assets/gradient.png'
 import UBL from '~public/assets/ubl.png'
-import UBLInsurer from '~public/assets/ublInsurer.png'
-
+import { setEditOrderInfo } from 'src/lib/redux/auth/action'
 import styles from './PaymentPage.module.scss'
+import { calculateAmountAfterPromotion } from 'src/lib/utils'
+import UploadDocumentsMini from '~components/UploadDocumentsMini/UploadDocumentsMini'
 
 const GoBackSection = () => {
   const router = useRouter()
+  const dispatch = useDispatch()
   const isDesktopOrLaptop = useMediaQuery({
     query: '(min-width: 430px)',
   })
@@ -44,6 +44,18 @@ const GoBackSection = () => {
     getModel()
   }, [make_id])
 
+  useEffect(() => {
+    const { order_id } = router.query
+    if (order_id) {
+      Api('GET', `order/${order_id}`).then(res => {
+        dispatch(setEditOrderInfo(res))
+        // if (res) {
+        //   setMakeModel(res.model?.name)
+        // }
+      })
+    }
+  }, [])
+
   return (
     <div className={`${styles['goBackWrapper']} `}>
       <Container>
@@ -57,14 +69,14 @@ const GoBackSection = () => {
                     <div className={styles['gobackarrow']}>
                       <Image src={GoBack} alt="backarrow" />
                     </div>
-                    <p className={`mt-3 ${styles['gobacktxt']}`}>Go Back</p>
+                    <p className={`mt-3 ${styles['gobacktxt']}`}>Back to Search</p>
                   </>
                 ) : (
                   <>
                     <div className={styles['gobackarrowmob']}>
                       <Image src={GoBackRed} alt="backarrow" />
                     </div>
-                    <p className={`mt-3 ${styles['gobacktxt']}`}>Back to Policy</p>
+                    <p className={`mt-3 ${styles['gobacktxt']}`}>Back to Search</p>
                   </>
                 )}
               </div>
@@ -85,9 +97,20 @@ const GoBackSection = () => {
 }
 
 const HorizontalCard = ({ updatedAnnualContribution }: { updatedAnnualContribution: number }) => {
-  const { annual_contribution, insurance_rate, company_logo_url } = useSelector(
-    state => state?.auth?.planDetails.buy_now,
+  const { annual_contribution, insurance_rate, company_logo_url,
+    promotion_discount_value,
+    promotion_discount_type, } = useSelector(
+      state => state?.auth?.planDetails.buy_now,
+    )
+  const temp = useSelector(
+    state => state?.auth,
   )
+
+  const annualContribution = calculateAmountAfterPromotion(
+    annual_contribution,
+    promotion_discount_value,
+    promotion_discount_type,
+  );
 
   const apiOrigin = process.env['NEXT_PUBLIC_IMAGE_ORIGIN']
   return (
@@ -97,9 +120,9 @@ const HorizontalCard = ({ updatedAnnualContribution }: { updatedAnnualContributi
         <div className={`${styles['icondiv']} `}>
           <Image
             alt=""
-            src={company_logo_url ? apiOrigin + company_logo_url : UBL}
-            width={'100%'}
-            height={'100%'}
+            src={company_logo_url ? company_logo_url : UBL}
+            width={'200px'}
+            height={'125px'}
             objectFit={'contain'}
           />
         </div>
@@ -108,17 +131,20 @@ const HorizontalCard = ({ updatedAnnualContribution }: { updatedAnnualContributi
         </div>
         <div className={`${styles['backgroundimg']} `}>
           <div style={{ marginLeft: '15px' }}>
-            <p className={`m-0 ${styles['cardinnertext']}`}>Premium Rate</p>
-            <p className={`m-0 ${styles['cardinnertext']}`}>{insurance_rate}%</p>
+            <p className={`m-0 ${styles['cardinnertext']}`}>Contribution Rate</p>
+            <p className={`m-0 ${styles['cardinnertext2']}`}>{insurance_rate}%</p>
           </div>
-          <div>
+          {/* <div>
             <p className={`m-0 ${styles['cardinnertext']}`}>Tracker Price (PKR)</p>
             <p className={`m-0 ${styles['cardinnertext']}`}>Not requested</p>
-          </div>
+          </div> */}
           <div>
-            <p className={`m-0 ${styles['cardinnertext']}`}>Annual Premium (PKR)</p>
+            <p className={`m-0 ${styles['cardinnertext']}`}>Annual Contribution (PKR)</p>
             <p className={`m-0 ${styles['cardinnertext2']}`}>
-              {currencyFormat(updatedAnnualContribution ? updatedAnnualContribution : annual_contribution)}
+              {
+                (parseFloat(updatedAnnualContribution ? updatedAnnualContribution : annualContribution)) > -1
+                  ? currencyFormat(updatedAnnualContribution ? updatedAnnualContribution : annualContribution)
+                  : 0}
             </p>
           </div>
         </div>
@@ -128,9 +154,19 @@ const HorizontalCard = ({ updatedAnnualContribution }: { updatedAnnualContributi
 }
 
 const MobileCard = ({ updatedAnnualContribution }: { updatedAnnualContribution: number }) => {
-  const { annual_contribution, insurance_rate, company_logo_url, policy_name } = useSelector(
-    state => state?.auth?.planDetails.buy_now,
+
+  const { annual_contribution, insurance_rate, company_logo_url, policy_name
+    , promotion_discount_value, promotion_discount_type
+  } = useSelector(
+    state => state?.auth?.planDetails.buy_now
   )
+
+  const annualContribution = calculateAmountAfterPromotion(
+    annual_contribution,
+    promotion_discount_value,
+    promotion_discount_type,
+  );
+
   const apiOrigin = process.env['NEXT_PUBLIC_IMAGE_ORIGIN']
   return (
     <>
@@ -139,14 +175,18 @@ const MobileCard = ({ updatedAnnualContribution }: { updatedAnnualContribution: 
           <div className={` ${styles['mobcardImg']}`}>
             <Image
               alt=""
-              src={company_logo_url ? apiOrigin + company_logo_url : UBL}
+              src={company_logo_url ? company_logo_url : UBL}
               width={'100%'}
               height={'100%'}
               objectFit={'contain'}
             />
           </div>
           <p className={`m-0 ${styles['mobcardpricetxt']}`}>
-            PKR{currencyFormat(updatedAnnualContribution ? updatedAnnualContribution : annual_contribution)}
+            PKR {
+              parseFloat(updatedAnnualContribution ? updatedAnnualContribution : annual_contribution) > -1
+                ? currencyFormat(updatedAnnualContribution ? updatedAnnualContribution : annual_contribution)
+                : 0
+            }
           </p>
         </div>
         <div className={` ${styles['cardLowerDiv']}`}>
@@ -158,7 +198,11 @@ const MobileCard = ({ updatedAnnualContribution }: { updatedAnnualContribution: 
           <div className={`d-flex flex-row justify-content-between`}>
             <p className={`m-0 ${styles['mobcardtxt']}`}>Installment Plan</p>
             <p className={`m-0 ${styles['mobcardtxt']}`}>
-              {currencyFormat(updatedAnnualContribution ? updatedAnnualContribution : annual_contribution)} / month
+              {
+                parseFloat(updatedAnnualContribution ? updatedAnnualContribution : annual_contribution) > -1
+                  ? currencyFormat(updatedAnnualContribution ? updatedAnnualContribution : annual_contribution)
+                  : 0
+              } / month
             </p>
           </div>
         </div>
@@ -173,15 +217,18 @@ const TabData = ({
   updateState,
   updatedAnnualContribution,
   setUpdatedAnnualContribution,
+  cnicData
 }: {
   selectedTab: number
   updateState: Function
   updatedAnnualContribution: number
-  setUpdatedAnnualContribution: Function
+  setUpdatedAnnualContribution: Function;
+  cnicData:Object
 }) => {
-  if (selectedTab === 0) return <PersonalDetails currentStep={selectedTab} updateState={updateState} />
-  if (selectedTab === 1) return <VehicleDetails currentStep={selectedTab} updateState={updateState} />
-  if (selectedTab === 2) return <DocumentsUpload currentStep={selectedTab} updateState={updateState} />
+  // if (selectedTab === 0) return <DocumentsUpload currentStep={selectedTab} updateState={updateState} />
+  if (selectedTab === 0) return <UploadDocumentsMini currentStep={selectedTab} updateState={updateState} />
+  if (selectedTab === 1) return <PersonalDetails currentStep={selectedTab} updateState={updateState}  cnicData={cnicData}/>
+  if (selectedTab === 2) return <VehicleDetails currentStep={selectedTab} updateState={updateState} />
   if (selectedTab === 3) return <ReviewDetails currentStep={selectedTab} updateState={updateState} />
   if (selectedTab === 4)
     return (
@@ -203,31 +250,39 @@ const PaymentPage = () => {
   const allowedTabIndex = useSelector(state => state?.auth.allowedTabIndex)
   const lockedTabIndex = useSelector(state => state?.auth.lockedTabIndex)
   const { policy_id } = useSelector(state => state?.auth?.planDetails.buy_now)
+  const test = useSelector(state => state?.auth?.planDetails)
   const router = useRouter()
+  const [cnicData,setCnicData]=useState({})
 
   useEffect(() => {
     if (policy_id === 0) {
-      router.replace('products/health')
+      router.replace('/')
     }
   }, [])
 
-  const updateState = (step: number) => {
+  const updateState = (step: number,data:Object) => {
+    console.log('OBJECT_DATA===>',data)
     setCurrentStep(step + 1)
+    if(data?.values){
+
+      setCnicData(data?.values)
+    }
   }
+
 
   const mobileTabData = [
     {
+      name: 'Documents Upload',
+      component: <DocumentsUpload currentStep={currentStep} updateState={updateState}  />,
+    },
+    {
       name: 'Personal Details',
       // CanSwitch
-      component: <PersonalDetails currentStep={currentStep} updateState={updateState} />,
+      component: <PersonalDetails currentStep={currentStep} updateState={updateState}  cnicData={cnicData}/>,
     },
     {
       name: 'Vehicle Details',
       component: <VehicleDetails currentStep={currentStep} updateState={updateState} />,
-    },
-    {
-      name: 'Documents Upload',
-      component: <DocumentsUpload currentStep={currentStep} updateState={updateState} />,
     },
     {
       name: 'Review Details',
@@ -267,6 +322,7 @@ const PaymentPage = () => {
               updateState={updateState}
               updatedAnnualContribution={updatedAnnualContribution}
               setUpdatedAnnualContribution={setUpdatedAnnualContribution}
+              cnicData={cnicData}
             />
           </Container>
         </div>

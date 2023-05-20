@@ -1,10 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 html,
 body {
   display: block;
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 a {
@@ -14,6 +15,7 @@ a {
 
 * {
   box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
 }
 
 .hide {
@@ -22,7 +24,7 @@ a {
 
 /* CSS variables. */
 :root {
-  --PhoneInput-color--focus:#939393 ;
+  --PhoneInput-color--focus: #939393;
   --PhoneInputInternationalIconPhone-opacity: 0.8;
   --PhoneInputInternationalIconGlobe-opacity: 0.65;
   --PhoneInputCountrySelect-marginRight: 0.35em;
@@ -143,8 +145,7 @@ a {
   border: 0;
   opacity: 0;
   cursor: pointer;
-  border:2px solid
-
+  border: 2px solid
 }
 
 .PhoneInputCountrySelect[disabled],
@@ -181,4 +182,301 @@ a {
 .PhoneInputCountrySelect:focus+.PhoneInputCountryIcon .PhoneInputInternationalIconGlobe {
   opacity: 1;
   color: var(--PhoneInputCountrySelectArrow-color--focus);
+}
+
+.PhoneInputCountry {
+  select {
+    pointer-events: none;
+  }
+
+  .PhoneInputCountrySelectArrow {
+    display: none;
+  }
+}
+
+div.PersonalDetailsDDInput_form__input-group__PRORP>div.react-datepicker-wrapper {
+  height: 100%;
+}
+
+div.PersonalDetailsDDInput_form__input-group__PRORP>div.react-datepicker-wrapper>div.react-datepicker__input-container {
+  height: 100%;
+}
+
+.contactUsBtn {
+  border: 0.5px solid #4D4D4D;
+  height: 38px;
+  border-radius: 4px;
+  background: #F5F5F5;
+  width: 20%;
+  line-height: 38px;
+  text-align: center;
+  font-size: 16px;
+  color: #4D4D4D !important;
+  margin: 0px 20px;
+
+  svg {
+    margin-right: 10px;
+  }
+}
+.UANBtn {
+  border: 0.5px solid #fff;
+  height: 38px;
+  border-radius: 4px;
+  background: linear-gradient(180deg, rgba(233, 20, 49, 1) 50%, rgba(162, 34, 45, 1) 100%, );
+  width: inherit;
+  line-height: 38px;
+  text-align: center;
+  font-size: 16px;
+  color: #fff !important;
+  margin: 0px 20px;
+  svg {
+    margin-right: 10px;
+  }
+  &:hover {
+    color: #e91431;
+    cursor: pointer;
+  }
+}
+
+.categoryLabel {
+  margin: 0;
+  text-align: center;
+  position: relative;
+  top: 15px;
+  color: #9b9191;
+}
+
+.bannerIntialContainer {
+  text-align: left;
+  display: block;
+  width: 100%;
+  z-index: 1;
+  font-size: 30px;
+  margin-top: 60px;
+}
+
+.bannerIntialContainerAuto {
+  text-align: left;
+  display: block;
+  // width: 100%;
+  z-index: 1;
+  font-size: 25px;
+  margin-left: 10px;
+  margin-top: 20px;
+}
+
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 33px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 14px;
+  width: 14px;
+  left: 2px;
+  bottom: 3px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked+.slider {
+  background-color: red;
+}
+
+input:focus+.slider {
+  box-shadow: 0 0 1px red;
+}
+
+input:checked+.slider:before {
+  -webkit-transform: translateX(13px);
+  -ms-transform: translateX(13px);
+  transform: translateX(13px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.slick-slide>div {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  margin-top: 50px;
+  margin: auto;
+  height: 100px;
+  padding: 0px;
+  // background: red;
+}
+
+.tabsBtn {
+  border: 0.5px solid #707070;
+  width: 444px;
+  border-radius: 4px;
+  margin: 30px auto;
+
+  button {
+    border: none;
+    width: 221px;
+    height: 54px;
+    background: none;
+
+    &.active-tab-btn {
+      background: transparent linear-gradient(180deg, #ED1633 0%, #A8202E 100%) 0% 0% no-repeat padding-box;
+      color: #fff;
+    }
+  }
+}
+
+.claim-list-item {
+  margin-top: 90px;
+
+  >div {
+    border: 0.5px solid #707070;
+    border-radius: 5px;
+    background: #fff;
+    padding: 14px 25px;
+    width: 372px;
+
+    >span {
+      max-width: 50px !important;
+      display: inline-block !important;
+      vertical-align: middle;
+    }
+
+    .text-wrapper {
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 20px;
+
+      p {
+        margin: 0px;
+      }
+
+      .main-heading {
+        font-size: 16px;
+      }
+
+      .bold-text {
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+.viewQoutesBtn {
+  >div {
+    >div {
+      height: 48px !important;
+      width: 100% !important;
+    }
+  }
+}
+
+.planPage {
+  height: 38px;
+}
+
+.paymentPage {
+  height: 58px;
+}
+
+@media screen and (min-width: 450px) {
+  .slick-slide>div {
+    margin: 0 50px;
+  }
+  .slick-list {
+    margin: 0 -50px;
+  }
+}
+
+.autoCompleteDropdownCustomStyle {
+  border: none;
+  box-shadow: none;
+}
+
+.p-autocomplete {
+  border: 0.5px solid #939393 !important;
+  box-shadow: none;
+}
+// 
+.p-button.p-component.p-autocomplete-dropdown.p-button-icon-only {
+  background: transparent;
+  border: none;
+  align-items: center;
+  span {
+    background: url('../../public/assets/dropDownIconRed.png');
+    height: 10px;
+    width: 18px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    &::before {
+      content: "";
+    }
+  }
+  span.p-button-label.p-c {
+    display: none;
+  }
+  &:enabled:focus {
+    box-shadow: none;
+    border-color: transparent;
+  }
+  &:enabled:hover {
+    box-shadow: none;
+    border-color: transparent;
+  }
+}
+
+.p-inputtext.p-component.p-autocomplete-input.p-autocomplete-dd-input {
+  border: none;
+  // border-right: 1px solid #939393;
+  &:enabled:focus {
+    box-shadow: none;
+    border-color: transparent;
+    // border-right: 1px solid #939393;
+  }
+  &:enabled:hover {
+    box-shadow: none;
+    border-color: transparent;
+    // border-right: 1px solid #939393;
+  }
+}
+
+.p-autocomplete {
+  width: 100%;
+}
+.p-autocomplete-items {
+  width: 100%;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }

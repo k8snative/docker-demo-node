@@ -8,12 +8,13 @@ import {
   renewPolicy as renewPolicyRedux,
   setCompareDetails,
   setInsuranceDetails as setInsuranceDetailsRedux,
+  updateLoader,
 } from 'src/lib/redux/auth/action'
 import { getFileName } from 'src/lib/utils'
 import * as Yup from 'yup'
 import Footer from '~components/Footer/Footer'
 import GetOurApp from '~components/GetOurApp/GetOurApp'
-
+import Lottie from "react-lottie";
 import Header from '../../components/Header'
 import ProductPlanCategoryContainer from '../../components/ProductPlanCategoryContainer/ProductPlanCategoryContainer'
 import ProductPlanCategoryContainerMobile from '../../components/ProductPlanCategoryContainerMobile/ProductPlanCategoryContainerMobile'
@@ -23,6 +24,8 @@ import ProductPlanTopContainer from '../../components/ProductPlanTopContainer/Pr
 import SeoHead from '../../components/SeoHead'
 import styles from '../../styles/Home.module.scss'
 import style from './index.module.scss'
+import loader from "../../../public/assets/loader.json";
+import Modal from 'react-bootstrap/Modal';
 
 const ProductPlan = ({ renewId, newValue }: { renewId: string | number; newValue: string | number }) => {
   const dispatch = useDispatch()
@@ -45,9 +48,11 @@ const ProductPlan = ({ renewId, newValue }: { renewId: string | number; newValue
     setFormikValidateForm(formikHandleForm)
   }
 
+  const { loading } = useSelector((state) => state.auth);
   // eslint-disable-next-line @typescript-eslint/naming-convention
   useEffect(() => {
     const getPlans = async () => {
+
       const res = await Api('POST', `policy/filters?${sortOrder}`, {
         make_id,
         model_id,
@@ -62,13 +67,16 @@ const ProductPlan = ({ renewId, newValue }: { renewId: string | number; newValue
       } else {
         setPlans([])
       }
+
     }
     getPlans()
+    dispatch(renewPolicyRedux({}))
   }, [])
 
   const [insurancePlansForm, setInsurancePlansForm] = useState({
     make_id: make_id || '',
     model_id: model_id || '',
+    sortOrder: 'sortby=value&orderby=desc',
     year: year || '',
     value: value || '',
     company_ids: [],
@@ -77,17 +85,19 @@ const ProductPlan = ({ renewId, newValue }: { renewId: string | number; newValue
   })
 
   const getOrderDetails = async () => {
+
     const tempOrderDetails = await Api('GET', `order/${renewId}`)
     if (tempOrderDetails?.success) {
       setOrderDetailsState(tempOrderDetails?.data)
-      console.log('tempOrderDetails?.data', tempOrderDetails?.data)
     }
   }
 
+
+
   useEffect(() => {
-    // console.log('OrderDetailAuto?.contact', orderDetails)
     if (!renewId || !newValue || renewPolicyData?.customer_name) return
     const orderDetails = orderDetailsState
+
     const { OrderDetailAuto } = orderDetails
     const values = {
       value: newValue,
@@ -100,8 +110,6 @@ const ProductPlan = ({ renewId, newValue }: { renewId: string | number; newValue
     }
     setInsurancePlansForm({ ...values })
     dispatch(setInsuranceDetailsRedux({ ...values }))
-    // console.log('OrderDetailAuto?.contact', OrderDetailAuto)
-    // console.log('OrderDetailAuto?.contact', orderDetails)
     const customerDetails = {
       previous_order_id: renewId,
       customer_name: OrderDetailAuto?.customer_name.split('.')[1].trim(),
@@ -141,11 +149,11 @@ const ProductPlan = ({ renewId, newValue }: { renewId: string | number; newValue
       'additional-document':
         orderDetails?.AdditionalDocuments?.length > 0
           ? [
-              {
-                filename: getFileName(orderDetails?.AdditionalDocuments[0]?.document),
-                filePath: orderDetails?.AdditionalDocuments[0]?.document,
-              },
-            ]
+            {
+              filename: getFileName(orderDetails?.AdditionalDocuments[0]?.document),
+              filePath: orderDetails?.AdditionalDocuments[0]?.document,
+            },
+          ]
           : [],
       cnic_back: {
         filename: getFileName(OrderDetailAuto?.id_proof_back_path),
@@ -173,6 +181,7 @@ const ProductPlan = ({ renewId, newValue }: { renewId: string | number; newValue
       },
       isPassport: !!OrderDetailAuto?.id_proof_back_path,
       signature_path: OrderDetailAuto?.signature_path,
+      previous_policy_id: OrderDetailAuto?.Policy?.id
     }
     dispatch(renewPolicyRedux({ ...customerDetails }))
     const getPlans = async () => {
@@ -192,6 +201,7 @@ const ProductPlan = ({ renewId, newValue }: { renewId: string | number; newValue
       }
     }
     getPlans()
+
     // }, [renewId, newValue, orderDetailsState, renewPolicyData])
   }, [orderDetailsState])
 
@@ -216,42 +226,67 @@ const ProductPlan = ({ renewId, newValue }: { renewId: string | number; newValue
         ]}
       />
       <Header />
-      <ProductPlanTopContainer />
-      <ProductPlanCategoryContainer
-        plans={{ value: plans, setValue: (data: any) => setPlans(data) }}
-        insurancePlansState={{ insurancePlansForm, setInsurancePlansForm: (data: any) => setInsurancePlansForm(data) }}
-        ppCompareData={ppCompareData}
-        setPPCompareData={setPPCompareData}
-        setValidateForm={validateForm}
-      />
-      {isMobile ? (
-        <div className={`${style['sticky']}`}>
-          <ProductPlanCategoryContainerMobile
-            plans={{ value: plans, setValue: (data: any) => setPlans(data) }}
-            insurancePlansState={{
-              insurancePlansForm,
-              setInsurancePlansForm: (data: any) => setInsurancePlansForm(data),
-            }}
-            ppCompareData={ppCompareData}
-            setPPCompareData={setPPCompareData}
-            showMobileFilter={showMobileFilter}
-            setShowMobileFilter={setShowMobileFilter}
-            previousInsurancePlansForm={structuredClone(insurancePlansForm)}
-          />
-        </div>
-      ) : (
-        <></>
-      )}
-      <ProductPlanMainContainer
-        plans={{ value: plans, setValue: setPlans }}
-        insurancePlansState={{ insurancePlansForm, setInsurancePlansForm }}
-        ppCompareData={ppCompareData}
-        setPPCompareData={setPPCompareData}
-        showMobileFilter={showMobileFilter}
-        setShowMobileFilter={setShowMobileFilter}
-        validateForm={formikValidateForm}
-      />
-      <GetOurApp />
+      <Modal
+        fullscreen={true}
+        centered={true}
+        show={loading || !plans.data}
+        dialogClassName="modal-90w"
+        aria-labelledby="example-custom-modal-styling-title"
+        style={{
+          opacity: '.75',
+          justifyContent: 'space-evenly'
+        }}
+        contentClassName={`justify-content-evenly`}
+      >
+        <Lottie
+          height={"56vh"}
+          width={isMobile ? 300 : 615}
+          options={{
+            loop: true,
+            autoplay: true,
+            animationData: loader,
+          }}
+        />
+      </Modal>
+      <div>
+        <ProductPlanTopContainer />
+        <ProductPlanCategoryContainer
+          plans={{ value: plans, setValue: (data: any) => setPlans(data) }}
+          insurancePlansState={{ insurancePlansForm, setInsurancePlansForm: (data: any) => setInsurancePlansForm(data) }}
+          ppCompareData={ppCompareData}
+          setPPCompareData={setPPCompareData}
+          setValidateForm={validateForm}
+        />
+        {isMobile ? (
+          <div className={`${style['sticky']}`}>
+            <ProductPlanCategoryContainerMobile
+              plans={{ value: plans, setValue: (data: any) => setPlans(data) }}
+              insurancePlansState={{
+                insurancePlansForm,
+                setInsurancePlansForm: (data: any) => setInsurancePlansForm(data),
+              }}
+              ppCompareData={ppCompareData}
+              setPPCompareData={setPPCompareData}
+              showMobileFilter={showMobileFilter}
+              setShowMobileFilter={setShowMobileFilter}
+              // previousInsurancePlansForm={structuredClone(insurancePlansForm)}
+            />
+          </div>
+        ) : (
+          <></>
+        )}
+        <ProductPlanMainContainer
+          plans={{ value: plans, setValue: setPlans }}
+          insurancePlansState={{ insurancePlansForm, setInsurancePlansForm }}
+          ppCompareData={ppCompareData}
+          setPPCompareData={setPPCompareData}
+          showMobileFilter={showMobileFilter}
+          setShowMobileFilter={setShowMobileFilter}
+          validateForm={formikValidateForm}
+        />
+        <GetOurApp />
+
+      </div>
       <Footer />
     </div>
   )
@@ -265,7 +300,7 @@ export async function getServerSideProps(context: any) {
 
 // export default ProductPlan
 
-const mapStateToProps = () => {}
+const mapStateToProps = () => { }
 
 const mapDispatchProps = {
   setInsuranceDetails: setInsuranceDetailsRedux,

@@ -5,7 +5,7 @@ import WHeadphones from '../../../public/assets/contactphone.png'
 import styles from './ContactOurAdvisorMob.module.scss'
 
 const ContactOurAdvisorMob = () => (
-  <Link href="/products/contactUs">
+  <Link href="/contactUs">
     <div className={styles['mwrapper']}>
       <div className={`d-flex  align-items-center justify-content-center ${styles['mcontactadvisor']}`}>
         <div className={`d-flex ${styles['micon']}`}>

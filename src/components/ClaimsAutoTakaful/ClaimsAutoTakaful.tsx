@@ -43,22 +43,17 @@ const ClaimsAutoTakaful = () => {
         <MediaQuery minWidth={430}>
           <Container className={styles['container']}>
             <p className={styles['heading']}>
-              Why There is a Need for
-              <span className={styles['headingInRed']}> Takaful Auto Claims in Pakistan?</span>
+              How Can
+              <span className={styles['headingInRed']}> Auto Takaful Claims Help You?</span>
             </p>
             <p className={` ${styles['autoTakafulparagraph']}`}>
-              Pakistan's traditional insurance claims have various characteristics that are contrary to some of the
-              fundamental values of Islamic financial claims. Traditional insurance operates on the practice and
-              philosophy of charging interest, and the risk is simply transferred from the insured to the insurer.
+              Pakistan's traditional insurance claims have various characteristics that are contrary to some of the fundamental values of Islamic financial claims. Traditional insurance operates on the practice and philosophy of charging interest, and the risk is simply transferred from the insured to the insurer.
             </p>
             <p className={` ${styles['autoTakafulparagraph']}`}>
-              On the other hand, Takaful is based on cooperation, protection, and connection. It’s an agreement between
-              groups of people who decide to jointly repay damage or loss from a fund they contribute to collectively.
+              On the other hand, Takaful is based on cooperation, protection, and connection. It’s an agreement between groups of people who decide to jointly repay damage or loss from a fund they contribute to collectively.
             </p>
             <p className={` ${styles['autoTakafulparagraph']}`}>
-              Takaful Bazaar’s claim is a legal request by a takaful participant /policyholder to the takaful operator
-              describing the accident/misfortune that has affected him/her & request for compensation as agreed in the
-              takaful policy.
+              Auto Takaful claim is a legal request by a takaful participant/policyholder to the takaful operator describing the accident/misfortune that has affected him/her & request for compensation as agreed in the takaful policy.
             </p>
           </Container>
         </MediaQuery>

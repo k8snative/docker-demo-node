@@ -1,25 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useFormik } from 'formik'
-import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { Container } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Api from 'src/lib/api'
-import { setInsuranceDetails } from 'src/lib/redux/auth/action'
-import currencyFormat from 'src/utils/currencyFormat'
+import { setInsuranceDetails, updateLoader } from 'src/lib/redux/auth/action'
 import * as Yup from 'yup'
-import ProPlanCatDropDown from '~components/ProPlanCatDropDown/ProPlanCatDropDown'
-
-import productPlanFilterImage from '../../../public/assets/productPlanFilterImage.png'
+import AutoCompleteDropdown from '~components/ReusuableComponent/AutoCompleteDropdown'
 import SignInUpButton from '../SignInUpButton/SignInUpButton'
 import styles from './ProductPlanCategoryContainer.module.scss'
 
 const dropDownDataSort = [
-  { option: 'None', value: '' },
-  { option: 'Name Asc', value: 'sortby=name&orderby=asc' },
-  { option: 'Name Desc', value: 'sortby=name&orderby=desc' },
-  { option: 'Value Asc', value: 'sortby=value&orderby=asc' },
-  { option: 'Value Desc', value: 'sortby=value&orderby=desc' },
+  // { id: '', name: 'None', value: '' },
+  { id: 'sortby=value&orderby=desc', name: 'Lowest to Highest', value: 'sortby=value&orderby=asc' },
+  { id: 'sortby=value&orderby=asc', name: 'Highest to Lowest', value: 'sortby=value&orderby=desc' },
+  { id: 'sortby=name&orderby=asc', name: 'A-Z', value: 'sortby=name&orderby=asc' },
 ]
 
 interface ProductPlanCategoryContainerProps {
@@ -36,6 +31,11 @@ interface ProductPlanCategoryContainerProps {
   setValidateForm: Function
 }
 
+type YearOption = {
+  id: number;
+  name: string;
+};
+
 const ProductPlanCategoryContainer = ({
   plans,
   insurancePlansState,
@@ -47,39 +47,44 @@ const ProductPlanCategoryContainer = ({
   const [models, setModels] = useState([])
   const [disableButton, setDisableButton] = useState<boolean>(false)
   const { buy_now, ...insuranceData } = useSelector(state => state?.auth?.planDetails)
-  const { insurancePlansForm, setInsurancePlansForm } = insurancePlansState
+  const { insurancePlansForm, setInsurancePlansForm } = insurancePlansState;
+  const [make, setMake] = useState<MakeDataProps[]>();
+  const [yearOptions, setYearOptions] = useState<YearOption[]>([]);
   const dispatch = useDispatch()
 
   const handleSearch = async () => {
-    const sortOrdertemp = insurancePlansForm?.sortOrder ? `?${insurancePlansForm?.sortOrder}` : ''
-    const { sortOrder, ...restData } = insurancePlansForm
+    dispatch(updateLoader(true));
+    const sortOrdertemp = formik.values?.sortOrder ? `?${formik.values?.sortOrder}` : 'sortby=value&orderby=asc'
+    const { sortOrder, ...restData } = formik.values
     setDisableButton(true)
     const res = await Api('POST', `policy/filters${sortOrdertemp}`, {
       ...restData,
-      year: insurancePlansForm.year.toString(),
+      year: formik.values.year.toString(),
     })
     if (res?.data) {
-      plans.setValue({ value: insurancePlansForm.value, data: res.data })
+      plans.setValue({ value: formik.values.value, data: res.data })
       if (ppCompareData.length) {
         const tempData = ppCompareData.map((each: any) => res.data.filter((val: any) => val?.id === each?.id)[0]) || []
         setPPCompareData(tempData.filter((each: any) => each))
       }
     }
+    dispatch(updateLoader(false));
     setDisableButton(false)
-    dispatch(setInsuranceDetails(insurancePlansForm))
+    dispatch(setInsuranceDetails(formik.values))
   }
 
+  const getYearOptions = () => {
+    const startYear = new Date().getFullYear() - 15;
+    const endYear = new Date().getFullYear();
+    const yearOptions = [];
+    for (let i = endYear; i >= startYear; i--) {
+      yearOptions.push({ id: i, name: i.toString() });
+    }
+    setYearOptions(yearOptions);
+  };
+
   const formik = useFormik({
-    initialValues: {
-      make_id: '',
-      model_id: '',
-      year: '',
-      value: '',
-      company_ids: [],
-      policy_type_ids: [],
-      addon_ids: [],
-      sortOrder: '',
-    },
+    initialValues: insurancePlansForm,
     validationSchema: Yup.object({
       make_id: Yup.string().required('Make is required'),
       model_id: Yup.string().required('Model is required'),
@@ -107,27 +112,22 @@ const ProductPlanCategoryContainer = ({
     },
   })
 
-  useEffect(() => {
-    formik.setValues({ ...insurancePlansForm })
-  }, [insurancePlansForm])
-
-  const getOptions = arr => arr.map(item => ({ option: item.name, id: item.id }))
-
   const getVehicles = async () => {
     const res = await Api('GET', `make?status=1`)
-    if (res?.data) setVehicles(getOptions(res.data))
+    if (res?.data) setVehicles(res.data)
+    if (res?.data) setMake(res.data)
   }
 
   const getModels = () => {
-    Api('GET', `model_make/${insurancePlansForm.make_id}?status=1`).then(res => {
-      if (res.success) setModels(getOptions(res.data))
+    Api('GET', `model_make/${formik.values.make_id}?status=1`).then(res => {
+      if (res.success) setModels(res.data)
     })
   }
   //
 
   useEffect(() => {
     getModels()
-  }, [insurancePlansForm.make_id])
+  }, [formik.values.make_id])
 
   const onLoad = () => {
     getVehicles()
@@ -135,88 +135,78 @@ const ProductPlanCategoryContainer = ({
 
   useEffect(() => {
     onLoad()
-    setInsurancePlansForm(insuranceData)
+    getYearOptions()
+    // setInsurancePlansForm(insuranceData)
   }, [])
 
   useEffect(() => {
-    setValidateForm(formik)
+    setInsurancePlansForm(
+      formik.values
+    )
+  }, [formik.values])
+
+  useEffect(() => {
+    // setValidateForm(formik)
   }, [formik.errors])
 
   return (
     <Container>
       <div className={` ${styles['wrapper']}`} style={{ borderColor: 'green' }}>
-        <div style={{ flexDirection: 'column', width: '15%', position: 'relative' }}>
-          <ProPlanCatDropDown
-            dropDownItems={vehicles}
-            insurancePlansForm={{ value: insurancePlansForm, setValue: setInsurancePlansForm }}
-            field={'make_id'}
-            errTxt={formik.errors.make_id}
-            resetModel={true}
+        <div className='planPage' style={{ flexDirection: 'column', width: '15%', position: 'relative' }}>
+          <AutoCompleteDropdown 
+            label={`Select Make`} 
+            option={make}
+            formikKey='make_id'
+            formik={formik}
+            customHeight={`10px`}
           />
-
-          {formik.errors.make_id && (
-            <p style={{ color: '#E91431', position: 'absolute', bottom: -13, zIndex: -2 }}>{formik.errors.make_id}</p>
-          )}
         </div>
-        <div style={{ flexDirection: 'column', width: '15%' }}>
-          <ProPlanCatDropDown
-            dropDownItems={models}
-            insurancePlansForm={{ value: insurancePlansForm, setValue: setInsurancePlansForm }}
-            field={'model_id'}
-            errTxt={formik.errors.model_id}
+        <div className='planPage' style={{ flexDirection: 'column', width: '15%' }}>
+          <AutoCompleteDropdown 
+            label={`Model`} 
+            option={models}
+            formikKey='model_id'
+            formik={formik}
+            customHeight={`10px`}
           />
-          {formik.errors.model_id && (
-            <p style={{ color: '#E91431', position: 'absolute', bottom: -13, zIndex: -2 }}>{formik.errors.model_id}</p>
-          )}
         </div>
-
-        <div style={{ flexDirection: 'column', width: '15%' }}>
-          <input
-            placeholder="Enter Year(2022)"
-            type={'number'}
-            min={1990}
-            style={{
-              border: formik.errors.year ? '2px solid #E91431' : '',
-            }}
-            className={styles['textContainer']}
-            onChange={e => setInsurancePlansForm({ ...insurancePlansForm, year: e.target.value })}
-            value={insurancePlansForm.year}
+        <div className='planPage' style={{ flexDirection: 'column', width: '15%' }}>
+          <AutoCompleteDropdown 
+            label={`Year`} 
+            option={yearOptions}
+            formikKey='year'
+            formik={formik}
+            customHeight={`10px`}
           />
-          {formik.errors.year && (
-            <p style={{ color: '#E91431', position: 'absolute', bottom: -13 }}>{formik.errors.year}</p>
-          )}
         </div>
-
-        <div style={{ flexDirection: 'column', width: '15%' }}>
-          <input
-            placeholder="Enter Value"
-            type={'text'}
-            className={styles['textContainer']}
-            style={{
-              border: formik.errors.value ? '2px solid #E91431' : '',
-            }}
-            onChange={e =>
-              setInsurancePlansForm({ ...insurancePlansForm, value: e.target.value.replace(/[^0-9.-]+/g, '') })
-            }
-            value={currencyFormat(Number(String(insurancePlansForm.value).replace(/[^0-9.-]+/g, '')))}
-          />
-          {formik.errors.value && (
-            <p style={{ color: '#E91431', position: 'absolute', bottom: -13 }}>{formik.errors.value}</p>
-          )}
-        </div>
+          <div style={{ flexDirection: 'column', width: '15%' }}>
+              <div className={styles['form__input-group']}>
+                <input
+                  className={`${styles['form__input']}`}
+                  name={`value`}
+                  type={`text`}
+                  required={true}
+                  onChange={(val: any) => {
+                    formik.setFieldValue('value', val.target.value)
+                  }}
+                  value={formik.values.value}
+                  onBlur={formik.handleBlur}
+                />
+                <label className={styles['form__input-label']}>Value</label>
+              </div>
+          </div>
 
         <div className={styles['btnContainer']}>
           <SignInUpButton btnTxt="Search" link="" onClick={disableButton ? () => {} : formik.handleSubmit} />
         </div>
-        <div className={styles['filterImgContainer']}>
-          <Image alt="" src={productPlanFilterImage} />
-        </div>
-        <div style={{ flexDirection: 'column', width: '15%' }}>
-          <ProPlanCatDropDown
-            dropDownItems={dropDownDataSort}
-            insurancePlansForm={{ value: insurancePlansForm, setValue: setInsurancePlansForm }}
-            field={'sortOrder'}
-            sort={true}
+        <div className='planPage' style={{ flexDirection: 'column', width: '15%' }}>
+          <AutoCompleteDropdown 
+            label={`Sort order`} 
+            option={dropDownDataSort}
+            formikKey='sortOrder'
+            formik={formik}
+            extraFunc={handleSearch}
+            customHeight={`10px`}
           />
         </div>
       </div>

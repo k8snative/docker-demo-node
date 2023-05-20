@@ -108,6 +108,14 @@
     }
 
 }
+.add-to-compare {
+    color: #404040;
+    font-size: 18px;
+    font-weight: 600;
+}
+.card:hover > .add-to-compare {
+    color: #101010;
+}
 
 .upperportion {
     display: flex;

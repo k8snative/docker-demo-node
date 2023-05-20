@@ -44,108 +44,53 @@ const ComparePageMobile = ({ data }: { data: any }) => {
   }
 
   const navigateToPaymentPage = id => {
+    const tempData = compareData.filter(item => item.id === id)[0]
+    let formatedAddons = []
+    if (addon_ids.length !== 0) {
+      const selectedAddons = tempData?.PolicyAddons?.filter((item, index) => {
+        for (let i = 0; i < addon_ids.length; i++) {
+          if (addon_ids[i] === item.addon_id) return true
+        }
+      })
+
+      formatedAddons = selectedAddons.map(item => {
+        if (item.type === 'fixed') {
+          return { addon_id: item.addon_id, amount: parseFloat(item.value) + tempData?.annual_contribution }
+        }
+        if (item.type === 'percentage') {
+          return { addon_id: item.addon_id, amount: tempData?.annual_contribution * (parseFloat(item.value) / 100) }
+        }
+      })
+    }
+
+    dispatch(clearBuyNow())
+    dispatch(clearPurchaseInfo())
+
+    dispatch(
+      setBuyNowData({
+        policy_id: tempData?.id.split('/')[0],
+        policy_type_id: tempData?.policy_type_id,
+        annual_contribution: tempData?.annual_contribution + (tempData?.addon_amount || 0),
+        insurance_rate: tempData?.insurance_rate,
+        company_logo_url: tempData?.company_logo_url,
+        policy_name: tempData?.name,
+        policy_addons: formatedAddons,
+        promotion_coupon_id: tempData?.promotion_coupon_id,
+        promotion_discount_type: tempData?.promotion_discount_type,
+        promotion_discount_value: tempData?.promotion_discount_value,
+      }),
+    );
     if (!user) {
       router.push({
-        pathname: '/auth/auth',
+        pathname: '/auth',
         query: {
           redirect: '/payment',
         },
       })
     } else {
-      const tempData = compareDetails.filter(item => item.id === id)[0]
-      let formatedAddons = []
-      if (addon_ids.length !== 0) {
-        const selectedAddons = tempData?.PolicyAddons?.filter((item, index) => {
-          for (let i = 0; i < addon_ids.length; i++) {
-            if (addon_ids[i] === item.addon_id) return true
-          }
-        })
-
-        formatedAddons = selectedAddons.map(item => {
-          if (item.type === 'fixed') {
-            return { addon_id: item.addon_id, amount: parseFloat(item.value) + tempData?.annual_contribution }
-          }
-          if (item.type === 'percentage') {
-            return { addon_id: item.addon_id, amount: tempData?.annual_contribution * (parseFloat(item.value) / 100) }
-          }
-        })
-      }
-
-      dispatch(clearBuyNow())
-      dispatch(clearPurchaseInfo())
-
-      if (tempData?.promotion_coupon_id !== 0) {
-        Api('GET', `verify-promotion/${tempData?.promotion_coupon_id}`).then((response: any) => {
-          if (response.success) {
-            dispatch(
-              setBuyNowData({
-                policy_id: tempData?.id.split('/')[0],
-                policy_type_id: tempData?.PolicyType?.id,
-                annual_contribution: calculateAmountAfterPromotion(
-                  tempData?.annual_contribution + (tempData?.addon_amount || 0),
-                  tempData?.promotion_discount_value,
-                  tempData?.promotion_discount_type,
-                ),
-                insurance_rate: tempData?.insurance_rate,
-                company_logo_url: tempData?.CompanySetup?.logo,
-                policy_name: tempData?.name,
-                policy_addons: formatedAddons,
-                promotion_coupon_id: tempData?.promotion_coupon_id,
-                promotion_discount_type: tempData?.promotion_discount_type,
-                promotion_discount_value: tempData?.promotion_discount_value,
-                total_discount_value: calculateDiscountAmount(
-                  tempData?.annual_contribution + (tempData?.addon_amount || 0),
-                  tempData?.promotion_discount_value,
-                  tempData?.promotion_discount_type,
-                ),
-              }),
-            )
-
-            router.push({
-              pathname: '/payment',
-            })
-          } else {
-            alert(response.message)
-            dispatch(
-              setBuyNowData({
-                policy_id: tempData?.id.split('/')[0],
-                policy_type_id: tempData?.PolicyType?.id,
-                annual_contribution: tempData?.annual_contribution + (tempData?.addon_amount || 0),
-                insurance_rate: tempData?.insurance_rate,
-                company_logo_url: tempData?.CompanySetup?.logo,
-                policy_name: tempData?.name,
-                policy_addons: formatedAddons,
-                promotion_coupon_id: tempData?.promotion_coupon_id,
-                promotion_discount_type: tempData?.promotion_discount_type,
-                promotion_discount_value: tempData?.promotion_discount_value,
-              }),
-            )
-
-            router.push({
-              pathname: '/payment',
-            })
-          }
-        })
-      } else {
-        dispatch(
-          setBuyNowData({
-            policy_id: tempData?.id.split('/')[0],
-            policy_type_id: tempData?.PolicyType?.id,
-            annual_contribution: tempData?.annual_contribution + (tempData?.addon_amount || 0),
-            insurance_rate: tempData?.insurance_rate,
-            company_logo_url: tempData?.CompanySetup?.logo,
-            policy_name: tempData?.name,
-            policy_addons: formatedAddons,
-            promotion_coupon_id: tempData?.promotion_coupon_id,
-            promotion_discount_type: tempData?.promotion_discount_type,
-            promotion_discount_value: tempData?.promotion_discount_value,
-          }),
-        )
-
         router.push({
           pathname: '/payment',
         })
-      }
     }
   }
 
@@ -194,7 +139,7 @@ const ComparePageMobile = ({ data }: { data: any }) => {
             <div className={styles['gobackarrow']}>
               <Image src={GoBackRed} alt="backarrow" />
             </div>
-            <p className={`mt-3 ${styles['gobacktxt']}`}>Back To Policy</p>
+            <p className={`mt-3 ${styles['gobacktxt']}`}>Back To Search</p>
           </div>
           {/* </Link> */}
         </Container>
@@ -272,7 +217,7 @@ const ComparePageMobile = ({ data }: { data: any }) => {
                             /> */}
                             <Image
                               alt=""
-                              src={`${process.env['NEXT_PUBLIC_IMAGE_ORIGIN']}${card?.img}`}
+                              src={card?.img}
                               width={'100%'}
                               height={'100%'}
                               objectFit={'contain'}
@@ -330,7 +275,7 @@ const ComparePageMobile = ({ data }: { data: any }) => {
                             <div className={` ${styles['mobimage']}`}>
                               <Image
                                 alt=""
-                                src={`${process.env['NEXT_PUBLIC_IMAGE_ORIGIN']}${card?.img}`}
+                                src={card?.img}
                                 width={'100%'}
                                 height={'100%'}
                                 objectFit={'contain'}

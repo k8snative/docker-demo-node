@@ -24,6 +24,7 @@ type FaqItemProps = {
 }
 type FaqProps = {
   txt: String
+  option: String
   tabName: String
   img: StaticImageData
   faq: FaqItemProps[]
@@ -47,7 +48,7 @@ const FAQSearchMobile = ({
     <div
       onClick={() => setSearchSelected(!isSearchSelected)}
       className={`d-flex align-items-center justify-content-between ${styles['searchContainer']}`}
-      // style={{ border: '10px solid coral' }}
+    // style={{ border: '10px solid coral' }}
     >
       <div className={`d-flex justify-content-center align-items-center ${styles['searchImgContainer']}`}>
         <Image priority={true} src={burgerSearch} alt="" />
@@ -64,7 +65,6 @@ const FAQSearchMobile = ({
       />
 
       <div className={`d-flex justify-content-center align-items-center ${styles['dotImgContainer']}`}>
-        <Image priority={true} src={threeDots} alt="" />
       </div>
     </div>
   )
@@ -90,7 +90,7 @@ const FAQSearch = ({
         }
       }}
       className={`d-flex align-items-center justify-content-between ${styles['searchContainer']}`}
-      // style={{ border: '10px solid coral' }}
+    // style={{ border: '10px solid coral' }}
     >
       {isSearchSelected ? (
         <>
@@ -121,7 +121,6 @@ const FAQSearch = ({
         onClick={() => setSearchSelected(!isSearchSelected)}
         className={`d-flex justify-content-center align-items-center ${styles['dotImgContainer']}`}
       >
-        <Image priority={true} src={threeDots} alt="" />
       </div>
     </div>
   )
@@ -171,7 +170,7 @@ const MainFAQWeb = ({
 }) => (
   <div
     className={`w-100 m-0 mb-5 p-0 d-flex flex-column align-items-center ${styles['wrapper']}`}
-    // style={{ border: '10px solid red' }}
+  // style={{ border: '10px solid red' }}
   >
     <Container>
       <div
@@ -183,17 +182,15 @@ const MainFAQWeb = ({
           className={` ${styles['leftContainer']}`}
         >
           <p className={styles['heading']}>
-            Compare and Get
-            <p className={styles['headingRed']}>Best Car Takaful Deals in Pakistan</p>
+          Get answers to your most 
+            <p className={styles['headingRed']}>frequently asked questions</p> 
+            
           </p>
-          <p className={` ${styles['topTxt']}`}>
-            Car Insurance, also known as auto or motor insurance, is a type of vehicle insurance policy that protects
-            you
-          </p>
+    
         </div>
         <div
           className={`d-flex align-items-center justify-content-between ${styles['rightContainer']}`}
-          // style={{ border: '5px solid green' }}
+        // style={{ border: '5px solid green' }}
         >
           {allFAQ.map((faq, index) => (
             <FAQButton
@@ -238,12 +235,12 @@ const MainFAQMobile = ({
   <>
     <div
       className={`w-100 m-0 px-4 py-0 d-flex flex-column ${styles['wrapper']}`}
-      // style={{ border: '10px solid red' }}
+    // style={{ border: '10px solid red' }}
     >
-      <p className={styles['heading']}>
-        Compare and Get
-        <p className={styles['headingRed']}>Best Car Takaful Deals in Pakistan</p>
-      </p>
+       <p className={styles['heading']}>
+          Get answers to your most 
+            <p className={styles['headingRed']}>frequently asked questions</p> 
+          </p>
       <div
         // style={{ border: '5px solid blue' }}
         className={`w-100 d-flex align-items-center justify-content-between ${styles['mobileBtnContainer']}`}
@@ -284,6 +281,8 @@ const MobileFAQnTabs = ({
     <div className={`w-100 mt-4 px-4 d-flex flex-column ${styles['']}`}>
       {allFAQ.map((faqCat: any, index: number) => (
         <>
+        {!!faqCat.tabName &&
+        <>
           <div
             onClick={() => {
               if (mobileSelectedTab === faqCat?.tabName) {
@@ -296,7 +295,7 @@ const MobileFAQnTabs = ({
             }}
             key={index}
             className={`my-2 d-flex ${styles['mobileTab']}`}
-            // style={{ border: '5px solid blue' }}
+          // style={{ border: '5px solid blue' }}
           >
             <div className={`mx-2 d-flex align-items-center justify-content-center ${styles['mobTabImg']}`}>
               <Image priority={true} src={upGrey} alt="" />
@@ -306,6 +305,8 @@ const MobileFAQnTabs = ({
           {mobileSelectedTab === faqCat?.tabName && (
             <GeneralFAQs heading="" headingRed="" para="" faqs={faqCat?.faq} showMore={false} />
           )}
+          </>
+          }
         </>
       ))}
     </div>
@@ -319,44 +320,50 @@ const MainFAQ = () => {
   const [allFAQ, setAllFAQ] = useState<FaqProps[]>([
     {
       txt: 'General',
+      option:'',
       tabName: "General FAQ's",
       img: MotorCircle,
       faq: [],
       isActive: true,
-      link: '/products/health',
+      link: '/general',
     },
     {
       txt: 'Auto',
+      option: 'Auto',
       tabName: "Auto Takaful FAQ's",
       img: MotorCircle,
       faq: [],
       isActive: false,
-      link: '/products/auto',
+      link: '/auto',
+    },
+    {
+      txt: 'Travel',
+      option: 'Travel',
+      tabName: "",
+      img: TravelCircle,
+      faq: [],
+      isActive: false,
+      link: '/travel',
     },
     {
       txt: 'Health',
-      tabName: "Health Takaful FAQ's",
+      option: 'Health',
+      tabName: "",
       img: HealthCircle,
       faq: [],
       isActive: false,
-      link: '/products/health',
+      link: '/health',
     },
     {
-      txt: 'Life',
+      txt: 'AutoClaim',
+      option: 'Family',
       tabName: "Auto Claim FAQ's",
       img: LifeCircle,
       faq: [],
       isActive: false,
-      link: '/products/health',
+      link: '/autoClaim',
     },
-    {
-      txt: 'Travel',
-      tabName: "Travel Takaful FAQ's",
-      img: TravelCircle,
-      faq: [],
-      isActive: false,
-      link: '/products/health',
-    },
+   
   ])
   const [selectedType, setSelectedType] = useState('General')
   const [selectedFAQ, setSelectedFAQ] = useState(allFAQ[1]?.faq)
@@ -386,7 +393,7 @@ const MainFAQ = () => {
       tempAllFAQ[i].faq = []
       if (type === tempAllFAQ[i].txt) selectedFAQIndex = i
     }
-    for (let i = 0; i < APIallFAQ.length; i += 1)
+    for (let i = 0; i < APIallFAQ?.length; i += 1)
       for (let j = 0; j < tempAllFAQ.length; j += 1)
         if (APIallFAQ[i]?.type === tempAllFAQ[j]?.txt) tempAllFAQ[j]?.faq.push(APIallFAQ[i])
 

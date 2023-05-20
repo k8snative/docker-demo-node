@@ -25,6 +25,7 @@
 
     @media (max-width: 450px) {
         margin-top: 10%;
+        font-size: 20px;
     }
 }
 
@@ -36,15 +37,22 @@
 
     @media (max-width: 450px) {
         margin-top: 10%;
+        font-size: 20px;
+
     }
 }
 
 .factsText {
-    margin-bottom: 3%;
-    font-size: 20px;
     color: $color-primary;
 
     text-align: center;
+
+    font-size: 16px;
+    color: #515151;
+    text-align: center;
+    margin: 0 30px;
+    margin-bottom: 3%;
+
 
     @media (max-width: 450px) {
         margin-top: 10%;
@@ -71,26 +79,26 @@
 }
 
 .whychooseHeadingtxt {
-    font-size: 21px;
+    font-size: 18px;
     color: $color-primary;
     margin: 5% 0 0 0;
     padding: 0;
-    font-weight: 500;
+    font-weight: 700;
 
     @media (max-width: 450px) {
-        font-size: 22px;
+        // font-size: 18;
     }
 }
 
 .whychoosetxt {
     color: $color-primary;
-    font-size: 18px;
+    font-size: 16px;
     text-align: center;
     margin: 0 8%;
     padding: 0;
 
     @media (max-width: 450px) {
-        font-size: 20px;
+        font-size: 16px;
     }
 
 }
@@ -139,6 +147,16 @@
 .modalHeading {
     color: $color-primary;
     font-size: 26px;
+}
+
+.crossBtn {
+    img {
+        position: relative !important;
+        width: auto !important;
+        height: auto !important;
+        top: -5px !important;
+        cursor: pointer;
+    }
 }
 
 .modalTxt {

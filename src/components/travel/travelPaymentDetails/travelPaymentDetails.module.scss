@@ -1,0 +1,346 @@
+@import "../../../styles/colors.scss";
+
+.maincontainer {
+    padding-left: 30px;
+    padding-right: 30px;
+
+    @media screen and (max-width:430px) {
+        padding: 0 15px;
+        background-color: #fff;
+    }
+}
+
+.voucherwrapper {}
+
+.paymentheading {
+    font-size: 22px;
+    color: $color-primary;
+
+    @media screen and (max-width:430px) {
+        display: none;
+    }
+}
+
+.txtFieldsRow {
+    margin-bottom: 1.5%;
+
+    @media screen and (max-width:770px) {
+        margin-bottom: 2%;
+    }
+}
+
+.paymentdetailswrapper {
+    background-color: #F6F6F6;
+    border: 1px solid #707070;
+    border-radius: 5px;
+    padding: 10px 20px;
+}
+
+
+
+.formstyles input {
+    background-image: url('../../../../public/assets/dot2.png') !important;
+    border-color: #707070;
+    background-size: 10px 10px;
+    background-position: 2px center !important;
+    cursor: pointer;
+    background-color: #EBEBEB;
+
+}
+
+.formstyles input:checked[type=checkbox] {
+    background-color: #F2E4E7;
+    border: 1px solid #D93034;
+    background-image: url('../../../../public/assets/dot.png') !important;
+    background-size: 10px 10px;
+    background-position: 19px center !important;
+
+}
+
+.formstyles input:focus {
+    background-image: url('../../../../public/assets/dot2.png') !important;
+    border-color: #707070;
+    background-size: 10px 10px;
+    outline: 0;
+    box-shadow: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    background-position: 2px center;
+}
+
+
+.iAgreeTxt {
+    font-size: 18px;
+    color: #1C1B1B;
+    margin: 0;
+    font-weight: 300;
+
+    &:hover {
+        cursor: context-menu;
+    }
+
+    @media screen and (max-width: 430px) {
+        font-size: 17px;
+
+    }
+}
+
+.inputBorder {
+    border: 0.7px solid $border;
+    border-radius: 5px;
+    height: 40px;
+    background-color: #FFF;
+    width: 90%;
+    position: relative;
+
+    .input[disabled] {
+        background-color: #DCDCDC;
+        height: 38.4px;
+        padding: 0 5px;
+    }
+
+    @media screen and (max-width: 430px) {
+
+        width: 100%;
+
+    }
+
+
+}
+
+.radiobtns {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.inputBorder2 {
+    border: 0.7px solid $border;
+    border-radius: 5px;
+    height: 40px;
+    background-color: #FFF;
+    width: 50%;
+    position: relative;
+
+    @media screen and (max-width: 430px) {
+
+        width: 100%;
+
+    }
+
+
+}
+
+.dropdowndiv {
+    width: 25%;
+
+    @media screen and (max-width: 430px) {
+
+        width: 100%;
+
+    }
+}
+
+.input {
+    border: 0;
+    width: 100%;
+    outline: none;
+    height: 36px;
+    padding: 0 5px;
+    // border: 0.7px solid $border;
+    border-radius: 5px;
+
+    @media screen and (max-width:430px) {
+        font-size: 15px;
+
+    }
+}
+
+
+
+
+.imgcontainer {
+    position: absolute;
+    right: 10px;
+    width: 20px;
+}
+
+.error {
+    color: $color-text-secondary;
+    font-size: 14px;
+    margin: 0;
+
+    @media screen and (max-width:770px) {
+        margin-bottom: 10px;
+
+    }
+
+}
+
+.pricedivRight {
+    display: flex;
+    align-items: center;
+    margin: 0;
+
+    @media screen and (max-width:770px) {
+        margin-top: 10px;
+
+    }
+
+}
+
+.pricetext {
+    font-size: 18px;
+    color: #1C1B1B;
+    font-weight: 500;
+
+    @media screen and (max-width:770px) {
+        font-size: 15px;
+
+    }
+}
+
+.removetxt {
+    color: $color-text-secondary;
+    font-size: 14px;
+    text-decoration: underline;
+    margin: 0;
+    margin-left: 15px;
+
+    &:hover {
+        cursor: pointer;
+    }
+
+}
+
+.HowtoPayWrapper {
+    margin-top: 40px;
+}
+
+.tabs {
+
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+
+}
+
+
+
+.tabTxtActive {
+    color: $color-text-secondary;
+    font-size: 20px;
+    margin: 0;
+    margin-bottom: 5px;
+    font-weight: 300;
+
+    &:hover {
+        cursor: pointer;
+    }
+
+    @media screen and (max-width:770px) {
+        font-size: 17px;
+
+    }
+}
+
+.tabTxtInactive {
+    color: #515151;
+    font-size: 20px;
+    margin: 0;
+    margin-bottom: 5px;
+    font-weight: 300;
+
+
+    &:hover {
+        cursor: pointer;
+    }
+
+    @media screen and (max-width:770px) {
+        font-size: 17px;
+
+    }
+
+}
+
+.cashwrapper {
+    background-color: #F6F6F6;
+    border: 0.5px solid #707070;
+    border-radius: 5px;
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: column;
+
+    @media screen and (max-width:430px) {
+        margin-bottom: 10px;
+    }
+
+
+}
+
+.ibftwrapper {
+    background-color: #F6F6F6;
+    border: 0.5px solid #707070;
+    border-radius: 5px;
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: column;
+
+    @media screen and (max-width:430px) {
+        margin-bottom: 10px;
+    }
+}
+
+.ibftxt {
+    font-size: 18px;
+    color: $color-primary;
+    font-weight: 200px;
+
+    @media screen and (max-width:770px) {
+        font-size: 14px;
+    }
+
+}
+
+.loremtxt {
+    color: $color-primary;
+    font-size: 14px;
+}
+
+.cashtextarea {
+
+    border: 0.7px solid $border;
+    border-radius: 5px;
+    background-color: #fff;
+    height: 100px;
+    margin: 0;
+    padding: 0;
+    padding: 5px 10px;
+    width: 100%;
+    resize: none;
+    outline: none;
+    // margin-bottom: 10px;
+
+
+
+
+
+}
+
+.inputError {
+    color: #ff3333;
+    font-size: 12px;
+    padding-left: 2px
+}
+
+.submitButton {
+    width: 30%;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    margin: 0 auto;
+
+    @media screen and (max-width: 770px) {
+        width: 100%;
+    }
+}

@@ -17,7 +17,15 @@ import uparrow from '../../../public/assets/uparrow.png'
 import ProdPlanWebTabs from '../ProdPlanWebTabs/ProdPlanWebTabs'
 import SignInUpButton from '../SignInUpButton/SignInUpButton'
 import styles from './ProductPlanCard.module.scss'
+import { Table } from "react-bootstrap";
+import React from "react";
 
+const TabsEnum = {
+  Coverage: 0,
+  DepreciationPolicy: 1,
+  ClaimProcess:2,
+  Addons:3
+}
 const tabData = [
   {
     name: 'Coverage',
@@ -25,10 +33,6 @@ const tabData = [
   },
   {
     name: 'Depreciation Policy',
-    isActive: false,
-  },
-  {
-    name: 'Cancellation Policy',
     isActive: false,
   },
   {
@@ -43,7 +47,7 @@ const tabData = [
 
 const CoverageTab = ({ data, coverages }: { data: object; coverages: any }) => (
   <>
-    {coverages?.map((coverage, index) => (
+    {coverages.filter(cov => cov.child_coverages.length > 0 )?.map((coverage, index) => (
       <>
         <div key={coverage?.id} style={{}} className="w-100 d-flex">
           <div className={styles['eachHeadingContainer']}>
@@ -93,20 +97,65 @@ const AddOnsTab = ({ data }: { data: object }) => (
 )
 
 const TabData = ({ selectedTab, data, coverages }: { selectedTab: number; data: object; coverages: any }) => {
-  if (selectedTab === 0)
+
+  if (selectedTab === TabsEnum.Coverage)
     return (
       <div style={{}} className="w-100">
         <CoverageTab data={data} coverages={coverages} />
       </div>
     )
-  if (selectedTab === 4) return <AddOnsTab data={data} />
-  return (
-    <div className="w-100 d-flex flex-column align-items-center justify-content-center">
-      <p className="m-0">{tabData[selectedTab]?.name}</p>
-      <p className="m-0">No Design Available</p>
-      <p className="m-0">No Data Available</p>
-    </div>
-  )
+  else if (selectedTab === TabsEnum.DepreciationPolicy){
+    const data = [
+      { yearMonth: "0 - 6 months", percentage: "5%" },
+      { yearMonth: "7 - 12 months", percentage: "10%" },
+      { yearMonth: "13 - 24 months", percentage: "20%" },
+      { yearMonth: "25 - 36 months", percentage: "30%" },
+      { yearMonth: "37 - 48 months", percentage: "40%" },
+      { yearMonth: "49 - 60 months", percentage: "50%" },
+      { yearMonth: "61 - 72 months", percentage: "60%" }
+    ];
+    return (
+      <div className="w-100 d-flex flex-column align-items-center justify-content-center">
+        <p style={{ padding: "10px",textAlign: "center" }}>In the event of a claim for replacement parts, including glass and plastic items, the following rates of depreciation will be applied. The depreciation is based on the year of manufacture, not the year of registration.</p>
+        <Table striped bordered hover style={{ width: "70%", margin: "0 auto" }}>
+          <thead>
+            <tr>
+              <th style={{ textAlign: "center" }}>Year / Month</th>
+              <th style={{ textAlign: "center" }}>Percentage</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.map((row, index) => (
+              <tr key={index}>
+                <td style={{ textAlign: "center" }}>{row.yearMonth}</td>
+                <td style={{ textAlign: "center" }}>{row.percentage}</td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </div>  
+    )
+  }
+  else if (selectedTab === TabsEnum.ClaimProcess){
+    return (
+      <div className="w-100 d-flex flex-column align-items-center justify-content-center">
+        <p style={{ padding: "10px",textAlign: "center" }}>The claim process can be initiated through the Takaful Bazaar portal. Upon initiation, our team will promptly reach out to you to assist in the process or alternatively, you may contact our helpline for guidance in completing the claim process on the portal. Our team is dedicated to ensuring a smooth and efficient claim experience.</p>
+      </div>  
+    )
+  }
+  else if (selectedTab === TabsEnum.Addons) {
+    return <AddOnsTab data={data} />
+  }
+  else {
+    return (
+      <div className="w-100 d-flex flex-column align-items-center justify-content-center">
+        <p className="m-0">{tabData[selectedTab]?.name}</p>
+        <p className="m-0">No Design Available</p>
+        <p className="m-0">No Data Available</p>
+      </div>
+    )
+  }
+
 }
 
 const PriceSection2 = ({ data, hasPromotion }: { data: object; hasPromotion: boolean }) => {
@@ -114,7 +163,7 @@ const PriceSection2 = ({ data, hasPromotion }: { data: object; hasPromotion: boo
   const [value, setValue] = useState()
 
   useEffect(() => {
-    setValue(data.value)
+    setValue(data?.value)
   }, [data])
 
   return (
@@ -127,13 +176,17 @@ const PriceSection2 = ({ data, hasPromotion }: { data: object; hasPromotion: boo
               <del>PKR {currencyFormat(data?.annual_contribution || 0)}</del>
             </p>
             <p className={styles['newRateTxtSmall']}>
-              PKR{' '}
+              PKR {' '}
               {currencyFormat(
                 calculateAmountAfterPromotion(
                   data?.annual_contribution,
                   data?.promotion_discount_value,
                   data?.promotion_discount_type,
-                ) || 0,
+                ) > 0 ? calculateAmountAfterPromotion(
+                  data?.annual_contribution,
+                  data?.promotion_discount_value,
+                  data?.promotion_discount_type,
+                ) : 0,
               )}
             </p>
           </>
@@ -256,130 +309,62 @@ const ProductPlanCard = ({
   const router = useRouter()
   const dispatch = useDispatch()
 
-  const serverImgPath = `${process.env['NEXT_PUBLIC_IMAGE_ORIGIN']}${data?.CompanySetup?.logo}`
+  const serverImgPath = data?.CompanySetup?.logo;
 
   const navigateToPaymentPage = () => {
+
+    let formatedAddons: any = []
+    if (addon_ids.length !== 0) {
+      const selectedAddons = data?.PolicyAddons?.filter((item, index) => {
+        for (let i = 0; i < addon_ids.length; i += 1) {
+          if (addon_ids[i] === item.addon_id) return true
+        }
+      })
+      formatedAddons = selectedAddons.map(item => {
+        if (item.type === 'fixed') {
+          return { addon_id: item.addon_id, amount: parseFloat(item.value) }
+        }
+        if (item.type === 'percentage') {
+          return { addon_id: item.addon_id, amount: data?.annual_contribution * (parseFloat(item.value) / 100) }
+        }
+      })
+    }
+    dispatch(clearBuyNow())
+    dispatch(clearPurchaseInfo())
+
+    dispatch(
+      setBuyNowData({
+        policy_id: data?.id.split('/')[0],
+        policy_type_id: data?.PolicyType?.id,
+        annual_contribution: data?.annual_contribution + (data?.addon_amount || 0),
+        insurance_rate: data?.insurance_rate,
+        company_logo_url: data?.CompanySetup?.logo,
+        policy_name: data?.name,
+        policy_addons: formatedAddons,
+        promotion_coupon_id: data?.promotion_coupon_id,
+        promotion_discount_type: data?.promotion_discount_type,
+        promotion_discount_value: data?.promotion_discount_value,
+      }),
+    );
     if (!user) {
       router.push({
-        pathname: '/auth/auth',
+        pathname: '/auth',
         query: {
           redirect: '/payment',
         },
       })
     } else {
-      let formatedAddons: any = []
-      if (addon_ids.length !== 0) {
-        const selectedAddons = data?.PolicyAddons?.filter((item, index) => {
-          for (let i = 0; i < addon_ids.length; i += 1) {
-            if (addon_ids[i] === item.addon_id) return true
-          }
-        })
-        formatedAddons = selectedAddons.map(item => {
-          if (item.type === 'fixed') {
-            return { addon_id: item.addon_id, amount: parseFloat(item.value) }
-          }
-          if (item.type === 'percentage') {
-            return { addon_id: item.addon_id, amount: data?.annual_contribution * (parseFloat(item.value) / 100) }
-          }
-        })
-      }
-      dispatch(clearBuyNow())
-      dispatch(clearPurchaseInfo())
-      if (hasPromotion) {
-        Api('GET', `verify-promotion/${data?.promotion_coupon_id}`).then((response: any) => {
-          if (response.success) {
-            dispatch(
-              setBuyNowData({
-                policy_id: data?.id.split('/')[0],
-                policy_type_id: data?.PolicyType?.id,
-                annual_contribution: calculateAmountAfterPromotion(
-                  data?.annual_contribution + (data?.addon_amount || 0),
-                  data?.promotion_discount_value,
-                  data?.promotion_discount_type,
-                ),
-                insurance_rate: data?.insurance_rate,
-                company_logo_url: data?.CompanySetup?.logo,
-                policy_name: data?.name,
-                policy_addons: formatedAddons,
-                promotion_coupon_id: data?.promotion_coupon_id,
-                promotion_discount_type: data?.promotion_discount_type,
-                promotion_discount_value: data?.promotion_discount_value,
-                total_discount_value: calculateDiscountAmount(
-                  data?.annual_contribution + (data?.addon_amount || 0),
-                  data?.promotion_discount_value,
-                  data?.promotion_discount_type,
-                ),
-              }),
-            )
-
-            router.push({
-              pathname: '/payment',
-            })
-          } else {
-            alert(response.message)
-            dispatch(
-              setBuyNowData({
-                policy_id: data?.id.split('/')[0],
-                policy_type_id: data?.PolicyType?.id,
-                annual_contribution: data?.annual_contribution + (data?.addon_amount || 0),
-                insurance_rate: data?.insurance_rate,
-                company_logo_url: data?.CompanySetup?.logo,
-                policy_name: data?.name,
-                policy_addons: formatedAddons,
-                promotion_coupon_id: data?.promotion_coupon_id,
-                promotion_discount_type: data?.promotion_discount_type,
-                promotion_discount_value: data?.promotion_discount_value,
-              }),
-            )
-
-            router.push({
-              pathname: '/payment',
-            })
-          }
-        })
-      } else {
-        dispatch(
-          setBuyNowData({
-            policy_id: data?.id.split('/')[0],
-            policy_type_id: data?.PolicyType?.id,
-            annual_contribution: data?.annual_contribution + (data?.addon_amount || 0),
-            insurance_rate: data?.insurance_rate,
-            company_logo_url: data?.CompanySetup?.logo,
-            policy_name: data?.name,
-            policy_addons: formatedAddons,
-            promotion_coupon_id: data?.promotion_coupon_id,
-            promotion_discount_type: data?.promotion_discount_type,
-            promotion_discount_value: data?.promotion_discount_value,
-          }),
-        )
-
         router.push({
           pathname: '/payment',
         })
-      }
+      // }
     }
   }
 
-  // //////////////////////////////////////////////
-
   const [coverages, setCoverages] = useState([])
-  // console.log('data', data)
 
   const getCoverage = async () => {
-    // const processedResult = []
-    // if (allCoverages) {
-    //   allCoverages.map((each: any) => {
-    //     if (each?.status) {
-    //       each?.child_coverages?.map((subEach: any) => {
-    //         const companyCoverage = data?.CompanySetup?.CompanyCoverages.filter(x => x?.coverage_id === subEach?.id)
-    //         if (companyCoverage && companyCoverage?.length > 0) subEach.state = true
-    //         else subEach.state = false
-    //       })
-    //       return processedResult?.push(each)
-    //     }
-    //   })
     setCoverages(allCoverages)
-    // }
   }
 
   const onLoad = () => {
@@ -387,7 +372,7 @@ const ProductPlanCard = ({
   }
 
   useEffect(onLoad, [])
-  // //////////////////////////////////////////////
+
   return (
     <div className={` ${styles['wrapper']}`}>
       {hasPromotion && (
@@ -413,8 +398,9 @@ const ProductPlanCard = ({
           <Image alt="" src={serverImgPath} width={'100%'} height={'100%'} objectFit={'contain'} />
         </div>
         <div className={` ${styles['providerContainer']}`}>
-          <div className={` ${styles['providerTopContainer']}`}>
-            <p className={styles['insurerTxt']}>{data?.name}</p>
+          <div className={` ${styles['providerTopContainer']}`} style={{display: 'block', height: 'auto'}}>
+          <h3 className={styles['insurerTxt']} style={{fontSize: 22, marginTop: 10}}>{data?.CompanySetup?.name}</h3>
+            <p className={styles['insurerTxt']} style={{textTransform: 'CAPITALIZE', marginTop: 5}}>{data?.name}</p>
           </div>
           <div className={` d-flex justify-content-between ${styles['providerBottomContainer']}`}>
             <div className={` ${styles['providerBottomLeft']}`}>
@@ -440,7 +426,7 @@ const ProductPlanCard = ({
               <p className={styles['cardTxt']}>{data?.PolicyType?.name}</p>
             </div>
             <div className={` ${styles['providerBottomRight']}`}>
-              <p className={styles['lblTxt']}>Premium Rate</p>
+              <p className={styles['lblTxt']}>Contribution Rate</p>
               <p className={styles['cardTxt']}>{`${data?.insurance_rate}%`}</p>
             </div>
           </div>

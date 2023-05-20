@@ -10,17 +10,17 @@ const AppWrapper = (props: any) => {
   useEffect(
     () => {
       if (!props.user) {
-        if (router.pathname !== '/auth/auth') {
+        if (router.pathname !== '/auth') {
           router.replace({
-            pathname: '/auth/auth',
+            pathname: '/auth',
             query: {
               redirect: router.query['redirect'] || router.asPath,
             },
           })
         }
       }
-      if (props.user && router.pathname === '/auth/auth') {
-        router.replace(router.query['redirect'] || '/products/health')
+      if (props.user && router.pathname === '/auth') {
+        router.replace(router.query['redirect'] || '/')
       }
     },
 

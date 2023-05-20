@@ -55,7 +55,7 @@ import styles from './InvoiceMob.module.scss'
 const printPdf = async () => {
   const pageWidth = 750
   const pageHeight = 900
-  var pdf = new jsPDF('l', 'mm', [pageWidth * 1.2, pageHeight * 1.2])
+  var pdf = new jsPDF('p', 'mm', [pageWidth * 1.2, pageHeight * 1.2])
 
   var imgHeight = document.getElementById('pdfcontainer').clientHeight
 
@@ -81,7 +81,7 @@ const printPdf = async () => {
 }
 const DownloadInvoice = () => (
   <div className={`${styles['downloadinvoicewrapper']}`}>
-    <Link href={{ pathname: '/products/health' }}>
+    <Link href={{ pathname: '/' }}>
       <div className={styles['gobackdiv']}>
         <div className={styles['gobackarrow']}>
           <Image src={GoBackRed} alt="backarrow" />
@@ -164,7 +164,7 @@ const Invoicereport = ({
       </div>
       <div className={`mt-1 ${styles['invoicelowerdiv']}`}>
         <div className={`${styles['invoicelowerrow2']}`}>
-          <p className={`m-0 ${styles['invoiceheadingstxt']}`}>Premium Rate:</p>
+          <p className={`m-0 ${styles['invoiceheadingstxt']}`}>Contribution Rate:</p>
           <p className={`m-0 ${styles['invoiceheadingstxt']}`}>{premium_rate}%</p>
         </div>
 
@@ -199,21 +199,19 @@ const Invoicereport = ({
 )
 
 const ComponentPDF = ({ invoice }: { invoice: any }) => {
-  console.log('pdfdata', invoice)
-
   return (
     <div id="pdfcontainer" className={`${styles['pdfcontainer']}`}>
       <div className="w-100 mt-2">
         {/* 1st row */}
         <div className={`${styles['invoicelogoContainer']}`}>
           <div className={` mb-2 ${styles['takafullogo']}`}>
-            <Image src={TakafulLogo} alt="" />
           </div>
         </div>
         {/* 2nd row */}
         <div className={`${styles['invoicelogoContainer']}`}>
-          <div className={`${styles['invoicelogo']}`}>
-            <Image src={InvoiceLogo} alt="" />
+          <div className={`${styles['invoicelogo']} p-2`}>
+            {/* <Image src={InvoiceLogo} alt="Invoice" fill={"contain"} /> */}
+            <h2> Invoice</h2>
           </div>
           <div className={`${styles['invoicevalueContainer']}`}>
             <p className={`${styles['invoicenoText']}`}>
@@ -327,20 +325,20 @@ const ComponentPDF = ({ invoice }: { invoice: any }) => {
           <p className={`${styles['totalText']}`}>Total</p>
           <p className={`${styles['totalText']}`}>Rs.{currencyFormat(invoice?.total | 0)}</p>
         </div>
-        <div className="d-flex mt-2">
+        {/* <div className="d-flex mt-2">
           <p className={`${styles['invoicenoText']}`}>Note:</p>
           <p className={`${styles['invoiceplainText']}`}>
             {' '}
             Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet
             dolore magna aliquam erat{' '}
           </p>
-        </div>
+        </div> */}
         <div className="d-flex justify-content-center align-items-center mt-4 flex-column">
           <p className={`${styles['thankyouText']}`}>
-            Thankyou for choosing<span className={`${styles['thankyouTextRed']}`}> Takaful Bazaar.pk</span>{' '}
+            Thankyou for choosing<span className={`${styles['thankyouTextRed']}`}> Takaful Bazaar</span>{' '}
           </p>
           <div className={`${styles['border']}`}>
-            <p className={`mt-2 ${styles['thankyouText']}`}> We are here to hear more from you!</p>
+            <p className={`mt-2 ${styles['thankyouText']}`}>For more information, please contact us on</p>
           </div>
           <div>
             <p className={`mt-2 ${styles['numberRedtext']}`}>021 - 111 - 832 - 682</p>
@@ -414,7 +412,7 @@ const Lowerbtn = () => (
   <div
     className={`w-100 fixed-bottom position-sticky d-flex align-items-center justify-content-center ${styles['mcontactadvisor']}`}
   >
-    <p className={`m-0 ${styles['madvisorpara']}`}>Track Your Policy</p>
+    <p className={`m-0 ${styles['madvisorpara']}`}>Go To Dashboard</p>
   </div>
 )
 
@@ -461,9 +459,9 @@ const InvoiceMob = ({
             total={total}
           />
         </div>
-        <p className={`d-flex mx-4 my-5`}>
+        {/* <p className={`d-flex mx-4 my-5`}>
           *Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut
-        </p>
+        </p> */}
       </div>
     </MediaQuery>
   </>

@@ -35,7 +35,6 @@ const ProductPlanCategoryContainerMobile = ({
   setPPCompareData,
   showMobileFilter,
   setShowMobileFilter,
-  previousInsurancePlansForm,
 }: ProductPlanCategoryContainerMobileProps) => {
   const [make, setMake] = useState([])
   const [models, setModels] = useState([])
@@ -44,11 +43,6 @@ const ProductPlanCategoryContainerMobile = ({
   const { insurancePlansForm, setInsurancePlansForm } = insurancePlansState
   const { buy_now, ...insuranceData } = useSelector(state => state?.auth?.planDetails)
   const dispatch = useDispatch()
-  // const previousInsurancePlansForm = structuredClone(insurancePlansForm)
-
-  // const [previousFomik, setPreviousFomik] = useState()
-  // console.log('sdfghfdsghfh', insurancePlansState?.insurancePlansForm)
-
   const getSelectedVehicleDetails = (id: any, obj: any) =>
     obj?.find((item: any) => item?.id?.toString() === id?.toString())?.option || 'Select'
 
@@ -198,9 +192,9 @@ const ProductPlanCategoryContainerMobile = ({
             <div>
               <p style={{ color: '#E91431', margin: 0 }}>{formik.errors.value}</p>
             </div>
-            <div className={`my-3 border-0 ${styles['btnContainer']}`}>
+            {/* <div className={`my-3 border-0 ${styles['btnContainer']}`}> */}
               <SignInUpButton btnTxt="View Quotes" link="" onClick={disableButton ? () => {} : formik.handleSubmit} />
-            </div>
+            {/* </div> */}
             <div className="w-100 my-3 d-flex align-items-center justify-content-between">
               {/* <div
                 onClick={() => {
@@ -222,11 +216,11 @@ const ProductPlanCategoryContainerMobile = ({
         </Modal>
       )}
       <div className={`w-100 d-flex align-items-center justify-content-between ${styles['rowContainer']}`}>
-        <div className={`w-25 ${styles['colContainer']}`}>
+        <div className={`w-50 ${styles['colContainer']}`}>
           <p className={` ${styles['smalTxt']}`}>Car Make</p>
           <p className={` ${styles['bigTxt']}`}>{getSelectedVehicleDetails(insurancePlansForm?.make_id, make)}</p>
         </div>
-        <div className={`w-25 ${styles['colContainer']}`}>
+        <div className={`w-50 ${styles['colContainer']}`}>
           <p className={` ${styles['smalTxt']}`}>Car Model</p>
           <p className={` ${styles['bigTxt']}`}>{getSelectedVehicleDetails(insurancePlansForm?.model_id, models)}</p>
         </div>
@@ -240,11 +234,11 @@ const ProductPlanCategoryContainerMobile = ({
         </div>
       </div>
       <div className={`w-100 d-flex align-items-center justify-content-between ${styles['rowContainer']}`}>
-        <div className={`w-25 ${styles['colContainer']}`}>
+        <div className={`w-50 ${styles['colContainer']}`}>
           <p className={` ${styles['smalTxt']}`}>Year</p>
           <p className={` ${styles['bigTxt']}`}>{insurancePlansForm?.year}</p>
         </div>
-        <div className={`w-25 ${styles['colContainer']}`}>
+        <div className={`w-50 ${styles['colContainer']}`}>
           <p className={` ${styles['smalTxt']}`}>Value</p>
           <p className={` ${styles['bigTxt']}`}>{currencyFormat(insurancePlansForm?.value)}</p>
         </div>

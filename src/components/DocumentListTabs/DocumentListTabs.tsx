@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { Card, Col, Container, Row } from 'react-bootstrap'
 import MediaQuery from 'react-responsive'
-
+import CardsDesign from '../../../public/assets/cards.png'
 import styles from './DocumentListTabs.module.scss'
 
 type DocumentProps = {
@@ -16,14 +16,33 @@ type DocumentProps = {
 const listDocument = [
   'License',
   'Pictures',
-  'Running Paper from Registration Book',
+  'Running Paper',
   'Registration Book must be on the same Name as of Policy',
   'CNIC',
   'Policy Copy',
-  'Claim Form signed & filled required on claimform',
-  'Satisfaction Note signed & filled',
-  'If car is on company name then company stamp is also required on satisfaction note',
+  'Claim Form signed & filled'
+
 ]
+const theifDocument = [
+  'License',
+  'Running Paper',
+  'Registration Book must be on the same Name as of Policy',
+  'CNIC',
+  'Policy Copy',
+  'Claim Form signed & filled',
+  'FIR / Roznamcha'
+
+]
+
+const listDocument1 = [
+  'License',
+
+]
+const theifDocument2 = [
+  'Test',
+
+]
+
 const listDocumentMob = [
   'Duly filled and signed claim form',
   'KYC',
@@ -36,19 +55,47 @@ const DocumentListTabs = () => {
   const { tab } = router.query
   const [documentType, setDocumentType] = useState<DocumentProps[]>([
     {
-      txt: 'Damage',
-      tabName: 'Damage',
+      txt: 'damage',
+      tabName: 'damage',
       isActive: true,
-      link: '/products/health',
+      link: '/',
     },
     {
-      txt: 'Theft ',
-      tabName: 'Theft',
+      txt: 'theft',
+      tabName: 'theft',
       isActive: false,
-      link: '/products/auto',
+      link: '/auto',
     },
   ])
   const [resetOpened, setResetOpened] = useState(false)
+  const [initialSelectedTab, setInitialSelectedTab] = useState('damage')
+  const [selectedTab, setSelectedTab] = useState('damage')
+  const [tabContent, setTabContent] = useState(listDocument)
+
+  const handleInitialTab = (val) => {
+    let content = ''
+    if (val === 'damage' && selectedTab === 'Personal Vehicle Damage') {
+      content = listDocument
+    } else if (val === 'damage' && selectedTab === 'Third Party Vehicle Damage') {
+      content = theifDocument
+    } else if (val === 'theft' && selectedTab === 'Personal Vehicle Damage') {
+      content = listDocument1
+    } else if (val === 'theft' && selectedTab === 'Third Party Vehicle Damage') {
+      content = theifDocument2
+    }
+    setTabContent(content) 
+  }
+
+  const handleTabs = (val) => {
+    setSelectedTab(val?.tabName)
+    let content = ''
+    if (val?.tabName === 'damage') {
+      content = listDocument
+    } else if (val?.tabName === 'theft') {
+      content = theifDocument
+    }
+    setTabContent(content) 
+  }
 
   useEffect(() => {
     if (tab) {
@@ -60,7 +107,7 @@ const DocumentListTabs = () => {
     <>
       <MediaQuery minWidth={450}>
         <Row>
-          <Col md={6}>
+          {/* <Col md={6}>
             <div className={`d-flex mt-5 align-items-center justify-content-center flex-column h-100`}>
               <div className="d-flex flex-row align-items-center">
                 <p className={styles['documentDamageList']}>Personal Vehicle Damage</p>
@@ -68,33 +115,49 @@ const DocumentListTabs = () => {
               </div>
               <p className={styles['documentDamageList']}>Third Party Vehicle Damage</p>
             </div>
-          </Col>
-          <Col md={6}>
+          </Col> */}
+          <Col md={12}>
             <div className=" mb-5 mx-4">
-              <Container className={`d-flex w-100 p-0 align-items-center justify-content-between ${styles['tabs']}`}>
+                {/* <div className="tabsBtn">
+                  <button 
+                    className={initialSelectedTab === 'damage' && "active-tab-btn"} 
+                    onClick={() => {handleInitialTab('damage'), setInitialSelectedTab('damage')}
+                  }>Damage</button>
+                  <button 
+                  className={initialSelectedTab === 'theft' && "active-tab-btn"} 
+                  onClick={() => {handleInitialTab('theft'), setInitialSelectedTab('theft')}}>Theft</button>
+                </div> */}
+              <Container className={`d-flex p-0 align-items-center justify-content-between ${styles['tabs']}`} style={{width: 200}}>
                 {documentType.map((each, index) => (
                   <div
                     className={`d-flex w-100 align-items-center justify-content-center ${
-                      styles[each?.isActive ? 'activeTab' : 'inActiveTab']
+                      styles[each?.tabName === selectedTab  ? 'activeTab' : 'inActiveTab']
                     }`}
                     key={index}
                     onClick={() => {
-                      setResetOpened(true)
+                      handleTabs(each)
                     }}
                   >
-                    <p className={`${styles[each?.isActive ? 'tabTxtActive' : 'tabTxtInactive']}`}>{each?.tabName}</p>
+                    <p className={`${styles[each?.tabName === selectedTab ? 'tabTxtActive' : 'tabTxtInactive']}`} style={{textTransform: 'capitalize'}}>{each?.tabName}</p>
                   </div>
                 ))}
               </Container>
               <Container className={`w-25 ${styles['borderBottomTab']}`} />
             </div>
-            <ul className={styles['listStyle']}>
-              {listDocument.map((val, ind) => (
-                <li className={styles['checkmark']} key={ind}>
-                  {val}
-                </li>
-              ))}
-            </ul>
+            <Row>
+              <Col md={8}>
+              <ul className={styles['listStyle']}>
+                {tabContent?.map((val, ind) => (
+                  <li className={styles['checkmark']} key={ind}>
+                    {val}
+                  </li>
+                ))}
+              </ul> 
+              </Col>
+              <Col md={4}>
+                <Image src={CardsDesign} alt="autotakafulbanner" />
+              </Col>
+            </Row>
           </Col>
         </Row>
       </MediaQuery>

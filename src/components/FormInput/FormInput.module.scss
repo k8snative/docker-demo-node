@@ -3,7 +3,7 @@
 .formInputContainer {
     border: 2px solid #E0E0E0;
     border-radius: 5px;
-
+    margin-top: 10px;
 }
 
 .formInput {
@@ -14,9 +14,14 @@
     width: 100%;
     outline: none;
     border: 0;
+
     // height: 35px;
+    @media screen and (max-width: 768px) {
+        font-size: 14px;
+    }
 }
-.mobileInput{
+
+.mobileInput {
     height: 25px;
 }
 
@@ -51,13 +56,12 @@
     font-size: 12px;
     color: $color-text-secondary;
     margin: 0;
-    margin-top: -4px;
     margin-left: 5px;
 }
 
-.errorDiv {
-    height: 18px;
-}
+// .errorDiv {
+//     height: 18px;
+// }
 
 /* Chrome, Safari, Edge, Opera */
 .formInput::-webkit-outer-spin-button,
@@ -69,4 +73,10 @@
 /* Firefox */
 .formInput[type=number] {
     -moz-appearance: textfield;
+}
+
+.phoneNoInput input {
+    border: none;
+    width: 100%;
+    height: 100%;
 }

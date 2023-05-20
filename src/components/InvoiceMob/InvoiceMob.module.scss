@@ -201,11 +201,11 @@
     display: flex;
     flex-direction: column;
     background-image: url('~public/assets/pdfdownloadbg.png');
-    background-position: stretch;
     background-repeat: no-repeat;
-    background-size: cover;
     padding: 10px;
     background-color: #FFF;
+    width: 750px;
+    height: 900px
 }
 
 .invoicelogoContainer {
@@ -216,10 +216,15 @@
 
 .takafullogo {
     width: 50px;
+    background-image: url('../../../public/assets/takafullogoblack.png');
+    height: 100px;
+    width: 220px;
+    background-size: contain;
+    background-repeat: no-repeat;
 }
 
 .invoicelogo {
-    width: 120px;
+    // width: 50px;
 }
 
 .invoicevalueContainer {

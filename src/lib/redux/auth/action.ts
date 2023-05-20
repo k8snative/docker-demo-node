@@ -3,6 +3,9 @@ import { removeCookie, setCookie } from 'src/lib/utils'
 
 import { AuthActionTypes } from './types'
 
+export const setEditOrderInfo = (order_details: any) => {
+  return {type: 'SET_EDIT_ORDER_DETAILS', payload: order_details  };
+}
 export const setCurrentUser =
   (item: any) =>
   (dispatch: Dispatch): any => {
@@ -97,12 +100,16 @@ export const setVehicleDetails =
   }
 
 export const setDocumentDetails =
-  (data: any) =>
+  (data: any, order_id, order_detail_id) =>
   (dispatch: Dispatch): any => {
     try {
       return dispatch({
         type: AuthActionTypes.SET_DOCUMENT_DETAILS,
-        payload: { documentData: data },
+        payload: { 
+          documentData: data, 
+          order_id, 
+          order_detail_id 
+        },
       })
     } catch (e) {
       return null
@@ -216,6 +223,58 @@ export const renewPolicy =
       return dispatch({
         type: AuthActionTypes.RENEW_POLICY,
         payload: obj,
+      })
+    } catch (e) {
+      return null
+    }
+  }
+
+export const leadData =
+  (obj: any) =>
+  (dispatch: Dispatch): any => {
+    try {
+      return dispatch({
+        type: AuthActionTypes.LEAD_DATA,
+        payload: obj,
+      })
+    } catch (e) {
+      return null
+    }
+  }
+
+  export const paymentId =
+  (val: any) =>
+  (dispatch: Dispatch): any => {
+    try {
+      return dispatch({
+        type: AuthActionTypes.PAYMENT_ID,
+        payload: val,
+      })
+    } catch (e) {
+      return null
+    }
+  }
+
+  export const updateLoader =
+  (val: any) =>
+  (dispatch: Dispatch): any => {
+    try {
+      return dispatch({
+        type: AuthActionTypes.SET_LOADER,
+        payload: val,
+      })
+    } catch (e) {
+      return null
+    }
+  }
+
+  export const updateAuthPopUp =
+  (val: any) =>
+  (dispatch: Dispatch): any => {
+    try {
+      return dispatch({
+        type: AuthActionTypes.UPDATE_AUTH_POPUP,
+        payload: val,
       })
     } catch (e) {
       return null

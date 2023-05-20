@@ -10,15 +10,17 @@
 }
 
 .headingText {
-    font-size: 18.43px;
+    font-size: 18px;
     margin-top: 30px;
     text-align: center;
-    font-weight: 500;
+    font-weight: 700;
+    color: #515151;
+    
 
 }
 
 .paraText {
-    font-size: 18px;
+    font-size: 16px;
     color: $color-primary;
     text-align: center;
 }
@@ -44,6 +46,16 @@
 .modalHeading {
     color: $color-primary;
     font-size: 26px;
+}
+
+.crossBtn {
+    img {
+        position: relative !important;
+        width: auto !important;
+        height: auto !important;
+        top: -5px !important;
+        cursor: pointer;
+    }
 }
 
 .modalTxt {

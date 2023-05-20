@@ -1,9 +1,12 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import NavDropdown from 'react-bootstrap/NavDropdown'
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import searchSubIcon from '../../../public/assets/dropdownStoke.jpg';
+// import searchSubIcon from '../../../public/assets/searchSubIcon.png'
 
-import dropDownIcon from '../../../public/assets/dropDownIcon.png'
+import downSideArrow from '../../../public/assets/downSidearrow.svg'
+// import dropDownIcon from '../../../public/assets/dropDownIcon.png'
 import styles from './CustomDropdown.module.scss'
 
 const CustomDropdown = ({
@@ -49,10 +52,11 @@ const CustomDropdown = ({
         <span className={styles['iconhover']}>
           <span className={styles['navTitle']}>{navtxt}</span>
           <Image
-            width={'18px'}
-            height={'12px'}
+            width={15}
+            height={8}
             className={`${isActive ? styles['rotate'] : styles['default']}`}
-            src={dropDownIcon}
+            // 
+            src={downSideArrow}
             alt=""
           />
         </span>
@@ -69,13 +73,26 @@ const CustomDropdown = ({
       }}
     >
       {options && (
-        <>
-          {navItems?.map((value, index) => (
-            <Link key={index} href={{ pathname: value?.link }}>
-              <NavDropdown.Item href="#action/3.1">{value?.name}</NavDropdown.Item>
-            </Link>
-          ))}
-        </>
+        navItems?.map((value, index) => (
+            <>
+              <Link key={index} href={{ pathname: value?.link }}>
+                <span>
+                  {
+                    value?.icon &&
+                    <Image
+                      // width={auto}
+                      // height={auto}
+                      src={value?.icon}
+                      alt={value?.name}
+                      // style={{ padding: '10px'}}
+                      // className={styles['dropdownImage']}
+                    />
+                  }
+                  <NavDropdown.Item href="#action/3.1">{value?.name}</NavDropdown.Item>
+                </span>
+              </Link>
+            </>
+        ))
       )}
 
       <></>

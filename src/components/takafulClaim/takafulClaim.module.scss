@@ -1,0 +1,70 @@
+@import '../../styles/colors.scss';
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    
+}
+
+.container {
+    width: 100%;
+
+}
+
+.heading {
+    font-size: 24px;
+    color: $color-primary;
+    margin-top: 6%;
+
+    .headingInRed {
+        font-size: 24px;
+        color: $color-text-secondary;
+    }
+
+    @media screen and (max-width: 430px) {
+        font-size: 25px;    
+        text-align: center;
+        font-weight: 500;
+        margin: 45% 5% 3% 5%;
+    
+        
+        // margin: 10%;
+
+    }
+}
+
+
+
+.paragraph {
+    font-size: 18px;
+    color: $color-primary;
+    text-align: center;
+    margin: 0 5%;
+    @media screen and (max-width: 430px) {
+        font-size: 20px;    
+        text-align: center;
+        margin: 0 10%;
+
+    }
+
+}
+
+.imageContainer {
+
+    margin-top: 60px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+}
+.mimageContainer {
+    background-color: #fff;
+margin:40px 30px 0 88px;
+    // margin-left:  5%;
+    // margin-right: 5%;
+    width: 80%;
+    
+   
+
+}

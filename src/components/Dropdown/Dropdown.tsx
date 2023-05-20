@@ -14,6 +14,7 @@ const Dropdown = ({
   formik,
   type = 'string',
   disabled = false,
+  extraFunc
 }: {
   label: string
   options: any
@@ -24,6 +25,7 @@ const Dropdown = ({
   formik: any
   type?: 'string' | 'object'
   disabled?: boolean
+  extraFunc?: Function
 }) => {
   const [isOpen, setOpen] = useState(false)
   // const handleItemClick = (id: any) => (selectedItem === id ? setSelectedItem(label) : setSelectedItem(id))
@@ -48,23 +50,23 @@ const Dropdown = ({
   }
 
   return (
-    <div onMouseLeave={() => setOpen(false)} className={`p-0 ${styles['mainWrapper']}`}>
+    <div onMouseLeave={() => setOpen(false)} className={`p-0 ${styles['form__input-group']}`}>
       <div
         onClick={() => {
           disabled ? {} : setOpen(!isOpen)
         }}
-        className={` ${styles['dropDownContainer']} ${disabled && styles['disabled']}`}
+        className={` ${styles['form__input']} ${disabled && styles['disabled']}`}
       >
-        <p className={`m-0 ${value ? styles['selectedTxt'] : styles['labelTxt']}`}>{value ? getValue() : label}</p>
+        <p className={`m-0 ${value ? styles['selectedTxt'] : styles['labelTxt']}`}>{value ? getValue() : ''}</p>
         <div className={styles['formImageContainer']}>
           <Image src={dropDownSmall} alt="" />
         </div>
       </div>
       {isOpen && (
         <div className={` ${styles['dropContainer']}`}>
-          {options.map((opt: any, index: any) => (
+          {options?.map((opt: any, index: any) => (
             <div key={index}>
-              <p onClick={() => setValue(opt)} className={styles['dropMenuItems']}>
+              <p onClick={() => {setValue(opt); setOpen(!isOpen); extraFunc && extraFunc()}} className={styles['dropMenuItems']}>
                 {opt?.option}
               </p>
             </div>
@@ -72,6 +74,7 @@ const Dropdown = ({
         </div>
       )}
       {error && <p className={`${styles['inputError']}`}>{error}</p>}
+      <label className={styles['form__input-label']}>{label}</label>
     </div>
   )
 }

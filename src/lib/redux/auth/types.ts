@@ -21,6 +21,10 @@ export enum AuthActionTypes {
   ADD_ITEM_IN_COMPARE = 'ADD_ITEM_IN_COMPARE',
   REMOVE_ITEM_COMPARE = 'REMOVE_ITEM_COMPARE',
   RENEW_POLICY = 'RENEW_POLICY',
+  LEAD_DATA = 'LEAD_DATA',
+  PAYMENT_ID = 'PAYMENT_ID',
+  SET_LOADER = 'SET_LOADER',
+  UPDATE_AUTH_POPUP = 'UPDATE_AUTH_POPUP'
 }
 
 export interface AuthState {
@@ -86,18 +90,18 @@ interface PurchaseDetails {
     current_address: string
     contact: string
     email: string
-    date_of_birth: string
+    date_of_birth: string | null
     place_of_birth: string
     father_name: string
     mother_name: string
     nationality_id: number
     cnic_number: string
-    cnic_issue_date: string
-    cnic_expiry_date: string
+    cnic_issue_date: string | null
+    cnic_expiry_date: string | null
     occupation: string
     source_of_income: string
     previous_insurance_company_name: string
-    previous_date_of_expiry: string
+    previous_date_of_expiry: string | null
     benificiary_name: string
     benificiary_contact: string
     benificiary_cnic_number: string
@@ -120,8 +124,8 @@ interface PurchaseDetails {
     chassis_number: string
     engine_number: string
     registration_number: string
-    survey_request_date: string
-    survey_request_time: string
+    survey_request_date: string | null
+    survey_request_time: string | null
     city_id: number
     survey_address: string
     survey_instructions: string
@@ -166,18 +170,18 @@ interface RenewPolicyData {
   current_address: string
   contact: string
   email: string
-  date_of_birth: string
+  date_of_birth: string | null
   place_of_birth: string
   father_name: string
   mother_name: string
   nationality_id: number
   cnic_number: string
-  cnic_issue_date: string
-  cnic_expiry_date: string
+  cnic_issue_date: string | null
+  cnic_expiry_date: string | null
   occupation: string
   source_of_income: string
   previous_insurance_company_name: string
-  previous_date_of_expiry: string
+  previous_date_of_expiry: string | null
   benificiary_name: string
   benificiary_contact: string
   benificiary_cnic_number: string
@@ -201,4 +205,5 @@ interface RenewPolicyData {
   ['running-paper']: { filename: string; filePath: string }
   isPassport: boolean
   signature_path: string
+  previous_policy_id?: number
 }

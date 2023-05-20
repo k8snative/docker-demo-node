@@ -58,7 +58,7 @@ const FAQButton = ({
         <div className={` d-flex align-items-center  ${styles['icons']}`}>
           <Image priority={true} src={faq?.img} alt="" />
         </div>
-        <p className={styles['btnFAQTxt']}>{faq?.txt}</p>
+        <p className={styles['btnFAQTxt']}>{faq?.option}</p>
       </div>
       // </Link>
     )

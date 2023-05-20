@@ -10,12 +10,13 @@ type AllCardProps = {
 }
 
 const AutoTakafulCards = ({ image, title, paragraph }: AllCardProps) => (
-  <Col xs={12} sm={12} md={6} lg={6} xl={4} className={`${styles['cardWrapper']}`}>
+  <Col md={6} lg={6} xl={4} className={`${styles['cardWrapper']}`}>
     <Card className={styles['cardContainer']}>
       <Card.Body className={styles['body']}>
         <Image src={image} alt="" width={'180px'} height={'110px'} />
         <Card.Title className={styles['title']}>{title}</Card.Title>
-        <Card.Text className={styles['paragraph']}>{paragraph}</Card.Text>
+        {/* <Card.Text className={styles['paragraph']}>{paragraph}</Card.Text> */}
+        <div className={styles['hoverDiv']}>{paragraph}</div>
       </Card.Body>
     </Card>
   </Col>

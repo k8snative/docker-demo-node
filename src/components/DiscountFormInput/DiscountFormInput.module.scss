@@ -98,6 +98,11 @@
     width: 80%;
     outline: none;
     padding-left: 10px;
+
+    @media screen and (max-width: 768px) {
+        font-size: 14px;
+    }
+
 }
 
 .tickImgWrap {

@@ -1,10 +1,9 @@
-import Image from 'next/image'
+import { useEffect, useState } from 'react'
 import { Container } from 'react-bootstrap'
 import { useMediaQuery } from 'react-responsive'
-// import Slider from 'react-slick'
 import Slider from 'react-slick'
+import Api from 'src/lib/api'
 import GetOurApp from '~components/GetOurApp/GetOurApp'
-
 import alfalahInsurance from '../../../public/assets/alfalahInsurance.png'
 import igiLife from '../../../public/assets/igiLife.png'
 import stateLife from '../../../public/assets/stateLife.png'
@@ -24,26 +23,49 @@ const sliderArray = [
 
 const SliderComponent = () => {
   const isDesktopOrLaptop = useMediaQuery({
-    query: '(min-width: 426px)',
+    query: '(min-width: 750px)',
   })
+  const [company, setCompany] = useState([])
+  useEffect(() => {
+    const fetchCitiesData = async () => {
+      const fetchedCities = await Api('GET', '/partner').then((res) => {
+        if(res.data.length > 0) {
+          setCompany(res.data)
+        } else {
+          setCompany([])
+        }
+      }).catch((e) => {
+        setCompany([])
+      })
+    }
+    fetchCitiesData()
+    }, [])
   const settings = {
-    arrows: false,
-    speed: 500,
-    slidesToShow: isDesktopOrLaptop ? 4 : 3,
-    slidesToScroll: 2,
-    // centerMode: true
+    infinite: true,
+    slidesToShow: isDesktopOrLaptop ? 4 : 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    speed: 2500,
+    autoplaySpeed: 500,
+    cssEase: "linear",
+    pauseOnHover: true,
+    lazyLoad: true,
+    variableWidth: isDesktopOrLaptop ? true : false
   }
   return (
     <Container className={styles['background']}>
-      <Slider {...settings}>
-        {sliderArray.map((img, index) => (
-          <div key={index}>
-            <div className={styles['abc']} key={index}>
-              <Image height={isDesktopOrLaptop ? 140 : 180} priority={true} src={img} alt="" objectFit="contain" />
-            </div>
-          </div>
-        ))}
-      </Slider>
+      <div>
+        <Slider {...settings} arrows={false}>
+          {
+            company.map((v) => (
+              <div className={styles['partnersDiv']}>
+                <img src={v.image} alt={v.name} />
+              </div>
+            )
+            )
+          }
+        </Slider>
+      </div>
     </Container>
   )
 }

@@ -3,28 +3,38 @@
 .wrapper {
     background-color: #fff;
     z-index: 1;
-    padding: 0 15px;
+    padding: 0 20px;
     padding-top: 10px;
     border: 0.9px solid #C9C9C9;
     border-radius: 5px;
+    width: 400px !important;
 
+
+    margin-left: auto !important;
+
+    @media screen and (min-width: 767px) {
+        margin: 0px 0px 0px -7px;
+    }
 
     @media screen and (max-width: 430px) {
+        width: 315px !important;
+
         border: 0px;
-        padding: 0 30px;
-        padding-top: 15px;
+        // padding: 0 30px;
+        // padding-top: 15px;
+        padding: 0;
     }
 
 
 }
 
 .dropDownContainer {
-    border: 0.56px solid #8E8E8E;
-    height: 40px;
+    border: 0.5px solid #939393;
+    height: 50px;
     position: relative;
     border-radius: 5px;
     padding: 0 10px;
-    margin: 10px 0;
+    margin: 21px 0;
 
 
     :hover {
@@ -32,7 +42,13 @@
     }
 
     @media screen and (max-width: 430px) {
-        height: 60px;
+        font-size: 16px;
+        height: 54px;
+        // width: 372px;
+        padding: 0 18px;
+        margin: 21px 0;
+
+
 
     }
 }
@@ -104,7 +120,7 @@
     }
 
     @media screen and (max-width: 425px) {
-        font-size: 24px;
+        font-size: 16px;
     }
 }
 
@@ -115,17 +131,17 @@
     width: 18px;
 
     @media screen and (max-width: 425px) {
-        width: 20px;
+        width: 16px;
     }
 }
 
 .bannerTxt {
     color: $color-primary;
-    font-size: 13px;
-    margin: 0 7px 0 0;
+    font-size: 12px;
+    //margin: 0 7px 0 0;
 
     @media screen and (max-width: 425px) {
-        font-size: 18px;
+        font-size: 14px;
     }
 }
 
@@ -159,7 +175,7 @@
     border: 0;
     outline: none;
     border-bottom: 2px solid $color-primary;
-    width: 40px;
+    width: 45px;
 }
 
 .calImageCont {
@@ -176,6 +192,7 @@
 
 .calInput {
     opacity: 0;
+    margin-left: 25px;
 }
 
 .formstyles input {
@@ -267,7 +284,7 @@
 }
 
 .notOTPTxt {
-    font-size: 12px;
+    font-size: 10px;
     color: $color-text-secondary;
     margin: 0;
     margin-left: 5px;
@@ -284,4 +301,23 @@
 /* Firefox */
 .selectedTxt[type=number] {
     -moz-appearance: textfield;
+}
+
+.dropDownContainerAuto {
+    position: relative;
+    margin: 21px 0;
+    :hover {
+        cursor: pointer;
+    }
+    @media screen and (max-width: 430px) {
+        font-size: 16px;
+        height: 54px;
+        margin: 21px 0;
+    }
+}
+
+.inputError {
+    color: #ff3333;
+    font-size: 12px;
+    padding-left: 2px
 }

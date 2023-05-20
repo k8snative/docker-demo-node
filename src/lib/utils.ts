@@ -1,3 +1,5 @@
+import { fontWeight } from "html2canvas/dist/types/css/property-descriptors/font-weight"
+
 const cookieDomain = process.env['NEXT_PUBLIC_COOKIE_DOMAIN'] || 'localhost'
 export const getSSLCookieOptions = () => {
   const isSSL = window.location.protocol === 'https:'
@@ -14,8 +16,21 @@ export const validateEmail = (email: string) => {
 }
 export const validatePhoneNo = (phone: string) => {
   // const re = /^((\+92)?(0092)?(92)?(0)?)(3)([0-9]{9})$/gm
-  const re = /^((\+92)|(0092))-{0,1}\d{3}-{0,1}\d{7}$|^\d{11}$|^\d{4}-\d{7}$/
+  const re = /^((\+92)?(0092)?(92)?(0)?)(3)([0-9]{9})$/gm
   return re.test(phone)
+}
+
+//otp validation
+export const validateOTP = (otp: string) => {
+  const re = /^[0-9]{6}$/
+  return re.test(otp)
+}
+
+export const validatePhoneNoPersonalInfo = (phone: string) => {
+  
+  const re = /^((\+92)?(0092)?(92)?(0)?)(3)([0-9]{9})$/gm
+  return re.test(phone)
+
 }
 export const validateName = (name: string) => {
   const re = /^[A-Za-z ,.'-]+$/
@@ -87,9 +102,9 @@ export const calculateAmountAfterPromotion = (amount: number, couponAmount: numb
   if (couponAmountType === 'percentage') {
     const percentageAmount = couponAmount / 100
     const amountToSubstract = amount * percentageAmount
-    return amount - amountToSubstract
+    return Math.ceil(amount - amountToSubstract)
   } else {
-    return amount - couponAmount
+    return Math.ceil(amount - couponAmount)
   }
 }
 
@@ -103,11 +118,11 @@ export const calculateAmountAfterPromotion = (amount: number, couponAmount: numb
 
 export const calculateDiscountAmount = (amount: number, couponAmount: number, couponAmountType: string) => {
   if (couponAmountType === 'percentage') {
-    const percentageAmount = couponAmount / 100
-    const amountToSubstract = amount * percentageAmount
-    return amountToSubstract
+    const percentageAmount = couponAmount / 100;
+    const amountToSubstract = amount * percentageAmount;
+    return Math.ceil(amountToSubstract)
   } else {
-    return couponAmount
+    return Math.ceil(couponAmount)
   }
 }
 
@@ -131,5 +146,97 @@ export const getFormattedDateForInput = (e: any) => {
   )}`
   return e ? temp : ''
 }
+ 
+export const DropDownStyles = {
+  control: (base : any, state : any) => ({
+    ...base,
+    // This line disable the blue border
+    boxShadow: state.isFocused ? 0 : 0,
+    fontSize:'14px',
+    border:'2px solid #E2E2E3',
+    '&:hover': {
+       border:'2px solid red'
+    },
+  }),
+  option: provided => ({
+    ...provided,
+    color: 'black',
+    background:'white',
+    fontSize:'14px',
+    '&:hover':{
+      color:'red'
+    }
+  }),
+  dropdownIndicator: base => ({
+    ...base,
+    color: "red",
+    fontWeight:'bold',
+    '&:hover' : {
+      color:'red',
+    },
+    fontSize:'14px',
+  }),
+  singleValue: provided => ({
+    ...provided,
+    color:'black',
+    fontSize:'14px',
+  }),
+  placeholder: (defaultStyles) => {
+    return {
+        ...defaultStyles,
+        color: 'black',
+        fontSize:'14px',
+
+    }
+  }
+};
+
+// custom Drop down for gray 
+export const DropDownStylesGray = {
+  control: (base : any, state : any) => ({
+    ...base,
+    // This line disable the blue border
+    boxShadow: state.isFocused ? 0 : 0,
+    fontSize:'14px',
+    border:'2px solid #E2E2E3',
+    borderRadius:'5px',
+    '&:hover': {
+       border:'2px solid red'
+    },
+    color:"#E2E2E3",
+  }),
+  option: provided => ({
+    ...provided,
+    color: 'black',
+    background:'white',
+    fontSize:'14px',
+    '&:hover':{
+      color:'red'
+    }
+  }),
+  dropdownIndicator: base => ({
+    ...base,
+    color: "red",
+    fontWeight:'bold',
+    '&:hover' : {
+      color:'red',
+    },
+    fontSize:'14px',
+  }),
+  singleValue: provided => ({
+    ...provided,
+    color:'black',
+    fontSize:'14px',
+  }),
+  placeholder: (defaultStyles) => {
+    return {
+        ...defaultStyles,
+        color: 'gray',
+        fontSize:'14px',
+
+    }
+  }
+};
+
 
 export default {}

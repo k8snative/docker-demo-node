@@ -1,0 +1,302 @@
+@import "../../../styles/colors.scss";
+
+
+.Container {
+    display: flex;
+    flex-direction: column;
+    background-color: #FFF;
+    border: 0.5px solid $border;
+    border-radius: 5px;
+    padding: 20px 0;
+    margin-top: 20px;
+
+}
+
+.mobileContainer {
+    background-color: #F4F4F4;
+    padding: 20px;
+
+}
+
+.goBackWrapper {
+    background-color: #F4F4F4;
+    height: 182.35px;
+
+    @media screen and (max-width: 770px) {
+        height: 142.35px;
+
+    }
+
+    @media screen and (max-width: 430px) {
+        height: 50px;
+
+    }
+
+}
+
+.gobackcol {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.gobackdiv {
+    display: flex;
+    align-items: center;
+    width: 70%;
+
+    @media screen and (max-width: 430px) {
+        width: 100%;
+        margin-left: 10px;
+    }
+
+    &:hover{
+        cursor: pointer;
+    }
+}
+.gobackarrowmob{
+    height: 17px;
+    width: 8px;
+    margin-right: 3%;
+
+
+
+}
+
+.gobackarrow {
+    height: 17px;
+    width: 9px;
+    margin-right: 5%;
+
+    @media screen and (max-width: 430px) {
+        margin-right: 4%;
+    }
+}
+
+.gobacktxt {
+    font-size: 20px;
+    color: $color-text-secondary;
+
+    @media screen and (max-width: 430px) {
+        color: $color-primary;
+        font-size: 18px;
+        text-align: center;
+    }
+    @media screen and (max-width: 770px) {
+        font-size: 16px;
+
+
+    }
+
+
+}
+
+.pricediv {
+    display: flex;
+    flex-direction: row;
+
+    @media screen and (max-width: 430px) {
+        display: none;
+    }
+
+
+
+}
+
+.pricedivtxt {
+    font-size: 22px;
+    color: $color-primary;
+    padding-right: 10px;
+
+    @media screen and (max-width: 1024px) {
+        font-size: 20px;
+
+    }
+    @media screen and (max-width: 770px) {
+        font-size: 16px;
+
+
+    }
+
+}
+
+.pricedivtxtred {
+    font-size: 22px;
+    color: $color-text-secondary;
+    padding-right: 10px;
+
+    @media screen and (max-width: 1024px) {
+        font-size: 20px;
+    }
+    @media screen and (max-width: 770px) {
+        font-size: 16px;
+
+
+    }
+}
+
+
+
+.horizontalCard {
+    border-radius: 9px;
+    border: 1px solid #BCBCBC;
+    background-color: #FFF;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin-top: -4.5%;
+    margin-bottom: 2%;
+
+
+
+}
+
+
+
+.icondiv {
+    display: flex;
+    align-items: center;
+    width: 15%;
+    position: relative;
+    padding: 10px 15px;
+
+
+
+
+}
+
+.icondiv2 {
+
+    width: 20%;
+    margin-left: -5%;
+    margin-bottom: -0.5%;
+    z-index: 1;
+
+
+    @media screen and (max-width: 1024px) {
+        margin-bottom: -0.7%;
+    }
+
+    @media screen and (max-width: 770px) {
+        margin-bottom: -0.85%;
+        margin-left: -4%;
+
+    }
+
+
+}
+
+.backgroundimg {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    margin-left: -3%;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    margin-bottom: -0.2px;
+    background: rgb(162, 34, 45);
+    background: linear-gradient(90deg, rgba(162, 34, 45, 1) 0%, rgba(233, 20, 49, 1) 100%);
+
+
+    @media screen and (max-width: 1024px) {
+        margin-bottom: -0.28px;
+    }
+
+
+
+}
+
+.cardinnertext {
+    font-size: 20px;
+    color: #FFF;
+
+    @media screen and (max-width: 1024px) {
+        font-size: 16px;
+    }
+
+    @media screen and (max-width: 770px) {
+        font-size: 14px;
+    }
+}
+
+.cardinnertext2 {
+    font-size: 42px;
+    color: #FFF;
+
+
+    @media screen and (max-width: 1024px) {
+        font-size: 38px;
+    }
+
+    @media screen and (max-width: 770px) {
+        font-size: 27px;
+        line-height: 0.9;
+    }
+}
+
+.tabDataContainer {
+
+    background-color: #F4F4F4;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding-bottom: 30px;
+    // padding: 15px;
+    // padding-top: 13px;
+}
+
+.cardWrapper {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    background-color: #FFF;
+    padding: 20px;
+    width: 100%;
+
+    box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.16);
+    -webkit-box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.16);
+    -moz-box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.16);
+}
+
+.cardUpperDiv {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #707070;
+}
+
+.cardLowerDiv {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    flex-direction: column;
+}
+
+.mobcardImg {
+    width: 40%;
+}
+
+.mobcardpricetxt {
+    font-size: 23px;
+    color: $color-text-secondary;
+    font-weight: bold;
+}
+
+.lowerdivheading {
+    font-size: 20px;
+    color: $color-primary;
+    font-weight: bold;
+}
+
+.mobcardtxt {
+    font-size: 16px;
+    color: $color-primary;
+
+}
+
+.redDiv {
+    padding: 8px;
+    background-color: $color-text-secondary;
+    margin-bottom: 20px;
+}

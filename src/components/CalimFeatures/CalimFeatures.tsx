@@ -14,6 +14,7 @@ import SuperSimple from '../../../public/assets/superSimple.png'
 import whyChoose1 from '../../../public/assets/whyChoose1.png'
 import whyChoose2 from '../../../public/assets/whyChoose2.png'
 import whyChoose3 from '../../../public/assets/whyChoose3.png'
+import Cross from '../../../public/assets/cardcross.png'
 import BannerForm from '../BannerForm/BannerForm'
 import Columns from '../Columns/Columns'
 import styles from './CalimFeatures.module.scss'
@@ -90,7 +91,7 @@ const EachColumn = ({
       <p className={styles['whychooseHeadingtxt']}>{heading}</p>
       <div className="h-25 w-100 d-flex flex-column align-items-center justify-content-between">
         <p className={`${styles['whychoosetxt']}`}>{paraTxt}</p>
-        <p
+        {/* <p
           className={divOpen && isDesktopOrLaptop ? styles['empty'] : styles['whychoosetxtRed']}
           onClick={
             isDesktopOrLaptop
@@ -101,7 +102,7 @@ const EachColumn = ({
           }
         >
           {divOpen && isDesktopOrLaptop ? '' : 'Read More..'}
-        </p>
+        </p> */}
       </div>
       {divOpen && isDesktopOrLaptop ? (
         <div className={styles['modalContainer']}>
@@ -124,11 +125,8 @@ const EachColumn = ({
         setOpen={() => setModalOpen(false)}
         renderComponent={
           <div className={styles['modalContainer']}>
-            <span className={styles['cross']} onClick={() => setModalOpen(false)}>
-              X
-            </span>
             <div className="px-2">
-              <p className={styles['modalHeading']}>{heading}</p>
+              <p className={styles['modalHeading']} style={{display: 'flex', justifyContent: 'space-between'}}>{heading} <span className={styles['crossBtn']} onClick={() => setModalOpen(false)}><Image src={Cross} alt="" width={10} height={10} /></span></p>
 
               <p className={styles['modalsubTxt']}>{modalTxt}</p>
               <p className={styles['whychoosetxtRed']} onClick={onClick}>
@@ -151,10 +149,10 @@ const CalimFeatures = () => {
     window.open(`${process.env['NEXT_PUBLIC_DASHBOARD_ORIGIN']}register-claims/auto`)
   }
   const contactUs = () => {
-    router.push('/products/contactUs')
+    router.push('/contactUs')
   }
   const getStarted = () => {
-    router.push('/auth/auth')
+    router.push('/auth')
   }
   return (
     <div className={styles['wrapper']}>
@@ -170,8 +168,8 @@ const CalimFeatures = () => {
         </p>
         <Row className={`d-flex align-items-start justify-content-around ${styles['row']}`}>
           <EachColumn
-            heading="We’re Super Simple"
-            paraTxt="Takaful Bazaar offers a simple 3-step online claim process."
+            heading="We’re Simple"
+            paraTxt="Takaful Bazaar offers a simple and easy 3-step online claim process"
             modalTxt="
             You can face damages and thefts, but it doesn’t mean that you & your family have to bear the long & tiring claim process when you are already struggling in your hard times. Takaful Bazaar offers a simple 3-step online claim process; this can be done in minutes at your convenience.
             "
@@ -182,8 +180,8 @@ const CalimFeatures = () => {
           />
 
           <EachColumn
-            heading="We’re Paperless"
-            paraTxt="Our digital claim makes the whole coverage process easier & simpler."
+            heading="We’re Hassle-free"
+            paraTxt="Digital claims makes the whole process easier & simpler"
             modalTxt="
             No one wants to take time to fill out an extensive claim form, especially when you want to file a claim as early as possible. That’s why Takaful Bazaar has introduced a hassle-free and partial digital claim process. Now you can check the status of your claim online anytime, anywhere.
             "
@@ -195,12 +193,12 @@ const CalimFeatures = () => {
           <EachColumn
             img={isDesktopOrLaptop ? whyChoose3c : whyChoose3}
             image={'WhyChoose3c.png'}
-            heading="We’re Available 24/7!"
-            paraTxt="Get instant assistance after theft or damage on your auto claims. "
+            heading="We’re Available 24/7"
+            paraTxt="Get round the clock assistance on your auto claims"
             modalTxt="
             Want to make a claim immediately after an accident or loss? No need to wait, as TB’s hardworking customer service agents are available day & night to give you immediate assistance with your claim needs.
             "
-            modalRedTxt="Hello Team-TB"
+            modalRedTxt="Contact Team-TB"
             onClick={contactUs}
           />
         </Row>

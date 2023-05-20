@@ -1,0 +1,367 @@
+@import "../../../styles/colors.scss";
+
+.wrapper {
+    padding-top: 30px;
+    background-color: #F2F2F3;
+    // overflow: auto;
+    // max-height: 100vh;
+}
+
+.ProductPlanFiltersContainer {
+    padding: 0 0 0 10px;
+    // padding-left: 4px;
+    border: 3px solid #E2E2E3;
+    border-radius: 5px;
+    background-color: #fff;
+    height: max-content;
+    overflow-x: visible;
+
+    @media screen and (max-width: 580px) {
+        display: none;
+    }
+}
+
+.ProductPlanFiltersInnerContainer {
+    width: 100%;
+    background: transparent;
+    overflow-y: scroll;
+
+
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* Internet Explorer 10+ */
+
+    &::-webkit-scrollbar {
+        /* WebKit */
+        width: 0;
+        height: 0;
+    }
+}
+
+.compare-cont {
+    z-index: 4;
+}
+
+.compareWrapper {
+    padding-right: 12px;
+    padding-left: 1px;
+
+    @media screen and (max-width: 992px) {
+        flex-direction: column;
+    }
+
+    @media screen and (max-width: 769px) {
+        padding-right: 8px;
+    }
+
+    @media screen and (max-width: 425px) {
+        padding: 0;
+    }
+}
+
+.compareContainer {
+    border: 2px solid #E2E2E3;
+    background-color: #fff;
+    width: 80%;
+    border-right: 0;
+
+    @media screen and (max-width: 992px) {
+        border-bottom: 0;
+        width: 100%;
+    }
+}
+
+.compareCardContainer {
+    border-right: 2px solid #E2E2E3;
+    width: 33%;
+    min-width: 33%;
+    max-width: 33%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    // justify-content: space-between;
+    // padding: 0 0 0 1%;
+    height: 150px;
+    position: relative;
+
+    @media screen and (max-width: 992px) {
+        width: 29%;
+    }
+
+    @media screen and (max-width: 768px) {
+        flex-direction: column;
+        height: 170px;
+    }
+}
+
+.cursorPointer {
+    cursor: pointer;
+}
+
+.compareButton {
+    padding: 6px;
+    border-radius: 4px;
+    cursor: not-allowed;
+    display: flex;
+    background-color: #E2E2E3;
+    border: 1px solid #A8A8A8;
+    align-items: center;
+    justify-content: center;
+}
+
+.compareBtnTxt {
+    margin: 0;
+    font-size: 15px;
+
+    @media screen and (max-width: 450px) {
+        font-size: 20px;
+    }
+
+}
+
+.crossImgContainer {
+    width: 20px;
+    top: 5px;
+    right: 5px;
+    z-index: 1;
+    cursor: pointer;
+}
+
+.compareImgContainer {
+    min-width: 40%;
+    // max-width: 50%;
+    min-height: 40%;
+
+    @media screen and (max-width: 768px) {
+        // margin: 5% 0;
+        // margin-top: 10%;
+        margin-top: 25px;
+        min-width: 90%;
+        min-height: 30%;
+        // max-width: 90%;
+    }
+
+    @media screen and (max-width: 426px) {
+        // margin-top: 10%;
+    }
+}
+
+.compareRightContainer {
+    max-width: 60%;
+    display: flex;
+    flex-direction: column;
+    // align-items: center;
+    justify-content: center;
+
+    @media screen and (max-width: 768px) {
+        min-width: 100%;
+        justify-content: flex-start;
+        margin: 0;
+        margin-top: 5%;
+        padding: 0 1%;
+    }
+}
+
+.compareCardTxt {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 500;
+    color: $color-primary;
+    margin-left: 3px;
+
+    @media screen and (max-width: 768px) {
+        // margin-left: 3%;
+    }
+
+    @media screen and (max-width: 426px) {
+        font-size: 11px;
+    }
+}
+
+.comparePriceTxt {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 500;
+    color: $color-text-secondary;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+
+    @media screen and (max-width: 1400px) {
+        font-size: 26px;
+    }
+
+    @media screen and (max-width: 1200px) {
+        font-size: 20px;
+    }
+
+    @media screen and (max-width: 993px) {
+        font-size: 16px;
+        // font-weight: 700;
+    }
+
+    @media screen and (max-width: 768px) {
+        font-size: 22px;
+    }
+
+    @media screen and (max-width: 426px) {
+        font-size: 18px;
+    }
+
+    @media screen and (max-width: 334px) {
+        font-size: 16px;
+        font-weight: 0;
+    }
+}
+
+.compareSeparator {
+    border: 0;
+    border-left: 2px solid #E2E2E3;
+    height: 150px;
+
+    @media screen and (max-width: 768px) {
+        height: 260px;
+    }
+
+    @media screen and (max-width: 426px) {
+        height: 220px;
+    }
+}
+
+.compareSeparatorDisposable {
+    border: 0;
+    border-left: 2px solid #E2E2E3;
+    height: 150px;
+
+    @media screen and (max-width: 992px) {
+        display: none;
+    }
+}
+
+.btnContainer {
+    border: 2px solid #E2E2E3;
+    border-left: 0;
+    min-width: 20%;
+    max-width: 20%;
+    padding: 0 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #fff;
+
+    @media screen and (max-width: 992px) {
+        display: none;
+    }
+}
+
+.btnMobileContainer {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+
+    @media screen and (min-width: 993px) {
+        display: none;
+    }
+}
+
+.compareBtnMobile {
+    width: 50%;
+    background-color: #E61531;
+}
+
+.compareBtnMobileTxt {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 21px;
+    margin: 3% 0;
+}
+
+.clearAllBtnMobile {
+    width: 50%;
+    background-color: #BDBCBC;
+}
+
+.clearAllBtn {
+    border: 1px solid $color-text-secondary;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.clearAllTxt {
+    margin: 3% 0;
+    color: $color-primary;
+}
+
+.prodPlanConAdvWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+
+    @media screen and (max-width: 600px) {
+        display: none;
+    }
+}
+
+.prodPlanConAdvContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    margin: 5% 0;
+
+}
+
+.mainHeading {
+    font-size: 25px;
+    margin: 1% 0;
+    color: $color-primary;
+
+    @media screen and (max-width: 580px) {
+        display: none;
+    }
+
+    &:hover {
+        cursor: context-menu;
+    }
+}
+
+.wrapperMobileFilter {
+    // border: 10px solid greenyellow;
+    position: absolute;
+    top: 65px;
+    // top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    // height: 100vh;
+    background-color: rgb(112, 112, 112, 0.9);
+    z-index: 3;
+
+    // display: none;
+    @media screen and (min-width: 581px) {
+        display: none;
+    }
+}
+
+.containerMobileFilter {
+    // border: 10px solid green;
+    background-color: #fff;
+    margin: 0 15% 0 0;
+    padding: 0 5%;
+    position: fixed;
+    overflow: auto;
+    height: calc(100vh - 70px);
+}
+
+.sticky {
+    position: sticky;
+    top: 130px;
+    // max-height: 200px;
+    // overflow: auto;
+}

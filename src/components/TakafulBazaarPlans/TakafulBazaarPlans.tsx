@@ -37,7 +37,7 @@ const TriStepsMob = ({
       </>
     ) : (
       <>
-        <div className={styles['triStepMobRightContainer']}>
+        <div className={styles['triStepMobRightContainerSecond']}>
           <div className={`d-flex align-items-center`}>
             <div className={styles['stepRowMob']}>
               <Image priority={true} width={'100%'} height={'100%'} src={stepHeading} alt="" />
@@ -78,14 +78,14 @@ const TakafulBazaarPlansWeb = () => (
         <Col className={`d-flex flex-column align-items-center ${styles['col']}`}>
           <p className={` ${styles['colHeading']}`}>
             Three Steps To Buying
-            <span className={` ${styles['redTxt']}`}> the Right Coverage</span>
+            <span className={` ${styles['redTxt']}`}> the Right Takaful Plan</span>
           </p>
-          <p className={` ${styles['subTxt']}`}>Get covered in 3 simple steps</p>
+          {/* <p className={` ${styles['subTxt']}`}>Get covered in 3 simple steps</p> */}
         </Col>
       </Row>
       <Row className={`d-flex ${styles['row']}`}>
-        <TriSteps img={step1} heading="Click" txt="Just fill in a few simple details" />
-        <TriSteps img={step2} heading="Compare" txt="Find the best value from leading takaful carriers" />
+        <TriSteps img={step1} heading="Click" txt="Just fill in a few simple details to get started" />
+        <TriSteps img={step2} heading="Compare" txt="Find the best products and prices from Pakistan’s leading Takaful Companies" />
         <TriSteps img={step3} heading="Cover" txt="Get covered from your choice of Takaful provider" />
       </Row>
     </Container>
@@ -93,10 +93,10 @@ const TakafulBazaarPlansWeb = () => (
 )
 const TakafulBazaarPlansMob = () => (
   <div className={`d-flex flex-column align-items-center align-items-center ${styles['mobContain']}`}>
-    <p className={styles['mobHeading']}>Three Steps To Buying The Right Coverage</p>
-    <p className={styles['mobtxt']}>Get covered in 3 simple steps</p>
+    {/* <p className={styles['mobHeading']}>Three Steps To Buying The Right Coverage</p> */}
+    {/* <p className={styles['mobtxt']}>Get covered in 3 simple steps</p> */}
     <TriStepsMob img={step1} headingNo={1} heading="Click" txt="Just fill in a few simple details" />
-    <TriStepsMob img={step2} headingNo={2} heading="Compare" txt="Find the best value from leading takaful carriers" />
+    <TriStepsMob img={step2} headingNo={2} heading="Compare" txt="Find the best products and prices from Pakistan’s leading Takaful Companies" />
     <TriStepsMob img={step3} headingNo={3} heading="Cover" txt="Get covered from your choice of Takaful provider" />
   </div>
 )

@@ -95,7 +95,16 @@ const Compare = () => {
         price: amount[i],
         id: ids[i],
         policyType: APICompareData[i]?.PolicyType?.name,
-      }
+        policy_type_id: APICompareData[i]?.PolicyType?.id,
+        annual_contribution: amount[i],
+        addon_amount: (APICompareData[i]?.addon_amount || 0),
+        insurance_rate: APICompareData[i]?.insurance_rate,
+        company_logo_url: APICompareData[i]?.CompanySetup?.logo,
+        policy_name: APICompareData[i]?.name,
+        promotion_coupon_id: APICompareData[i]?.promotion_coupon_id,
+        promotion_discount_type: APICompareData[i]?.promotion_discount_type,
+        promotion_discount_value: APICompareData[i]?.promotion_discount_value,
+        }
       for (let j = 0; j < allCoverages.length; j += 1) {
         if (allCoverages[j]?.status) {
           tempCompareData[i].details[j] = {

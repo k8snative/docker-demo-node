@@ -2,7 +2,7 @@ import Image, { StaticImageData } from 'next/image'
 import { ReactNode, useState } from 'react'
 import { Col, Modal } from 'react-bootstrap'
 import { useMediaQuery } from 'react-responsive'
-
+import Cross from '../../../public/assets/cardcross.png'
 import styles from './Columns.module.scss'
 
 type AllColumnsProps = {
@@ -32,16 +32,16 @@ const Columns = ({ image, heading, text, modalHeading, modalText, onClick, link 
       <Image width="180px" height="160px" src={image} alt="" />
       <p className={styles['headingText']}>{heading}</p>
       <p className={styles['paraText']}>{text}</p>
-      <p className={styles['whychoosetxtRed']} onClick={() => setModalOpen(true)}>
+      {/* <p className={styles['whychoosetxtRed']} onClick={() => setModalOpen(true)}>
         Read More..
-      </p>
+      </p> */}
       <CustomModal
         open={modalOpen}
         setOpen={() => setModalOpen(false)}
         renderComponent={
           <div>
             <div className={styles['modalContainer']}>
-              <p className={styles['modalHeading']}>{modalHeading}</p>
+              <p className={styles['modalHeading']} style={{display: 'flex', justifyContent: 'space-between'}}>{modalHeading} <span className={styles['crossBtn']} onClick={() => setModalOpen(false)}><Image src={Cross} alt="" width={10} height={10} /></span></p>
               <p className={styles['modalsubTxt']}>{modalText}</p>
               <p className={styles['modalsubTxtRed']} onClick={onClick}>
                 {link}

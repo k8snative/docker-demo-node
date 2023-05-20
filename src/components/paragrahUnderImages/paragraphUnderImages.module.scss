@@ -1,0 +1,226 @@
+@import "../../styles/colors.scss";
+
+.wrapper {
+    // border: 10px solid black;
+    width: 100%;
+    background-color: #fff;
+
+    @media (max-width: 450px) {
+        margin-bottom: 30%;
+    }
+}
+
+.container {
+    //  border: 10px solid green;
+    margin-bottom: 5%;
+    width: 100%;
+}
+
+.whyChooseHeading {
+    margin: 4% 0 0.5% 0;
+    font-size: 25px;
+    color: $color-primary;
+    text-align: center;
+    font-weight: bold;
+
+    @media (max-width: 450px) {
+        margin-top: 10%;
+        font-size: 20px;
+    }
+}
+
+.TakafulRedText {
+    margin: 4% 0 0.5% 0;
+    font-size: 25px;
+    color: $color-text-secondary;
+    text-align: center;
+
+    @media (max-width: 450px) {
+        margin-top: 10%;
+        font-size: 20px;
+
+    }
+}
+
+.factsText {
+    color: $color-primary;
+
+    text-align: center;
+
+    font-size: 16px;
+    color: #515151;
+    text-align: center;
+    margin: 0 30px;
+    margin-bottom: 3%;
+
+
+    @media (max-width: 450px) {
+        margin-top: 10%;
+    }
+}
+
+.row {
+    // border: 10px solid blue;
+
+}
+
+.col {
+    // border: 10px solid yellow;
+    margin: 0.2% 0;
+    padding: 1%;
+
+
+    // justify-content: center;
+    @media (max-width: 450px) {
+        margin: 5% 0;
+
+
+    }
+}
+
+.whychooseHeadingtxt {
+    font-size: 18px;
+    color: $color-primary;
+    margin: 5% 0 0 0;
+    padding: 0;
+    font-weight: 700;
+
+    @media (max-width: 450px) {
+        // font-size: 18;
+    }
+}
+
+.whychoosetxt {
+    color: $color-primary;
+    font-size: 16px;
+    text-align: center;
+    margin: 0 8%;
+    padding: 0;
+
+    @media (max-width: 450px) {
+        font-size: 16px;
+    }
+
+}
+
+.whychoosetxtRed {
+    color: $color-text-secondary;
+    font-size: 16px;
+    padding: 0;
+    font-style: italic;
+
+    &:hover {
+        cursor: pointer;
+        opacity: 0.5;
+    }
+
+    @media (max-width: 450px) {
+        margin-top: 5%;
+        font-size: 18px;
+        text-align: center;
+    }
+}
+
+.modalContainer {
+    // border: 2px solid #707070;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+}
+
+.modalContainer2 {
+    // border: 2px solid #707070;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    // padding: 10px;
+
+}
+
+.empty {
+    margin: 0;
+    padding: 0;
+}
+
+
+.modalHeading {
+    color: $color-primary;
+    font-size: 26px;
+}
+
+.crossBtn {
+    img {
+        position: relative !important;
+        width: auto !important;
+        height: auto !important;
+        top: -5px !important;
+        cursor: pointer;
+    }
+}
+
+.modalTxt {
+    color: $color-primary;
+    font-size: 18px;
+}
+
+.signUpText {
+    color: $color-text-secondary;
+    font-size: 18px;
+    cursor: pointer;
+    font-style: italic;
+
+    @media (max-width: 450px) {
+        margin-top: 5%;
+
+        text-align: center;
+    }
+
+}
+
+.modalTxt2 {
+
+    color: $color-primary;
+    font-size: 18px;
+    text-align: center;
+    margin-top: 5px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.lists {
+    margin-left: 25px;
+    margin-right: 25px;
+}
+
+
+.modalLi {
+    color: $color-primary;
+    font-size: 16px;
+}
+
+.modalsubTxt {
+    color: $color-primary;
+    font-size: 12px;
+}
+
+.modalsubTxt2 {
+    color: $color-primary;
+    font-size: 16px;
+    margin-right: 18px;
+    margin-left: 18px;
+
+
+}
+.TakafulRedText {
+    margin: 4% 0 0.5% 0;
+    font-size: 25px;
+    color: $color-text-secondary;
+    text-align: center;
+
+    @media (max-width: 450px) {
+        margin-top: 10%;
+        font-size: 20px;
+
+    }
+}

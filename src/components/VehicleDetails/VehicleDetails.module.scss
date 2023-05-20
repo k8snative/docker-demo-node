@@ -18,8 +18,8 @@
         margin-bottom: 2.8%;
     }
 
-    @media screen and (max-width:770px) {
-        margin-bottom: 2%;
+    @media screen and (max-width:500px) {
+        margin-bottom: 5%;
     }
 
     .textarea[disabled] {
@@ -33,7 +33,8 @@
     color: $color-text-secondary;
 
     @media screen and (max-width:430px) {
-        color: $color-primary
+        color: $color-primary;
+        display: none
     }
 }
 
@@ -57,7 +58,7 @@
     }
 
     @media screen and (max-width: 430px) {
-        font-size: 17px;
+        font-size: 12px;
 
     }
 }
@@ -210,6 +211,7 @@
 
     @media screen and (max-width: 430px) {
         background-color: #FFF;
+        margin-top: 15px 0;
 
     }
 }
@@ -242,9 +244,10 @@
 .inputBorder {
     border: 0.7px solid $border;
     border-radius: 5px;
-    background-color: #fff;
+    background-color: #DCDCDC;
     height: 40px;
     width: 100%;
+    color: $border;
 
 }
 
@@ -365,7 +368,7 @@
 }
 
 .submitButton {
-    width: 30%;
+    width: 25%;
     align-items: center;
     justify-content: center;
     display: flex;
@@ -374,4 +377,55 @@
     @media screen and (max-width: 770px) {
         width: 100%;
     }
+}
+
+.form__input-group {
+    height: 58px;
+    margin: 15px 0;
+    width: 100%;
+    position: relative;
+    display: flex;
+}
+
+.form__input {
+    width: 100%;
+    padding: 10px;
+    border: 0.7px solid #939393;
+    border-radius: 5px;
+    transition: border 0.25s ease-in-out;
+    font-size: 16px;
+    height: 100%;
+    // text-align: center;
+
+    input:focus {
+        box-shadow: none;
+        border: none;
+    }
+
+    &:not(:placeholder-shown) {
+        outline: none;
+        border: 0.7px solid #939393;
+    }
+
+    &:focus {
+        outline: none;
+        border: 0.7px solid #939393;
+    }
+}
+
+.form__input-label {
+    color: $border;
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    font-size: 16px;
+    transform: translateY(-50%);
+    transition: all 0.25s ease-in-out;
+}
+
+.form__input-label {
+    top: 0;
+    background-color: #fff;
+    font-size: 12px;
+    padding: 0 10px;
 }

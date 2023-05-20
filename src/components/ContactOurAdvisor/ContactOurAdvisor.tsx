@@ -27,14 +27,14 @@ const ContactOurAdvisorWeb = () => (
 )
 
 const ContactOurAdvisorMob = () => (
-  <Link href="/products/contactUs">
+  <Link href="/contactUs">
     <div className={styles['mwrapper']}>
       <Container>
         <div className={`d-flex  align-items-center justify-content-center ${styles['mcontactadvisor']}`}>
           <div className={`d-flex ${styles['micon']}`}>
             <Image src={WHeadphones} alt="headphones" objectFit="contain" />
           </div>
-          <p className={`m-0 ${styles['madvisorpara']}`}>Hello Team - TB</p>
+          <p className={`m-0 ${styles['madvisorpara']}`}>Contact Team - TB</p>
         </div>
       </Container>
     </div>
@@ -50,7 +50,7 @@ const ContactOurAdvisor = ({
 }) => (
   <>
     <MediaQuery minWidth={475}>
-      <ContactOurAdvisorWeb />
+      {/* <ContactOurAdvisorWeb /> */}
     </MediaQuery>
     <MediaQuery maxWidth={475}>
       {categoriesVisible ? (

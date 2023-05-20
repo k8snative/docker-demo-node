@@ -2,6 +2,7 @@ import CryptoJS from 'crypto-js'
 
 import { store } from './redux'
 import { logout } from './redux/auth/action'
+import Router from 'next/router';
 
 const apiOrigin = process.env['NEXT_PUBLIC_API_ORIGIN']
 export default async function Api(method: string, path: string, data?: any, isUrlEncoded = false, isFormData = false) {
@@ -36,6 +37,7 @@ export default async function Api(method: string, path: string, data?: any, isUr
     body = data
   } else if (data && !isUrlEncoded && !isFormData) {
     const encrypted = await CryptoJS.AES.encrypt(JSON.stringify(data), process.env['NEXT_PUBLIC_ENCRYPTION_KEY'])
+
     body = { encrypted: true, data: encrypted.toString() }
   }
   try {
@@ -50,6 +52,7 @@ export default async function Api(method: string, path: string, data?: any, isUr
 
       if (response.status === 503 || response.status === 401 || response.status === 400) {
         store.dispatch(logout())
+        Router.push('/auth');
       }
     }
   } catch (error) {
@@ -72,6 +75,7 @@ export default async function Api(method: string, path: string, data?: any, isUr
     if (response.status === 503 || response.status === 401 || response.status === 400) {
       const json = await response.json()
       store.dispatch(logout())
+      Router.push('/auth');
       return json
     }
 

@@ -3,7 +3,9 @@
 .wrapper {
     width: 100%;
     padding: 2% 0;
+    // padding-bottom: 200px;
     max-height: calc(100vh - 200px);
+    // max-height: 100vh;
     background: transparent;
 
     scrollbar-width: none;
@@ -69,10 +71,15 @@
 
 
 // }
-
-
+.mobHeading {
+    @media screen and (min-width: 580px) {
+        display: none;
+    }
+}
 
 .mainHeading {
+    padding-top: 20px;
+    font-weight: bold;
     font-size: 25px;
     margin: 1% 0;
     color: $color-primary;
@@ -93,6 +100,7 @@
 
     @media screen and (max-width: 580px) {
         font-size: 18px;
+        font-weight: 600;
     }
 
     &:hover {
@@ -102,6 +110,7 @@
 
 .mobileHeading {
     font-size: 18px;
+    font-weight: 600;
     margin: 1% 0;
     color: $color-primary;
 
@@ -127,7 +136,7 @@
 
 .mobileSeparator {
     border: 0;
-    border-bottom: 2px solid #E2E2E3;
+    border-bottom: 1px solid #E2E2E3;
     margin: 8% 0;
     padding: 0;
 
@@ -158,6 +167,11 @@
     max-width: 12px;
     margin-right: 8%;
 
+    @media screen and (max-width: 764px) {
+        max-width: 18px;
+
+    }
+
     @media screen and (max-width: 1000px) {
         margin-right: 5%;
     }
@@ -175,9 +189,11 @@
         font-size: 12px;
     }
 
-    @media screen and (max-width: 580px) {
-        font-size: 18px;
+    @media screen and (max-width: 450px) {
+        font-size: 16px;
+        width: 250px;
     }
+
 }
 
 .iImgContainer {
@@ -209,6 +225,7 @@
     top: -8px;
     display: flex;
     justify-content: flex-end;
+    z-index: 2000000;
 }
 
 .infoContainer {
@@ -266,7 +283,18 @@
 }
 
 .btnMob {
-    width: 100%;
+    // width: 100%;
+    // position: fixed;
+    // top: 0;
+    // z-index: -10000;
+    // height: 200px;
+    // bottom: -200px;
+    // bottom: px;
+    position: sticky;
+    bottom: 0;
+    padding-bottom: 25%;
+    background-color: white;
+    z-index: 10000;
 
 
     @media screen and (min-width: 581px) {

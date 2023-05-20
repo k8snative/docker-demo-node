@@ -14,6 +14,10 @@
     // margin: 5% 5px;
 }
 
+.newRateTxtSmall {
+    font-size: 16px;
+}
+
 .compareContainer {
     border: 2px solid #A8A8A8;
     position: absolute;
@@ -46,11 +50,11 @@
 }
 
 .redBorder {
-    border: 2px solid $color-border;
+    border: 1px solid $color-border;
 }
 
 .greyBorder {
-    border: 2px solid #E2E2E3;
+    border: 1px solid #E2E2E3;
 }
 
 .leftContainer {
@@ -75,9 +79,15 @@
     }
 }
 
+.newRateTxtSmallDel {
+    margin-bottom: 0px;
+    font-size: 14px;
+    color: $color-primary;
+}
+
 .priceMainTxt {
     margin: 0;
-    margin-top: 20%;
+    // margin-top: 20%;
     font-size: 22px;
     font-weight: 600;
     color: $color-text-secondary;
@@ -101,7 +111,7 @@
 .separatorMob {
     padding: 0;
     border: 0;
-    border-bottom: 2px solid #E2E2E3;
+    border-bottom: 1px solid #E2E2E3;
     width: 100%;
 }
 
@@ -113,7 +123,7 @@
 }
 
 .lblTxt {
-    margin: 2% 0;
+    margin: 5% 0;
     font-size: 13px;
     font-weight: 500;
     color: $color-primary;
@@ -128,42 +138,42 @@
 .tabHeading {
     margin: 10px 0;
     font-weight: 500;
-    font-size: 18px;
+    font-size: 16px;
 }
 
 .tabSubHeadingContainer {
-    background-color: #E2E2E3;
+    background-color: #f1f1f1;
     padding: 3px 0;
 }
 
 .tabSubHeading {
     margin: 8px 0;
     font-weight: 500;
-    font-size: 17px;
+    font-size: 16px;
     color: $color-primary;
 }
 
 .tabDataTxt {
     margin: 3px 0;
     color: $color-primary;
-    font-size: 17px;
+    font-size: 16px;
     font-weight: 300;
 }
 
 .boolImgContainerCross {
-    width: 18px;
-    min-width: 18px;
-    max-width: 18px;
+    width: 13px;
+    // min-width: 16px;
+    // max-width: 16px;
 }
 
 .boolImgContainerTick {
-    width: 24px;
-    min-width: 24px;
-    max-width: 24px;
+    width: 16px;
+    min-width: 16px;
+    max-width: 16px;
 }
 
 .dropImgContainer {
-    width: 20px;
+    width: 13px;
 }
 
 .showMoreContainer {
@@ -197,7 +207,7 @@
 }
 
 .pickContainer {
-    border: 2px solid $color-border;
+    border: 1px solid $color-border;
     width: 40%;
     display: flex;
     align-items: center;
@@ -215,7 +225,7 @@
 
 .pickTxt {
     margin: 4px 5px 8px 0;
-    font-size: 13px;
+    font-size: 12px;
     color: $color-text-secondary;
 }
 

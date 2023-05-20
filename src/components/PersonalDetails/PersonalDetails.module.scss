@@ -33,7 +33,7 @@
     border: 0.5px solid $border;
     border-radius: 5px;
     padding: 20px;
-    background-color: #F6F6F6;
+    background-color: #FFF;
     margin-top: 10px;
 
     @media screen and (max-width:430px) {
@@ -60,7 +60,7 @@
     color: $border;
 
     @media screen and (max-width:430px) {
-        font-size: 18px;
+        font-size: 16px;
 
     }
 }
@@ -77,14 +77,14 @@
     font-size: 20px;
 
     @media screen and (max-width: 770px) {
-
-        font-size: 17px;
+        font-weight: 400;
+        font-size: 16px;
 
     }
 
     @media screen and (max-width: 430px) {
 
-        font-size: 17px;
+        font-size: 16px;
         width: 100%;
     }
 }
@@ -176,6 +176,18 @@
     font-size: 14px;
     color: $color-primary;
 
+    @media screen and (max-width: 430px) {
+        font-size: 12px;
+        font-style: italic;
+    }
+
+}
+
+.note_details {
+    font-size: 14px;
+    color: $color-primary;
+
+
 }
 
 .notetxt {
@@ -184,8 +196,18 @@
 
     @media screen and (max-width: 430px) {
         font-weight: bold;
+        font-size: 12px;
     }
 
+}
+
+.dropdown-input {
+    height: 58px;
+
+    @media screen and (max-width: 500px) {
+        height: 54px;
+        margin: 15px 0;
+    }
 }
 
 .inputBorder {
@@ -208,7 +230,7 @@
 }
 
 .submitButton {
-    width: 30%;
+    width: 25%;
     align-items: center;
     justify-content: center;
     display: flex;
@@ -217,4 +239,12 @@
     @media screen and (max-width: 770px) {
         width: 100%;
     }
+}
+
+.custom-width-checkbox {
+    width: 0.3%;
+}
+
+.same-as-text-color {
+    color: #ff3333;
 }

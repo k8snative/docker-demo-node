@@ -2,6 +2,10 @@
 
 .goBackImgContainer {
     width: 10px;
+
+    @media screen and (max-width: 450px) {
+        width: 8px;
+    }
 }
 
 .goBackTxt {
@@ -10,7 +14,7 @@
     margin: 0 10px;
 }
 
-.cursorPointer{
+.cursorPointer {
     display: flex;
     align-items: center;
     justify-content: center;

@@ -15,12 +15,11 @@ const DocumentCheckList = () => (
           <p className={styles['heading']}>
             Documents <span className={styles['headingInRed']}> Checklist </span>
           </p>
-          <p className={styles['paragraph']}>
-            Don’t know what documents you need to file a claim after theft and damage? Scroll down the list and gather
-            your documents to file a claim:
-          </p>
+          {/* <p className={styles['paragraph']}>
+          following are the documents required for filing auto claims:
+          </p> */}
 
-          <div className={`w-50 ${styles['tabsStyle']}`}>
+          <div className={`w-100 ${styles['tabsStyle']}`}>
             <DocumentListTabs />
           </div>
         </Container>

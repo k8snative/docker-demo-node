@@ -1,11 +1,11 @@
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { ChangeEvent, useEffect, useState } from 'react'
-import { isValidPhoneNumber } from 'react-phone-number-input'
-import { connect } from 'react-redux'
+// import { isValidPhoneNumber } from 'react-phone-number-input'
+import { connect, useSelector } from 'react-redux'
 import Api from 'src/lib/api'
 import { setCurrentUser as setCurrentUserRedux } from 'src/lib/redux/auth/action'
-import { validateEmail, validateName, validatePhoneNo } from 'src/lib/utils'
+import { validateEmail, validateName, validateOTP, validatePhoneNo, validatePhoneNoPersonalInfo } from 'src/lib/utils'
 
 import arrowBack from '../../../public/assets/arrowBack.png'
 import FormBottomContainer from '../FormBottomContainer/FormBottomContainer'
@@ -15,6 +15,7 @@ import FormTopContainer from '../FormTopContainer/FormTopContainer'
 import FormTxt from '../FormTxt/FormTxt'
 import SignInInputs from '../SignInInputs/SignInInputs'
 import styles from './FloatingForm.module.scss'
+
 
 type SignUpInputsProps = {
   mobile_no: string
@@ -112,18 +113,18 @@ const SignUpInputs = ({
       value={mobile_no}
       onChange={(value: any) => {
         handleOnChange(null, 'mobile_no', value)
-        // console.log('mobile', value)
       }}
       sendOTP={sendOTP}
       errTxt={error?.mobile_no}
       handleOTP={handleOTP}
       otpSteps={otpSteps}
       isLoading={isLoading}
+      
       curStep={curStep}
       focusOutFunc={() => {
         let errMes = ''
         if (!mobile_no) errMes = 'Number is empty'
-        else if (!isValidPhoneNumber(mobile_no)) errMes = 'Invalid Number'
+        // else if (!validatePhoneNoPersonalInfo(mobile_no)) errMes = 'Invalid Number'
         else errMes = ''
         const tempData = { ...error, mobile_no: errMes }
         setError(tempData)
@@ -139,7 +140,7 @@ const SignUpInputs = ({
       focusOutFunc={() => {
         let errMes = ''
         if (!otpCode) errMes = 'Enter Otp Code'
-        // else if (!validatePhoneNo(mobile_no)) errMes = 'Invalid Number'
+        else if (!validateOTP(otpCode)) errMes = 'Invalid Number'
         else errMes = ''
         const tempData = { ...error, otpError: errMes }
         setError(tempData)
@@ -149,7 +150,7 @@ const SignUpInputs = ({
 )
 
 const FloatingForm = ({ setCurrentUser }: { setCurrentUser: Function }) => {
-  const router = useRouter()
+  const router = useRouter();
   const [error, setError] = useState({})
   const [isSignIn, setSignIn] = useState(false)
 
@@ -157,19 +158,21 @@ const FloatingForm = ({ setCurrentUser }: { setCurrentUser: Function }) => {
   const [activeSignUp, setActiveSignUp] = useState(true)
 
   const [termChecked, isTermChecked] = useState(false)
+  const {leadData} = useSelector(state => state.auth)
   const [signUpData, setSignupData] = useState<SignUpInputsProps>({
-    mobile_no: '',
-    emailNo: '',
-    email: '',
+    mobile_no: leadData?.number || '+92',
+    emailNo: leadData?.emailState,
+    email: leadData?.emailState,
     otpCode: '',
     last_name: '',
-    first_name: '',
+    first_name: leadData?.name,
   })
   const [signInData, setSignInData] = useState<SignInInputsProps>({
-    mobile_no: '',
-    emailNo: '',
+    mobile_no: leadData?.number,
+    emailNo: leadData?.emailState,
     otpCode: '',
   })
+  const [isEmail, setIsEmail] = useState(true);
 
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [isSignupLoading, setIsSignupLoading] = useState<boolean>(false)
@@ -178,8 +181,14 @@ const FloatingForm = ({ setCurrentUser }: { setCurrentUser: Function }) => {
     if ((router.query['redirect'] as string) === '/payment') {
       return '/productPlan'
     }
-    return '/products/health'
+    return '/'
   }
+
+  useEffect(() => {
+    if ((router.query['redirect'] as string) === '/payment') {
+      setSignIn(true);
+    }
+  }, [])
 
   const [secondsSignIn, setSecondsSignIn] = useState(0)
   const [secondsSignUp, setSecondsSignUp] = useState(0)
@@ -234,14 +243,29 @@ const FloatingForm = ({ setCurrentUser }: { setCurrentUser: Function }) => {
   }, [curStepSignUp, secondsSignUp])
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement> | null, name?: string, value?: string) => {
-    // var e = e
+    if (e?.target?.name === 'emailNo') {
+      const emailNumValue = e.target.value;
+      let tempError = error
+      if (!emailNumValue?.length)
+        tempError = { ...tempError, emailNo: 'Email or Mobile Number cannot be empty' }
+      else if (
+        emailNumValue?.length > 0 &&
+        isEmail ? !validateEmail(emailNumValue) : !validatePhoneNoPersonalInfo(emailNumValue)
+      ) {
+        tempError = { 
+          ...tempError, 
+          emailNo: 'Please enter valid email or number with valid country code' 
+        }
+      }
+      else {
+        tempError = { 
+          ...tempError, 
+          emailNo: ''
+        }
+      }
+      setError(tempError)
+    }
     if (isSignIn) {
-      // if (isNaN(+e.target.value)) {
-      //   e.target.value = null
-      // }
-      // if (!isNaN(+e.target.value) && e.target.value.length > 11) {
-      //   e.target.value = e.target.value.slice(0, 11)
-      // }
       if (name && value) {
         setSignupData({
           ...signUpData,
@@ -269,10 +293,10 @@ const FloatingForm = ({ setCurrentUser }: { setCurrentUser: Function }) => {
     let isValidated = false
     let tempError = {}
 
-    if (!isValidPhoneNumber(signUpData?.mobile_no)) {
-      tempError = { ...tempError, mobile_no: 'Invalid Number' }
-      isValidated = true
-    }
+    // if (!validatePhoneNoPersonalInfo(signUpData?.mobile_no)) {
+    //   tempError = { ...tempError, mobile_no: 'Invalid Number' }
+    //   isValidated = true
+    // }
     if (!signUpData?.mobile_no?.length) {
       tempError = { ...tempError, mobile_no: 'Mobile is empty' }
       isValidated = true
@@ -314,10 +338,10 @@ const FloatingForm = ({ setCurrentUser }: { setCurrentUser: Function }) => {
     let isValidated = false
     let tempError = {}
 
-    if (!isValidPhoneNumber(signUpData?.mobile_no)) {
-      tempError = { ...tempError, mobile_no: 'Mobile Number is Invalid' }
-      isValidated = true
-    }
+    // if (!validatePhoneNoPersonalInfo(signUpData?.mobile_no)) {
+    //   tempError = { ...tempError, mobile_no: 'Mobile Number is Invalid' }
+    //   isValidated = true
+    // }
     if (!signUpData?.mobile_no?.length) {
       tempError = { ...tempError, mobile_no: 'Mobile is Empty' }
       isValidated = true
@@ -357,8 +381,7 @@ const FloatingForm = ({ setCurrentUser }: { setCurrentUser: Function }) => {
     }
     if (
       signInData.emailNo?.length > 0 &&
-      !validateEmail(signInData.emailNo) &&
-      !isValidPhoneNumber(signInData.emailNo)
+      isEmail ? !validateEmail(signInData.emailNo) : !validatePhoneNoPersonalInfo(signInData.emailNo)
     ) {
       tempError = { ...tempError, emailNo: 'Please enter valid email or number with valid country code' }
       isValidated = true
@@ -367,7 +390,13 @@ const FloatingForm = ({ setCurrentUser }: { setCurrentUser: Function }) => {
       tempError = { ...tempError, otpError: 'Enter OTP Code' }
       isValidated = true
     }
-    if (!termChecked) {
+    //validate otp code
+    if (signInData.otpCode?.length > 0 && signInData.otpCode?.length < 6) {
+      tempError = { ...tempError, otpError: 'Enter Valid OTP Code' }
+      isValidated = true
+    }
+    
+    if (!termChecked && isSignIn) {
       tempError = { ...tempError, termError: 'Kindly Agree to our Terms & Conditions' }
       isValidated = true
     }
@@ -383,8 +412,7 @@ const FloatingForm = ({ setCurrentUser }: { setCurrentUser: Function }) => {
       } else setError({ ...error, emailNo: '' })
       if (
         signInData.emailNo?.length > 0 &&
-        !validateEmail(signInData.emailNo) &&
-        !isValidPhoneNumber(signInData.emailNo)
+        isEmail ? !validateEmail(signInData.emailNo) : !validatePhoneNoPersonalInfo(signInData.emailNo)
       ) {
         setError({
           ...error,
@@ -402,12 +430,21 @@ const FloatingForm = ({ setCurrentUser }: { setCurrentUser: Function }) => {
     }
 
     const data = {
-      input: signInData.email?.length > 0 ? signInData.mobile_no : signInData.emailNo,
+      input: 
+        isEmail 
+          ? 
+            signInData.email?.length > 0 
+              ? signInData.mobile_no 
+              : signInData.emailNo
+          : signInData.email?.length > 0 
+            ? signInData.mobile_no 
+            : (signInData.emailNo.includes('+') ? signInData.emailNo : `+${signInData.emailNo}`),
       type: 'customer',
       mode: 'sign_in',
     }
+    
     const dataSignUp = {
-      input: signUpData.email?.length > 0 ? signUpData.mobile_no : signUpData.emailNo,
+      input: signUpData.email?.length > 0 ? (signUpData.mobile_no.includes('+') ? signUpData.mobile_no : `+${signUpData.mobile_no}`) : signUpData.emailNo,
       email: signUpData.email,
       type: 'customer',
       mode: 'sign_up',
@@ -469,14 +506,17 @@ const FloatingForm = ({ setCurrentUser }: { setCurrentUser: Function }) => {
     const data = {
       otp_code: signInData.otpCode,
       type: 'customer',
-      input: signInData.emailNo,
+      // input: isEmail ? signInData.emailNo,
+      input: isEmail 
+              ? signInData.emailNo
+              : signInData.emailNo.includes('+') ? signInData.emailNo : `+${signInData.emailNo}`,
     }
 
     // TODO: set user in redux setCurrentUser
 
     const dataSignUp = {
-      input: signUpData.mobile_no,
-      contact: signUpData.mobile_no,
+      input: signUpData.mobile_no.includes('+') ? signUpData.mobile_no : `+${signUpData.mobile_no}`,
+      contact: signUpData.mobile_no.includes('+') ? signUpData.mobile_no : `+${signUpData.mobile_no}`,
       otp_code: signUpData.otpCode,
       email: signUpData.email,
       last_name: signUpData.last_name,
@@ -486,7 +526,7 @@ const FloatingForm = ({ setCurrentUser }: { setCurrentUser: Function }) => {
 
     // setCurrentUser('user')
 
-    if (!termChecked) {
+    if (!termChecked && isSignIn) {
       setError({ ...error, termError: 'Kindly Agree to our Terms & Conditions' })
       return
     }
@@ -498,7 +538,7 @@ const FloatingForm = ({ setCurrentUser }: { setCurrentUser: Function }) => {
       if (router.query['redirect']) {
         router.replace(router.query['redirect'] as string)
       } else {
-        router.replace('/products/health')
+        router.replace('/auto')
       }
     } else {
       let tempData = { ...error, otpError: response?.message }
@@ -513,12 +553,16 @@ const FloatingForm = ({ setCurrentUser }: { setCurrentUser: Function }) => {
     }
   }, [termChecked])
 
+  useEffect(() => {
+    isEmail ? setSignInData({ ...signInData, emailNo: leadData?.emailState || '' }) : setSignInData({ ...signInData, emailNo: leadData?.number || '+92' })
+  }, [isEmail])
+
   return (
     <div className={`w-100 d-flex align-items-center justify-content-center`}>
       <div
         style={{
           position: 'fixed',
-          top: '120px',
+          top: 0,
           left: 0,
           right: 0,
           bottom: 0,
@@ -578,8 +622,7 @@ const FloatingForm = ({ setCurrentUser }: { setCurrentUser: Function }) => {
                 tempError = { ...tempError, emailNo: 'Email or Mobile Number cannot be empty' }
               else if (
                 signInData.emailNo?.length > 0 &&
-                !validateEmail(signInData.emailNo) &&
-                !isValidPhoneNumber(signInData.emailNo)
+                isEmail ? !validateEmail(signInData.emailNo) : !validatePhoneNoPersonalInfo(signInData.emailNo)
               )
                 tempError = { ...tempError, emailNo: 'Please enter valid email or number with valid country code' }
               else tempError = { ...tempError, emailNo: '' }
@@ -591,6 +634,8 @@ const FloatingForm = ({ setCurrentUser }: { setCurrentUser: Function }) => {
               else tempError = { ...tempError, otpError: '' }
               setError(tempError)
             }}
+            isEmail={isEmail}
+            setIsEmail={setIsEmail}
           />
         )}
         <div style={{ marginTop: '-7px' }} />
@@ -600,9 +645,10 @@ const FloatingForm = ({ setCurrentUser }: { setCurrentUser: Function }) => {
           goBack={false}
           btnTxt="Continue"
           onClick={() => handleSubmit()}
-          termChecked={termChecked}
-          isTermChecked={isTermChecked}
-          error={error?.termError}
+          termChecked={isSignIn && termChecked}
+          isTermChecked={isSignIn && isTermChecked}
+          error={isSignIn && error?.termError}
+          isSignIn={isSignIn ? true : false}
           // setTermErrorObj={() => {
           //   let tempData = { ...error, termError: '' }
           //   setError(tempData)

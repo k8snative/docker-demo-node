@@ -1,72 +1,87 @@
-import type { NextPage } from 'next'
-import Image from 'next/image'
-import Row from 'react-bootstrap/Row'
+import loader from "../../public/assets/loader.json";
+import Banner from "../components/Banner/Banner";
+import ContactOurAdvisor from "../components/ContactOurAdvisor/ContactOurAdvisor";
+import Footer from "../components/Footer/Footer";
+import GeneralFAQs from "../components/GeneralFAQs/GeneralFAQs";
+import Header from "../components/Header";
+import OurPartners from "../components/OurPartners/OurPartners";
+import SeoHead from "../components/SeoHead";
+import TakafulBazaarPlans from "../components/TakafulBazaarPlans/TakafulBazaarPlans";
+import WhatIsTakaful from "../components/WhatIsTakaful";
+import WhyChooseUs from "../components/WhyChooseUs";
+import styles from "../styles/Home.module.scss";
+import type { NextPage } from "next";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import Lottie from "react-lottie";
+import { useSelector } from "react-redux";
+import Api from "src/lib/api";
 
-import SeoHead from '../components/SeoHead'
-import styles from '../styles/Home.module.scss'
+const Home: NextPage = () => {
+  const [faq, setFAQ] = useState();
+  const router = useRouter();
+  const getFAQ = async () => {
+    const apiData = await Api("GET", `faq/General`);
+    setFAQ(apiData?.data);
+  };
+  // let loading = true;
+  const { loading } = useSelector((state) => state.auth);
+  useEffect(() => {
+    getFAQ();
+  }, []);
+  return (
+    <div className={styles["container"]}>
+      <SeoHead
+        title="Takaful Bazaar"
+        description="Leading online insurance"
+        customLinkTags={[
+          {
+            rel: "icon",
+            href: "/favIcon.png",
+          },
+        ]}
+      />
+      <Header />
+      {loading ? (
+        <div>
+          <Lottie
+            height={"56vh"}
+            width={615}
+            options={{
+              loop: true,
+              autoplay: true,
+              animationData: loader,
+            }}
+          />
+        </div>
+      ) : (
+        <>
+          <Banner path={`main`} sampleTextProp="asdsa" key={1} hideForm showBanner={false}/>
+          {/* <ContactOurAdvisor categoriesVisible={true} contactAvisorMob={true} /> */}
+          <WhatIsTakaful />
+          <WhyChooseUs />
+          <TakafulBazaarPlans />
+          {/* <GeneralFAQs
+                heading="General"
+                headingRed="FAQ's"
+                para="Got a question? We are here to answer ! If you don’t find
+                your answer here, drop us a line at our"
+                linkText="24/7 Available Call Center"
+                onClick={() => router.push('/contactUs')}
+                mobpara=""
+                faqs={faq}
+                redtxt={false}
+                showMore={true}
+                showMoreLink={'0'}
+                backGroundColor="#fff"
+                topSeparator={false}
+              /> */}
+          <OurPartners />
+        </>
+      )}
+      <Footer />
+    </div>
+  );
+};
 
-const Home: NextPage = () => (
-  <div className={styles['container']}>
-    <SeoHead
-      title="Takaful Bazar"
-      description="Some description"
-      customLinkTags={[
-        {
-          rel: 'icon',
-          href: '/favIcon.png',
-        },
-      ]}
-    />
-
-    <main className={styles['main']}>
-      <h1 className={styles['title']}>
-        Welcome to <a href="https://nextjs.org">Next.js!</a>
-      </h1>
-      <Row>
-        <p className={styles['description']}>
-          Get started by editing <code className={styles['code']}>pages/index.tsx</code>
-        </p>
-      </Row>
-
-      <div className={styles['grid']}>
-        <a href="https://nextjs.org/docs" className={styles['card']}>
-          <h2>Documentation &rarr;</h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a href="https://nextjs.org/learn" className={styles['card']}>
-          <h2>Learn &rarr;</h2>
-          <p>Learn about Next.js in an interactive course with quizzes!</p>
-        </a>
-
-        <a href="https://github.com/vercel/next.js/tree/canary/examples" className={styles['card']}>
-          <h2>Examples &rarr;</h2>
-          <p>Discover and deploy boilerplate example Next.js projects.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          className={styles['card']}
-        >
-          <h2>Deploy &rarr;</h2>
-          <p>Instantly deploy your Next.js site to a public URL with Vercel.</p>
-        </a>
-      </div>
-    </main>
-
-    <footer className={styles['footer']}>
-      <a
-        href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Powered by{' '}
-        <span className={styles['logo']}>
-          <Image priority={true} src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-        </span>
-      </a>
-    </footer>
-  </div>
-)
-
-export default Home
+export default Home;

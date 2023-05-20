@@ -31,21 +31,29 @@ const WebTabs = ({
 }) => {
   const data = allFAQ
   return (
-    <div className="w-100 mb-3 ml-1  ">
-      <Container className={`d-flex  p-0 align-items-center justify-content-between ${styles['tabs']}`}>
+    
+    <div className="w-100 mb-3 ml-1">
+      <Container className={`d-flex  p-0 align-items-center justify-content-around ${styles['tabs']}`}>
         {data.map((each, index) => (
-          <div
-            className={`d-flex align-items-center justify-content-center ${
-              styles[each?.isActive ? 'activeTab' : 'inActiveTab']
-            }`}
-            key={index}
-            onClick={() => {
-              searchSetSelectedFAQ(each, setSelectedFAQ, allFAQ, setAllFAQ, setSelectedType)
-              setResetOpenedFaq(true)
-            }}
-          >
-            <p className={`${styles[each?.isActive ? 'tabTxtActive' : 'tabTxtInactive']}`}>{each?.tabName}</p>
-          </div>
+          <>
+          
+          {!!each?.tabName &&   (
+
+            <div
+              className={`d-flex align-items-center justify-content-center ${
+                styles[each?.isActive ? 'activeTab' : 'inActiveTab']
+              }`}
+              key={index}
+              onClick={() => {
+                searchSetSelectedFAQ(each, setSelectedFAQ, allFAQ, setAllFAQ, setSelectedType)
+                setResetOpenedFaq(true)
+              }}
+            >
+              
+           <p className={`${styles[each?.isActive ? 'tabTxtActive' : 'tabTxtInactive']}`}>{each?.tabName}</p>
+            </div>
+          )}
+          </>
         ))}
       </Container>
       <Container className={styles['borderBottomTab']} />

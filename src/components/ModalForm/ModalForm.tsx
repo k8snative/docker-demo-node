@@ -1,99 +1,132 @@
-import { useFormik } from 'formik'
 import { useEffect, useState } from 'react'
-import { Modal } from 'react-bootstrap'
+import { Modal, Spinner } from 'react-bootstrap'
 import { isValidPhoneNumber } from 'react-phone-number-input'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Api from 'src/lib/api'
-import { leadGenRedux, setCurrentUser } from 'src/lib/redux/auth/action'
-import { validateEmail, validateName, validatePhoneNo } from 'src/lib/utils'
+import { leadGenRedux, setCurrentUser, leadData, updateAuthPopUp } from 'src/lib/redux/auth/action'
+import { validateEmail, validateName, validatePhoneNoPersonalInfo } from 'src/lib/utils'
+import DiscountFormInput from "../DiscountFormInput/DiscountFormInput";
+import FormBottomContainer from "../FormBottomContainer/FormBottomContainer";
+import FormHeading from "../FormHeading/FormHeading";
+import FormTopContainer from "../FormTopContainer/FormTopContainer";
+import FormTxt from "../FormTxt/FormTxt";
+import SignInInputs from "../SignInInputs/SignInInputs";
+import styles from "./ModalForm.module.scss";
+import FormInput from "../FormInput/FormInput";
 
-import DiscountFormInput from '../DiscountFormInput/DiscountFormInput'
-import FormBottomContainer from '../FormBottomContainer/FormBottomContainer'
-import FormHeading from '../FormHeading/FormHeading'
-import FormTopContainer from '../FormTopContainer/FormTopContainer'
-import FormTxt from '../FormTxt/FormTxt'
-import SignInInputs from '../SignInInputs/SignInInputs'
-import styles from './ModalForm.module.scss'
+const nameOptions = [{ option: "Mr." }, { option: "Mrs." }, { option: "Ms." }];
+const phoneOptions = [
+  { option: "+92" },
+  { option: "+924" },
+  { option: "+823" },
+];
 
-const nameOptions = [{ option: 'Mr.' }, { option: 'Mrs.' }, { option: 'Ms.' }]
-const phoneOptions = [{ option: '+92' }, { option: '+924' }, { option: '+823' }]
+const ModalForm = ({
+  showModal,
+  setShowModal,
+}: {
+  showModal: boolean;
+  setShowModal: Function;
+}) => {
+  const { make_id, model_id, year, value } = useSelector(
+    (state) => state?.auth?.planDetails
+  );
+  const date = useSelector((state) => state?.auth?.planDetails.date_of_expiry);
 
-const ModalForm = ({ showModal, setShowModal }: { showModal: boolean; setShowModal: Function }) => {
-  const [isSignIn, setSignIn] = useState(false)
-  const [showDiv, setShowDiv] = useState('')
-  const [fullName, setName] = useState('')
-  const [fullNameError, setNameError] = useState('')
-  const [emailState, setEmail] = useState('')
-  const [emailStateError, setEmailError] = useState('')
-  const [number, setNumber] = useState('')
-  const [numberError, setNumberError] = useState('')
-  const [termChecked, isTermChecked] = useState(false)
-  const [termError, setTermError] = useState('')
-  const [error, setError] = useState({})
-  const [active, setActive] = useState(true)
+  const [isSignIn, setSignIn] = useState(false);
+  const [showDiv, setShowDiv] = useState("");
+  const [fullName, setName] = useState("");
+  const [fullNameError, setNameError] = useState("");
+  const [emailState, setEmail] = useState("");
+  const [emailStateError, setEmailError] = useState("");
+  const [otpState, setOtpState] = useState("");
+  const [otpStateError, setotpStateError] = useState("");
+  const [number, setNumber] = useState("");
+  const [numberError, setNumberError] = useState("");
+  const [termChecked, isTermChecked] = useState(false);
+  const [termError, setTermError] = useState("");
+  const [error, setError] = useState({});
+  const [active, setActive] = useState(true);
   const [signInData, setSignInData] = useState<SignInInputsProps>({
-    mobile_no: '',
-    emailNo: '',
-    otpCode: '',
-  })
-  const [isLoading, setIsLoading] = useState<boolean>(false)
+    mobile_no: "+92",
+    emailNo: "",
+    otpCode: "",
+  });
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [submitLoading, setSubmitLoading] = useState<boolena>(false)
+  const [isEmail, setIsEmail] = useState(true);
+  const [isExistingUser, setIsExistingUser] = useState(false);
+  const [seconds, setSeconds] = useState(0);
+  const [curStep, setCurStep] = useState(0);
+  const dispatch = useDispatch();
 
-  const dispatch = useDispatch()
+  const { leadData: stateLeadData } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    setTermError('')
-    setError({})
-    setNameError('')
-    setEmailError('')
-    setNumberError('')
-  }, [isSignIn])
+    setTermError("");
+    setError({});
+    setNameError("");
+    setEmailError("");
+    setNumberError("");
+  }, [isSignIn]);
 
   useEffect(() => {
     if (termChecked) {
       setError({
         ...error,
-        termError: '',
-      })
+        termError: "",
+      });
     }
-  }, [termChecked])
+  }, [termChecked]);
   const validateSigninData = (): boolean => {
-    let isValidated = false
-    let tempError = {}
+    let isValidated = false;
+    let tempError = {};
 
     if (!signInData.emailNo?.length) {
-      tempError = { ...tempError, emailNo: 'Email or Mobile Number cannot be empty' }
-      isValidated = true
+      tempError = {
+        ...tempError,
+        emailNo: "Email or Mobile Number cannot be empty",
+      };
+      isValidated = true;
     }
     if (
       signInData.emailNo?.length > 0 &&
-      !validateEmail(signInData.emailNo) &&
-      !isValidPhoneNumber(signInData.emailNo)
+        isEmail ? !validateEmail(signInData.emailNo) : !validatePhoneNoPersonalInfo(signInData.emailNo)
     ) {
-      tempError = { ...tempError, emailNo: 'Please enter valid email or number' }
-      isValidated = true
+      tempError = {
+        ...tempError,
+        emailNo: "Please enter valid email or number",
+      };
+      isValidated = true;
     }
     if (!signInData.otpCode?.length) {
-      tempError = { ...tempError, otpError: 'Enter OTP Code' }
-      isValidated = true
+      tempError = { ...tempError, otpError: "Enter OTP Code" };
+      isValidated = true;
     }
-    if (!termChecked) {
-      tempError = { ...tempError, termError: 'Kindly Agree to our Terms & Conditions' }
-      isValidated = true
+    if (!isSignIn && !termChecked) {
+      tempError = {
+        ...tempError,
+        termError: "Kindly Agree to our Terms & Conditions",
+      };
+      isValidated = true;
     }
-    setError(tempError)
-    return isValidated
-  }
+    setError(tempError);
+    return isValidated;
+  };
 
   const handleSubmit = async () => {
-    if (validateSigninData()) return
+    setSubmitLoading(true)
+    if (!isExistingUser) {
+      if (validateSigninData()) return;
+    }
 
     // if (!termChecked) {
     //   return setError({ ...error, termChecked: 'Please accept terms and conditions' })
     // }
     const data = {
-      otp_code: signInData.otpCode,
+      otp_code: isExistingUser ? otpState : signInData.otpCode,
       type: 'customer',
-      input: signInData.emailNo,
+      input: isExistingUser ? (number.includes('+') ? number : `+${number}`) : isEmail ? signInData.emailNo : (signInData.emailNo.includes('+') ? signInData.emailNo : `+${signInData.emailNo}`),
     }
 
     // if (!termChecked) {
@@ -101,23 +134,78 @@ const ModalForm = ({ showModal, setShowModal }: { showModal: boolean; setShowMod
     //   return
     // }
 
-    const response = await Api('POST', `otp_verify`, data, true)
+    const response = await Api("POST", `otp_verify`, data, true);
     if (response.success) {
-      dispatch(setCurrentUser({ ...response.data.user, ...response.data.codes }))
-      setShowModal(false)
-      //  router.replace('/products/health')
-    } else {
-      setError({ ...error, otpError: response?.message })
-    }
-  }
-  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
-    // eslint-disable-next-line default-case
+      dispatch(
+        setCurrentUser({ ...response.data.user, ...response.data.codes })
+      );
 
-    setSignInData({
-      ...signInData,
-      [e.target.name]: e.target.value,
-    })
-  }
+      dispatch(
+        leadData({
+          number: number,
+          emailState: emailState,
+          name: fullName,
+          isExistingUser: isExistingUser
+        })
+      );
+
+      dispatch(updateAuthPopUp(true))
+
+      setShowModal(false);
+      setSubmitLoading(false)
+
+      //  router.replace('/')
+    } else {
+      setError({ ...error, otpError: response?.message });
+      setSubmitLoading(false)
+
+    }
+  };
+  const handleOnChange = (
+    e: ChangeEvent<HTMLInputElement> | null,
+    name?: string,
+    value?: string
+  ) => {
+    if (e?.target?.name === "emailNo") {
+      const emailNumValue = e.target.value;
+      let tempError = error;
+      if (!emailNumValue?.length)
+        tempError = {
+          ...tempError,
+          emailNo: "Email or Mobile Number cannot be empty",
+        };
+      else if (
+        emailNumValue?.length > 0 &&
+          isEmail ? !validateEmail(emailNumValue) : !validatePhoneNoPersonalInfo(emailNumValue)
+      ) {
+        tempError = {
+          ...tempError,
+          emailNo: "Please enter valid email or number with valid country code",
+        };
+      } else {
+        tempError = {
+          ...tempError,
+          emailNo: "",
+        };
+      }
+      setError(tempError);
+    }
+    if (name && value) {
+      setSignInData({
+        ...signInData,
+        [name]: value,
+      });
+    } else if (e !== null) {
+      setSignInData({
+        ...signInData,
+        [e.target.name]: e.target.value,
+      });
+    }
+    // setSignInData({
+    //   ...signInData,
+    //   emailNo: e.target.value,
+    // })
+  };
   const leadGen = async () => {
     const data = {
       name: fullName,
@@ -125,13 +213,27 @@ const ModalForm = ({ showModal, setShowModal }: { showModal: boolean; setShowMod
       contact: number,
 
       email: emailState,
-    }
+      make_id: make_id,
+      model_id: model_id,
+      year: year,
+      value: value,
+      ...(date && { previous_policy_expiry_date: date }),
+    };
+    dispatch(
+      leadData({
+        number: number,
+        emailState: emailState,
+        name: fullName,
+        isExistingUser: isExistingUser
+      })
+    );
 
     if (!data?.name) {
-      setNameError('Name is empty')
-    } else if (!validateName(data?.name)) setNameError('Name should contain alphabets only')
+      setNameError("Name is empty");
+    } else if (!validateName(data?.name))
+      setNameError("Name should contain alphabets only");
     else {
-      setNameError('')
+      setNameError("");
     }
     // if (data?.contact === '+92') {
     //   setNumberError('Number is empty')
@@ -141,24 +243,23 @@ const ModalForm = ({ showModal, setShowModal }: { showModal: boolean; setShowMod
     //   setNumberError('Invalid number')
     // }
     if (!data?.contact?.length) {
-      setNumberError('Number is empty')
+      setNumberError("Number is empty");
     } else if (!isValidPhoneNumber(data?.contact)) {
-      setNumberError('Invalid Number')
+      setNumberError("Invalid Number");
     } else {
-      setNumberError('')
+      setNumberError("");
     }
     if (!data?.email) {
-      setEmailError('Email is empty')
+      setEmailError("Email is empty");
     } else if (!validateEmail(data?.email)) {
-      setEmailError('Invalid email')
-    } else setEmailError('')
-    if (!termChecked) {
-      setTermError('Kindly agree to our Terms & Conditions')
+      setEmailError("Invalid email");
+    } else setEmailError("");
+    if (!isSignIn && !termChecked) {
+      setTermError("Kindly agree to our Terms & Conditions");
     } else {
-      setTermError('')
+      setTermError("");
     }
     // if (!fullNameError && !numberError && !emailStateError)
-    // console.log('before')
     if (
       data?.name &&
       data?.contact &&
@@ -169,48 +270,60 @@ const ModalForm = ({ showModal, setShowModal }: { showModal: boolean; setShowMod
       // data?.contact !== '+92' &&
       // validatePhoneNo(data?.contact) &&
     )
-      await Api('POST', `lead_generation/register`, data).then(res => {
-        // console.log('after')
+      await Api("POST", `lead_generation/register`, data).then((res) => {
         if (res.success) {
-          setShowModal(false)
-          dispatch(leadGenRedux())
+          dispatch(leadGenRedux());
+          if (res?.existingUser) {
+            setIsExistingUser(true);
+            setSeconds(59);
+            setCurStep(curStep === 2 ? 1 : curStep + 1);
+            setError({
+              ...error,
+              termError: "You are an existing user. OTP has been sent to your registered Phone/Email, please enter to Sign-In. ",
+            });
+          } else {
+            setShowModal(false);
+            setIsExistingUser(false);
+            dispatch(updateAuthPopUp(true))
+          }
         }
-      })
-  }
+      });
+  };
   // ////////////////////////////////////////////////////////////////////////////////
-  const [seconds, setSeconds] = useState(0)
   useEffect(() => {
     const intervalId = setInterval(() => {
       if (seconds >= 1) {
-        setSeconds(seconds - 1)
+        setSeconds(seconds - 1);
       }
       if (seconds === 0) {
-        setActive(true)
-        clearInterval(intervalId)
+        setActive(true);
+        clearInterval(intervalId);
       }
-    }, 1000)
+    }, 1000);
     return () => {
-      clearInterval(intervalId)
-    }
-  }, [seconds])
+      clearInterval(intervalId);
+    };
+  }, [seconds]);
 
-  const otpSteps = ['Send OTP', `00:${seconds > 9 ? seconds : `0${seconds}`}`, 'Resend']
-  const [curStep, setCurStep] = useState(0)
-
+  const otpSteps = [
+    "Send OTP",
+    `00:${seconds > 9 ? seconds : `0${seconds}`}`,
+    "Resend",
+  ];
   useEffect(() => {
     if (curStep === 1 && seconds === 0) setCurStep(2)
   }, [curStep, seconds])
-  // ////////////////////////////////////////////////////////////////////////////////
+
   const sendOTP = async () => {
     if (!signInData.emailNo?.length) {
-      setError({ ...error, emailNo: 'Email or Mobile Number cannot be empty' })
-      setActive(true)
-      return
+      setError({ ...error, emailNo: "Email or Mobile Number cannot be empty" });
+      setActive(true);
+      return;
     }
+
     if (
       signInData.emailNo?.length > 0 &&
-      !validateEmail(signInData.emailNo) &&
-      !isValidPhoneNumber(signInData.emailNo)
+        isEmail ? !validateEmail(signInData.emailNo) : !validatePhoneNoPersonalInfo(signInData.emailNo)
     ) {
       setError({ ...error, emailNo: 'Please enter valid email or number with valid country code' })
       setActive(true)
@@ -219,60 +332,81 @@ const ModalForm = ({ showModal, setShowModal }: { showModal: boolean; setShowMod
     setError({ ...error, emailNo: '' })
     if (
       signInData.emailNo?.length > 0 &&
-      !validateEmail(signInData.emailNo) &&
-      !isValidPhoneNumber(signInData.emailNo)
+        isEmail ? !validateEmail(signInData.emailNo) : !validatePhoneNoPersonalInfo(signInData.emailNo)
     ) {
-      // console.log('Error', ' NOT VALID SIGN IN  DATA ')
 
       setError({
         ...error,
-        emailNo: 'Please enter valid email or number with valid country code',
-      })
-      setActive(true)
-      return
+        emailNo: "Please enter valid email or number with valid country code",
+      });
+      setActive(true);
+      return;
+    }
+    setError({ ...error, emailNo: "" });
+    if (
+      signInData.emailNo?.length > 0 &&
+        isEmail ? !validateEmail(signInData.emailNo) : !validatePhoneNoPersonalInfo(signInData.emailNo)
+    ) {
+      setError({
+        ...error,
+        emailNo: "Please enter valid email or number with valid country code",
+      });
+      setActive(true);
+      return;
     }
 
     const data = {
-      input: signInData.emailNo,
+      input: isExistingUser ? (number.includes('+') ? number : `+${number}`) : isEmail ? signInData.emailNo : (signInData.emailNo.includes('+') ? signInData.emailNo : `+${signInData.emailNo}`),
       type: 'customer',
       mode: 'sign_in',
     }
 
-    setIsLoading(true)
-    const res = await Api('POST', `otp_request`, data)
+    setIsLoading(true);
+    const res = await Api("POST", `otp_request`, data);
     if (res?.success) {
-      setIsLoading(false)
-      setSeconds(59)
-      setCurStep(curStep === 2 ? 1 : curStep + 1)
+      setIsLoading(false);
+      setSeconds(59);
+      setCurStep(curStep === 2 ? 1 : curStep + 1);
     } else {
-      setIsLoading(false)
-      setActive(true)
-      setError({ ...error, otpError: res?.message })
+      setIsLoading(false);
+      setActive(true);
+      setError({ ...error, otpError: res?.message });
     }
-  }
-  // /////////////////////////////////////////////////////////////////////////////////////////////
+  };
+
   const handleOTP = () => {
-    if (!active) return
+    if (!isExistingUser && !active) return;
     if (sendOTP)
       if (seconds <= 0) {
-        setActive(false)
-        sendOTP()
+        setActive(false);
+        sendOTP();
         // setSeconds(59)
         // setCurStep(curStep === 2 ? 1 : curStep + 1)
       }
-  }
-  // /////////////////////////////////////////////////////////////////////////////////////////////
+  };
+
+  useEffect(() => {
+    isEmail
+      ? setSignInData({ ...signInData, emailNo: stateLeadData.emailState })
+      : setSignInData({
+        ...signInData,
+        emailNo: stateLeadData.number || "+92",
+      });
+  }, [isEmail]);
+
+
 
   return (
     <Modal className={styles['mainModal']} size="sm" show={showModal} centered={true}>
       <div className={` ${styles['modalWrapper']}`}>
-        <p className={styles['modalFormTopTxt']}>Sign up now and get 11% off</p>
+        <p className={styles['modalFormTopTxt']}>Continue to see the results</p>
+        {/* <p className={styles['modalFormTopTxt']}>Sign up now</p> */}
         <div className={`py-3 ${styles['modalContaienr']}`}>
           <FormTopContainer
             isSignIn={isSignIn}
             setSignIn={setSignIn}
             topRedTxtConditional={false}
-            topTxt={'Already an existing user?'}
+            topTxt={"Already an existing user?"}
           />
 
           <div className="my-3">
@@ -281,6 +415,7 @@ const ModalForm = ({ showModal, setShowModal }: { showModal: boolean; setShowMod
                 <FormHeading isSignIn={!isSignIn} />
                 <FormTxt />
                 <SignInInputs
+                  {...signInData}
                   handleOnChange={handleOnChange}
                   error={error}
                   sendOTP={sendOTP}
@@ -289,27 +424,32 @@ const ModalForm = ({ showModal, setShowModal }: { showModal: boolean; setShowMod
                   isLoading={isLoading}
                   curStep={curStep}
                   focusOutFuncemailNUm={() => {
-                    let tempError = error
+                    let tempError = error;
                     if (!signInData.emailNo?.length)
-                      tempError = { ...tempError, emailNo: 'Email or Mobile Number cannot be empty' }
+                      tempError = {
+                        ...tempError,
+                        emailNo: "Email or Mobile Number cannot be empty",
+                      };
                     else if (
                       signInData.emailNo?.length > 0 &&
-                      !validateEmail(signInData.emailNo) &&
-                      !isValidPhoneNumber(signInData.emailNo)
+                        isEmail ? !validateEmail(signInData.emailNo) : !validatePhoneNoPersonalInfo(signInData.emailNo)
                     )
                       tempError = {
                         ...tempError,
-                        emailNo: 'Please enter valid email or number with valid country code ',
+                        emailNo: 'Please enter valid email or number with valid country code',
                       }
                     else tempError = { ...tempError, emailNo: '' }
                     setError(tempError)
                   }}
                   focusOutFuncOTP={() => {
-                    let tempError = error
-                    if (!signInData.otpCode?.length) tempError = { ...tempError, otpError: 'Enter OTP Code' }
-                    else tempError = { ...tempError, otpError: '' }
-                    setError(tempError)
+                    let tempError = error;
+                    if (!signInData.otpCode?.length)
+                      tempError = { ...tempError, otpError: "Enter OTP Code" };
+                    else tempError = { ...tempError, otpError: "" };
+                    setError(tempError);
                   }}
+                  isEmail={isEmail}
+                  setIsEmail={setIsEmail}
                 />
               </>
             ) : (
@@ -323,102 +463,135 @@ const ModalForm = ({ showModal, setShowModal }: { showModal: boolean; setShowMod
                   value={fullName}
                   onChange={setName}
                   error={fullNameError}
-                  onfocusout={e => {
+                  onfocusout={(e) => {
                     if (!fullName) {
-                      setNameError('Name is empty')
-                      return false
+                      setNameError("Name is empty");
+                      return false;
                     }
                     if (!validateName(fullName)) {
-                      setNameError('Name should contain alphabets only')
-                      return false
+                      setNameError("Name should contain alphabets only");
+                      return false;
                     }
-                    setNameError('')
-                    return true
+                    setNameError("");
+                    return true;
                   }}
                 />
+                {
+                  isExistingUser ? (
+                    <>
+                      <FormInput
+                        type="sendOTP"
+                        placeHolder="Mobile Number*"
+                        name="emailNo"
+                        value={number}
+                        onChange={setNumber}
+                        sendOTP={sendOTP}
+                        handleOTP={handleOTP}
+                        otpSteps={otpSteps}
+                        isLoading={isLoading}
+                        curStep={curStep}
+                      />
+                    </>
+                  ) : (
+                    <DiscountFormInput
+                      showDiv={showDiv}
+                      setShowDiv={setShowDiv}
+                      divStyle={true}
+                      options={phoneOptions}
+                      placeholder="Phone Number*"
+                      value={number}
+                      onChange={setNumber}
+                      error={numberError}
+                      onfocusout={() => {
+                        if (!number) {
+                          setNumberError("Number is empty");
+                          return false;
+                        }
+                        if (!isValidPhoneNumber(number)) {
+                          setNumberError("Invalid Number");
+                          return false;
+                        }
+                        setNumberError("");
+                        return true;
+                      }}
+                    />
+                  )}
                 <DiscountFormInput
                   showDiv={showDiv}
                   setShowDiv={setShowDiv}
                   divStyle={true}
-                  options={phoneOptions}
-                  placeholder="Phone Number*"
-                  value={number}
-                  onChange={setNumber}
-                  error={numberError}
-                  onfocusout={() => {
-                    if (!number) {
-                      setNumberError('Number is empty')
-                      return false
-                    }
-                    if (!isValidPhoneNumber(number)) {
-                      setNumberError('Invalid Number')
-                      return false
-                    }
-                    setNumberError('')
-                    return true
-                  }}
-                />
-                <DiscountFormInput
-                  showDiv={showDiv}
-                  setShowDiv={setShowDiv}
-                  divStyle={true}
-                  options={''}
+                  options={""}
                   placeholder="Email*"
                   value={emailState}
                   onChange={setEmail}
                   error={emailStateError}
                   onfocusout={() => {
                     if (!emailState) {
-                      setEmailError('Email is empty')
-                      return false
+                      setEmailError("Email is empty");
+                      return false;
                     }
                     if (!validateEmail(emailState)) {
-                      setEmailError('Invalid email')
-                      return false
+                      setEmailError("Invalid email");
+                      return false;
                     }
-                    setEmailError('')
-                    return true
+                    setEmailError("");
+                    return true;
                   }}
                 />
+                {
+                  isExistingUser && (
+                    <>
+                      <FormInput
+                        type="otp"
+                        placeHolder="Enter OTP"
+                        name="otpCode"
+                        value={otpState}
+                        onChange={(e) => {
+                          setOtpState(e.target.value)
+                        }}
+                        // onChange={handleOnChange}
+                        errTxt={otpStateError}
+                      // focusOutFunc={focusOutFuncOTP}
+                      />
+                    </>
+                  )
+                }
               </>
             )}
           </div>
-          <div style={{ marginTop: '-10px' }} />
-          {isSignIn ? (
-            <FormBottomContainer
-              backbtnlink="/products/health"
-              link=""
-              goBack={true}
-              btnTxt="Continue"
-              onClick={() => {
-                handleSubmit()
-                // setShowModal(!showModal)
-              }}
-              termChecked={termChecked}
-              isTermChecked={isTermChecked}
-              error={error?.termError}
-              setTermError={setTermError}
-            />
-          ) : (
-            <FormBottomContainer
-              link=""
-              goBack={true}
-              btnTxt="View Plans"
-              backbtnlink="/products/health"
-              onClick={() => {
-                leadGen()
-                // setShowModal(!showModal)
-              }}
-              termChecked={termChecked}
-              isTermChecked={isTermChecked}
-              error={termError}
-              setTermError={setTermError}
-            />
-          )}
+          <div style={{ marginTop: "-10px" }} />
+          {
+            isExistingUser && (
+              <div className={`d-flex align-items-center  ${styles['errorDiv']}`}>
+                {error && <p className={styles['notOTPTxt']}>{error?.otpError}</p>}
+              </div>
+            )
+          }
+          <FormBottomContainer
+            disable={submitLoading}
+            backbtnlink={"/"}
+            link=""
+            goBack={false}
+            btnTxt={!submitLoading ? "Continue" : < Spinner size="sm" animation='border' />}
+            /* !!!!!!! WARNING !!!!!! */
+            /* Conditions are messy and in reverse do not touch */
+            /* !!!!!!! WARNING !!!!!! */
+            onClick={() => {
+              if (isSignIn) {
+                handleSubmit();
+              } else {
+                isExistingUser ? handleSubmit() : leadGen()
+              }
+            }}
+            termChecked={!isSignIn && termChecked}
+            isTermChecked={!isSignIn && isTermChecked}
+            error={!isSignIn && error?.termError}
+            isSignIn={!isSignIn}
+          />
         </div>
       </div>
     </Modal>
-  )
-}
+  );
+};
 
-export default ModalForm
+export default ModalForm;

@@ -1,114 +1,126 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import Image from 'next/image'
-import { useEffect, useState } from 'react'
-import PerfectScrollbar from 'react-perfect-scrollbar'
-import 'react-perfect-scrollbar/dist/css/styles.css'
-import { useDispatch, useSelector } from 'react-redux'
-import Api from 'src/lib/api'
-import { setInsuranceDetails } from 'src/lib/redux/auth/action'
-
-import dropDownIconRed from '../../../public/assets/dropDownIconRed.png'
-import formRadioChecked from '../../../public/assets/formRadioChecked.png'
-import formRadioUnchecked from '../../../public/assets/formRadioUnchecked.png'
-import iGrey from '../../../public/assets/iGrey.png'
-import iRed from '../../../public/assets/iRed.png'
-import uparrow from '../../../public/assets/uparrow.png'
-import BtnMobile from '../BtnMobile/BtnMobile'
-import SignInUpButton from '../SignInUpButton/SignInUpButton'
-import styles from './ProductPlanFilters.module.scss'
+import Checked from "../../../public/assets/checked.svg";
+import dropDownIconRed from "../../../public/assets/dropDownIconRed.png";
+import formRadioChecked from "../../../public/assets/formRadioChecked.png";
+import formRadioUnchecked from "../../../public/assets/formRadioUnchecked.png";
+import iGrey from "../../../public/assets/iGrey.png";
+import iRed from "../../../public/assets/iRed.png";
+import ModalCross from "../../../public/assets/modalCross.png";
+import UnChecked from "../../../public/assets/uncheck.svg";
+import uparrow from "../../../public/assets/uparrow.png";
+import BtnMobile from "../BtnMobile/BtnMobile";
+import SignInUpButton from "../SignInUpButton/SignInUpButton";
+import styles from "./ProductPlanFilters.module.scss";
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import PerfectScrollbar from "react-perfect-scrollbar";
+import "react-perfect-scrollbar/dist/css/styles.css";
+import Slider from "react-rangeslider";
+import { useDispatch, useSelector } from "react-redux";
+import Api from "src/lib/api";
+import { setInsuranceDetails } from "src/lib/redux/auth/action";
 
 const FilterItems = ({
   data,
   insurancePlansState,
   field,
+  showTooltips = false,
 }: {
   data: {
-    name: string
-    description?: string
-  }
-  insurancePlansState: any
-  field: any
+    name: string;
+    description?: string;
+  };
+  insurancePlansState: any;
+  field: any;
+  showTooltips: boolean;
 }) => {
-  const [isHovering, setIsHovered] = useState(false)
-  const [isSelected, setSelected] = useState(false)
-  const [showItxt, setShowItxt] = useState('')
-  const [showPolicyInfo, setShowPolicyInfo] = useState(false)
+  const [isHovering, setIsHovered] = useState(false);
+  const [isSelected, setSelected] = useState(false);
+  const [showItxt, setShowItxt] = useState("");
+  const [showPolicyInfo, setShowPolicyInfo] = useState(false);
 
-  const filterTxt = data?.name
+  const filterTxt = data?.name;
 
-  const { insurancePlansForm, setInsurancePlansForm } = insurancePlansState
+  const { insurancePlansForm, setInsurancePlansForm } = insurancePlansState;
 
   const getImage = () => {
-    if (showItxt) return iRed
-    if (isHovering) return iRed
-    return iGrey
-  }
+    if (showItxt) return iRed;
+    if (isHovering) return iRed;
+    return iGrey;
+  };
 
   const handleSelect = () => {
-    const index = insurancePlansForm[field].findIndex(item => item == data.id)
+    const index = insurancePlansForm[field].findIndex(
+      (item) => item == data.id
+    );
     if (index > -1) {
-      insurancePlansForm[field].splice(index, 1)
+      insurancePlansForm[field].splice(index, 1);
     } else {
-      insurancePlansForm[field].push(data.id)
+      insurancePlansForm[field].push(data.id);
     }
 
-    setInsurancePlansForm({ ...insurancePlansForm })
-  }
+    setInsurancePlansForm({ ...insurancePlansForm });
+  };
 
   const handleClick = () => {
-    setIsHovered(true)
-    setShowPolicyInfo(true)
-    showPolicyInfo = true
-  }
+    setIsHovered(true);
+    setShowPolicyInfo(true);
+    showPolicyInfo = true;
+  };
   const hoverGone = () => {
-    setIsHovered(false)
-    setShowPolicyInfo(false)
-    showPolicyInfo = false
-  }
+    setIsHovered(false);
+    setShowPolicyInfo(false);
+    showPolicyInfo = false;
+  };
   // if (data?.status)
   return (
     data?.status && (
       <div
-        // style={{ border: '1px solid black' }}
-        className={`d-flex align-items-center justify-content ${styles['filterItemContainer']}`}
+        className={`d-flex align-items-center justify-content ${styles["filterItemContainer"]}`}
       >
-        {/* {console.log('data', data)} */}
-        <div onClick={handleSelect} className={styles['imgContainer']}>
-          <Image alt="" src={insurancePlansForm[field]?.includes(data?.id) ? formRadioChecked : formRadioUnchecked} />
+        <div onClick={handleSelect} className={styles["imgContainer"]}>
+          <Image
+            alt=""
+            src={
+              insurancePlansForm[field]?.includes(data?.id)
+                ? Checked
+                : UnChecked
+            }
+          />
         </div>
-        <p onClick={handleSelect} className={styles['filterTxt']}>
+        <p onClick={handleSelect} className={styles["filterTxt"]}>
           {filterTxt}
         </p>
 
-        {data?.description && (
+        {field !== "policy_type_ids" && data?.description && (
           <div
             onMouseLeave={() => hoverGone()}
             onMouseEnter={() => setIsHovered(true)}
             onClick={() => handleClick()}
-            className={`${styles['iImgContainer']}`}
+            className={`${styles["iImgContainer"]}`}
           >
             <Image alt="" src={getImage()} />
 
             {showPolicyInfo && data?.description && (
-              <div className={styles['infoWrapper']}>
-                <div className={styles['infoContainer']}>
-                  <p className={styles['infoTxt']}>{data?.description}</p>
+              <div className={styles["infoWrapper"]}>
+                <div className={styles["infoContainer"]}>
+                  <p className={styles["infoTxt"]}>{data?.description}</p>
                 </div>
               </div>
             )}
           </div>
         )}
-        {showItxt === filterTxt && (
-          <div className={styles['infoWrapper']}>
-            <div className={styles['infoContainer']}>
-              <p className={styles['infoTxt']}>{data?.description}</p>
+        {showTooltips && showItxt === filterTxt && (
+          <div className={styles["infoWrapper"]}>
+            <div className={styles["infoContainer"]}>
+              <p className={styles["infoTxt"]}>{data?.description}</p>
             </div>
           </div>
         )}
       </div>
     )
-  )
-}
+  );
+};
 
 // type ProductPlanFiltersProps ={
 //   filterData: {
@@ -137,110 +149,115 @@ const ProductPlanFilters = ({
   setShowMobileFilter,
   validateForm,
 }: {
-  plans: any
-  insurancePlansState: any
-  ppCompareData: any[]
-  setPPCompareData: Function
-  setShowMobileFilter?: Function
-  validateForm: any
+  plans: any;
+  insurancePlansState: any;
+  ppCompareData: any[];
+  setPPCompareData: Function;
+  setShowMobileFilter?: Function;
+  validateForm: any;
 }) => {
-  const [insurances, setAllInsurance] = useState([])
-  const [policyType, setPolicyType] = useState([])
-  const [addOns, setAllAddOns] = useState([])
-  const [disableButton, setDisableButton] = useState<boolean>(false)
-  const { buy_now, ...insuranceData } = useSelector(state => state?.auth?.planDetails)
-  const planDetails = useSelector(state => state?.auth?.planDetails)
+  const [insurances, setAllInsurance] = useState([]);
+  const [policyType, setPolicyType] = useState([]);
+  const [addOns, setAllAddOns] = useState([]);
+  const [disableButton, setDisableButton] = useState<boolean>(false);
+  const { buy_now, ...insuranceData } = useSelector(
+    (state) => state?.auth?.planDetails
+  );
+  const planDetails = useSelector((state) => state?.auth?.planDetails);
 
-  // console.log('planDetails: ', planDetails)
-
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const getAllInsuranceCompanies = async () => {
-    const result = await Api('Get', '/company_setup')
+    const result = await Api("Get", "/company_setup");
     if (result.data) {
-      setAllInsurance(result.data)
+      setAllInsurance(result.data);
     }
-  }
+  };
   const getAllPolicyTypes = async () => {
-    const result = await Api('Get', '/policy_type')
+    const result = await Api("Get", "/policy_type");
     if (result.data) {
-      setPolicyType(result.data)
+      setPolicyType(result.data);
     }
-  }
+  };
   const getAllAddOns = async () => {
-    const result = await Api('Get', '/addons')
+    const result = await Api("Get", "/addons");
     if (result.data) {
-      setAllAddOns(result.data)
+      setAllAddOns(result.data);
     }
-  }
+  };
   const onLoad = () => {
-    getAllInsuranceCompanies()
-    getAllPolicyTypes()
-    getAllAddOns()
-  }
+    getAllInsuranceCompanies();
+    getAllPolicyTypes();
+    getAllAddOns();
+  };
   useEffect(() => {
-    onLoad()
-    setInsurancePlansForm(insuranceData)
-  }, [])
+    onLoad();
+    setInsurancePlansForm(insuranceData);
+  }, []);
 
-  const { insurancePlansForm, setInsurancePlansForm } = insurancePlansState
-
-  // console.log('insurancePlansForm: ', insurancePlansForm)
+  const { insurancePlansForm, setInsurancePlansForm } = insurancePlansState;
 
   const getFilteredPlans = async () => {
-    validateForm.validateForm()
-    if (Object.keys(validateForm.errors).length) return
-    const { sortOrder, ...restData } = insurancePlansForm
-    setDisableButton(true)
-    const res = await Api('POST', `policy/filters?${insurancePlansForm?.sortOrder}`, {
-      ...restData,
-      year: insurancePlansForm.year.toString(),
-    })
+    validateForm?.validateForm();
+    //if (Object?.keys(validateForm?.errors).length) return
+    const { sortOrder, ...restData } = insurancePlansForm;
+    setDisableButton(true);
+    const res = await Api(
+      "POST",
+      `policy/filters?${insurancePlansForm?.sortOrder}`,
+      {
+        ...restData,
+        year: insurancePlansForm.year.toString(),
+      }
+    );
     if (res?.data) {
-      plans.setValue({ value: insurancePlansForm.value, data: res.data })
+      plans.setValue({ value: insurancePlansForm.value, data: res.data });
       if (ppCompareData.length) {
-        const tempData = ppCompareData.map(each => res.data.filter(val => val?.id === each?.id)[0]) || []
-        setPPCompareData(tempData.filter(each => each))
+        const tempData =
+          ppCompareData.map(
+            (each) => res.data.filter((val) => val?.id === each?.id)[0]
+          ) || [];
+        setPPCompareData(tempData.filter((each) => each));
       }
     }
-    setDisableButton(false)
-    dispatch(setInsuranceDetails(insurancePlansForm))
-  }
+    setDisableButton(false);
+    dispatch(setInsuranceDetails(insurancePlansForm));
+  };
 
-  const [companyCount, setCompanyCount] = useState(3)
-  const [companyLength, setCompanyLength] = useState(3)
-  const [policyCount, setPolicyCount] = useState(3)
-  const [policyLength, setPolicyLength] = useState(3)
-  const [addOnCount, setAddOnCount] = useState(3)
-  const [addOnLength, setAddOnLength] = useState(3)
+  const [companyCount, setCompanyCount] = useState(3);
+  const [companyLength, setCompanyLength] = useState(3);
+  const [policyCount, setPolicyCount] = useState(3);
+  const [policyLength, setPolicyLength] = useState(3);
+  const [addOnCount, setAddOnCount] = useState(3);
+  const [addOnLength, setAddOnLength] = useState(3);
 
   useEffect(() => {
-    let count = 0
+    let count = 0;
     insurances.map((each: any) => {
-      if (each?.status) count += 1
-    })
-    setCompanyLength(count)
-  }, [insurances])
+      if (each?.status) count += 1;
+    });
+    setCompanyLength(count);
+  }, [insurances]);
 
   useEffect(() => {
-    let count = 0
+    let count = 0;
     policyType.map((each: any) => {
-      if (each?.status) count += 1
-    })
-    setPolicyLength(count)
-  }, [policyType])
+      if (each?.status) count += 1;
+    });
+    setPolicyLength(count);
+  }, [policyType]);
 
   useEffect(() => {
-    let count = 0
+    let count = 0;
     addOns.map((each: any) => {
-      if (each?.status) count += 1
-    })
-    setAddOnLength(count)
-  }, [addOns])
+      if (each?.status) count += 1;
+    });
+    setAddOnLength(count);
+  }, [addOns]);
 
   return (
     <>
-      <PerfectScrollbar
+      {/* <PerfectScrollbar
         style={{
           width: '100%',
           overflowY: 'auto',
@@ -249,7 +266,7 @@ const ProductPlanFilters = ({
         options={{
           wheelPropagation: false,
         }}
-      >
+      > */}
         <div
           className={`position-relative d-flex flex-column justify-content-between ${
             ppCompareData.length > 0 ? styles['wrapperWithCompareOn'] : styles['wrapper']
@@ -258,41 +275,45 @@ const ProductPlanFilters = ({
           {/* <p className={` ${styles['mainHeading']}`}>Filters</p> */}
           <div className={`w-100 ${styles['scrolldiv']}`}>
             <div className={` ${styles['scrolldiv2']}`}>
-              <p className={` ${styles['heading']}`}>Insurance Companies</p>
+              <p className={` ${styles['heading']}`}>Takaful Providers</p>
 
-              <div className={`w-100 `}>
-                <div className={styles['separator']} />
-                {insurances?.map((each, index) => {
-                  // console.log('each', each)
-                  // if (each?.status) setCompanyLength(companyLength + 1)
-                  if (index < companyCount)
-                    return (
-                      <FilterItems
-                        field={'company_ids'}
-                        insurancePlansState={insurancePlansState}
-                        data={each}
-                        key={index}
-                      />
-                    )
-                })}
-                {companyLength > 3 && (
-                  <div
-                    onClick={() => {
-                      if (companyCount === 3) setCompanyCount(insurances.length + 1)
-                      else setCompanyCount(3)
-                    }}
-                    className={`w-100 my-2 d-flex align-items-center ${styles['cursorPointer']}`}
-                  >
-                    <p className={styles['moreDetailsTxt']}>{companyCount === 3 ? 'See more' : 'See less'}</p>
-                    <div className={`mt-1 mx-2 ${styles['dropImgContainer']}`}>
-                      <Image alt="" src={companyCount !== 3 ? uparrow : dropDownIconRed} />
-                    </div>
+            <div className={`w-100 `}>
+              <div className={styles["separator"]} />
+              {insurances?.map((each, index) => {
+                if (index < companyCount)
+                  return (
+                    <FilterItems
+                      field={"company_ids"}
+                      insurancePlansState={insurancePlansState}
+                      data={each}
+                      key={index}
+                    />
+                  );
+              })}
+              {companyLength > 3 && (
+                <div
+                  onClick={() => {
+                    if (companyCount === 3)
+                      setCompanyCount(insurances.length + 1);
+                    else setCompanyCount(3);
+                  }}
+                  className={`w-100 my-2 d-flex align-items-center ${styles["cursorPointer"]}`}
+                >
+                  <p className={styles["moreDetailsTxt"]}>
+                    {companyCount === 3 ? "See more" : "See less"}
+                  </p>
+                  <div className={`mt-1 mx-2 ${styles["dropImgContainer"]}`}>
+                    <Image
+                      alt=""
+                      src={companyCount !== 3 ? uparrow : dropDownIconRed}
+                    />
+                  </div>
                   </div>
                 )}
                 <div className={styles['separator']} />
                 <div className={styles['mobileSeparator']} />
               </div>
-              <p className={` ${styles['heading']}`}>Insurance Type</p>
+              <p className={` ${styles['heading']}`}>Policy Type</p>
               <div className={`w-100 ${styles['']}`}>
                 <div className={styles['separator']} />
                 {policyType.map((each, index) => {
@@ -319,64 +340,75 @@ const ProductPlanFilters = ({
                       <Image alt="" src={policyCount !== 3 ? uparrow : dropDownIconRed} />
                     </div>
                   </div>
-                )}
-                <div className={styles['separator']} />
-                <div className={styles['mobileSeparator']} />
-              </div>
-              <div className={`w-100 mb-5 ${styles['']}`}>
-                <p className={` ${styles['mainHeading']}`}>Add-Ons</p>
-                <p className={` ${styles['mobileHeading']}`}>Add-Ons</p>
-                {/* {addOns.map((each, index) => (
+                
+              )}
+              <div className={styles["separator"]} />
+              <div className={styles["mobileSeparator"]} />
+            </div>
+            <div className={`w-100 mb-5 ${styles[""]}`}>
+              <p className={` ${styles["mainHeading"]}`}>Add-Ons</p>
+              <p className={` ${styles["mobileHeading"]}`}>Add-Ons</p>
+              {/* {addOns.map((each, index) => (
               <FilterItems field={'addon_ids'} insurancePlansState={insurancePlansState} key={index} data={each} />
             ))} */}
-                {addOns.map((each, index) => {
-                  if (index < addOnCount)
-                    return (
-                      <FilterItems
-                        field={'addon_ids'}
-                        insurancePlansState={insurancePlansState}
-                        key={index}
-                        data={each}
-                      />
-                    )
-                })}
-                {addOnLength > 3 && (
-                  <div
-                    onClick={() => {
-                      if (addOnCount === 3) setAddOnCount(addOns.length + 1)
-                      else setAddOnCount(3)
-                    }}
-                    className={`w-100 my-2 d-flex align-items-center ${styles['cursorPointer']}`}
-                  >
-                    <p className={styles['moreDetailsTxt']}>{addOnCount === 3 ? 'See more' : 'See less'}</p>
-                    <div className={`mt-1 mx-2 ${styles['dropImgContainer']}`}>
-                      <Image alt="" src={addOnCount !== 3 ? uparrow : dropDownIconRed} />
-                    </div>
+              {addOns.map((each, index) => {
+                if (index < addOnCount)
+                  return (
+                    <FilterItems
+                      field={"addon_ids"}
+                      insurancePlansState={insurancePlansState}
+                      key={index}
+                      data={each}
+                    />
+                  );
+              })}
+              {addOnLength > 3 && (
+                <div
+                  onClick={() => {
+                    if (addOnCount === 3) setAddOnCount(addOns.length + 1);
+                    else setAddOnCount(3);
+                  }}
+                  className={`w-100 my-2 d-flex align-items-center ${styles["cursorPointer"]}`}
+                >
+                  <p className={styles["moreDetailsTxt"]}>
+                    {addOnCount === 3 ? "See more" : "See less"}
+                  </p>
+                  <div className={`mt-1 mx-2 ${styles["dropImgContainer"]}`}>
+                    <Image
+                      alt=""
+                      src={addOnCount !== 3 ? uparrow : dropDownIconRed}
+                    />
                   </div>
-                )}
-              </div>
+                </div>
+              )}
             </div>
           </div>
-          {/* <div className={`fixed-bottom position-sticky ${styles['btnWeb']}`}> */}
-          <div className={` ${styles['btnWeb']}`}>
-            <SignInUpButton btnTxt="Update Prices" link="" onClick={disableButton ? () => {} : getFilteredPlans} />
-          </div>
           <div
-            className={styles['btnMob']}
+            className={styles["btnMob"]}
             onClick={
               disableButton
                 ? () => {}
                 : () => {
-                    getFilteredPlans()
-                    setShowMobileFilter(false)
+                    getFilteredPlans();
+                    setShowMobileFilter(false);
                   }
             }
           >
             <BtnMobile btnTxt="Update Prices" />
           </div>
         </div>
-      </PerfectScrollbar>
+        {/* <div className={`fixed-bottom position-sticky ${styles['btnWeb']}`}> */}
+        <div className={` ${styles["btnWeb"]}`}>
+          <SignInUpButton
+            btnTxt="Update Prices"
+            link=""
+            onClick={disableButton ? () => {} : getFilteredPlans}
+          />
+        </div>
+      </div>
+
+      {/* </PerfectScrollbar> */}
     </>
-  )
-}
-export default ProductPlanFilters
+  );
+};
+export default ProductPlanFilters;

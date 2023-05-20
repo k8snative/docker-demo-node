@@ -9,21 +9,32 @@
     background-image: url('../../../public/assets/bazaarPlanBackground.png');
     background-position: center;
     background-size: cover;
+    height: 120px;
 
     @media screen and (max-width: 450px) {
         flex-direction: column;
+        height: 100px;
+
     }
 }
 
+// .getApp {
+//     // display: none;
+//     margin-left: 30px !important;
+// }
+
 .headingTxt2 {
-    font-size: 27px;
+    font-size: 24px;
     color: $color-primary;
     margin: 10px 0;
     margin-right: 4%;
     margin-left: 1%;
+    font-weight: bold;
 
-    @media screen and (max-width: 400px) {
+    @media screen and (max-width: 786px) {
         font-size: 19px;
         margin-right: 0;
+        margin-bottom: 5px;
+        text-align: center;
     }
 }

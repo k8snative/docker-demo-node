@@ -125,20 +125,20 @@ const ComponentPDF = () => (
         <p className={`${styles['totalText']}`}>Total</p>
         <p className={`${styles['totalText']}`}>Rs. 52,000 </p>
       </div>
-      <div className="d-flex mt-2">
+      {/* <div className="d-flex mt-2">
         <p className={`${styles['invoicenoText']}`}>Note:</p>
         <p className={`${styles['invoiceplainText']}`}>
           {' '}
           Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet
           dolore magna aliquam erat{' '}
         </p>
-      </div>
+      </div> */}
       <div className="d-flex justify-content-center align-items-center mt-4 flex-column">
         <p className={`${styles['thankyouText']}`}>
-          Thankyou for choosing<span className={`${styles['thankyouTextRed']}`}> Takaful Bazaar.pk</span>{' '}
+          Thankyou for choosing<span className={`${styles['thankyouTextRed']}`}> Takaful Bazaar</span>{' '}
         </p>
         <div className={`${styles['border']}`}>
-          <p className={`mt-2 ${styles['thankyouText']}`}> We are here to hear more from you!</p>
+          <p className={`mt-2 ${styles['thankyouText']}`}>For more information, please contact us on</p>
         </div>
         <div>
           <p className={`mt-2 ${styles['numberRedtext']}`}>021 - 111 - 832 - 682</p>

@@ -7,17 +7,16 @@
 
 .wrapper1 {
 
-    background-image: url('../../../public/assets/contactusbg.png');
+    // background-image: url('../../../public/assets/contactusbg.png');
     background-position: center;
     background-color: #F4F4F4;
     background-position: center;
     background-size: cover;
-    height: 355px;
+    height: 300px;
 
     @media screen and (max-width: 430px) {
         height: auto;
     }
-
 
 }
 
@@ -45,7 +44,7 @@
     padding: 10px;
     justify-content: center;
     padding-top: 30px;
-
+    width: 70%;
     @media screen and (max-width: 430px) {
         padding-top: 10px;
         margin-top: 10px;
@@ -55,7 +54,7 @@
 }
 
 .heading {
-    font-size: 27px;
+    font-size: 36px;
     color: $color-primary;
 
     @media screen and (max-width: 430px) {
@@ -82,9 +81,17 @@
     }
 }
 
+.UANtxt {
+    color:'#fff';
+    &:hover {
+        cursor: context-menu;
+        color: #fff
+    }
+}
+
 .subheading {
-    font-size: 19px;
-    color: $color-primary;
+    font-size: 16px;
+    color: #515151;
 
     @media screen and (max-width: 430px) {
         font-size: 12px;
@@ -331,7 +338,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-
+    padding-bottom: 25px;
     @media screen and (max-width: 430px) {
         background-color: #FFFFFF;
         padding: 0
@@ -362,7 +369,7 @@
     border-radius: 5px;
     width: 100%;
     display: flex;
-    align-items: center;
+    align-items: baseline;
     justify-content: center;
 
     @media screen and (max-width: 430px) {
@@ -425,13 +432,10 @@
     color: $color-primary;
     margin: 0;
 
-    &:hover {
-        cursor: pointer;
-    }
-
     .iAgreeTxtRed {
         color: $color-text-secondary;
         text-decoration: underline;
+        cursor: pointer;
     }
 }
 
@@ -773,7 +777,7 @@
 .greytxt {
     color: $color-primary;
     font-size: 20px;
-
+    padding-right: 10px;
     @media screen and (max-width: 430px) {
         font-size: 16px;
 

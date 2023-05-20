@@ -80,114 +80,59 @@ const StickyDiv = ({ data, deleteFromCompareState }: { data: any; deleteFromComp
           }}
           className={` ${styles['card']}`}
         >
-          <p className="m-0">Add to compare</p>
+          <p className={`m-0 ${styles['add-to-compare']}`}>Add to compare</p>
         </div>
       </Col>
     ))
   }
   const navigateToPaymentPage = id => {
+    const tempData = compareData.filter(item => item.id === id)[0]
+    let formatedAddons = []
+    if (addon_ids.length !== 0) {
+      const selectedAddons = tempData?.PolicyAddons?.filter((item, index) => {
+        for (let i = 0; i < addon_ids.length; i++) {
+          if (addon_ids[i] === item.addon_id) return true
+        }
+      })
+
+      formatedAddons = selectedAddons.map(item => {
+        if (item.type === 'fixed') {
+          return { addon_id: item.addon_id, amount: parseFloat(item.value) + tempData?.annual_contribution }
+        }
+        if (item.type === 'percentage') {
+          return { addon_id: item.addon_id, amount: tempData?.annual_contribution * (parseFloat(item.value) / 100) }
+        }
+      })
+    }
+
+    dispatch(clearBuyNow())
+    dispatch(clearPurchaseInfo())
+
+    dispatch(
+      setBuyNowData({
+        policy_id: tempData?.id.split('/')[0],
+        policy_type_id: tempData?.PolicyType?.id,
+        annual_contribution: tempData?.annual_contribution + (tempData?.addon_amount || 0),
+        insurance_rate: tempData?.insurance_rate,
+        company_logo_url: tempData?.CompanySetup?.logo,
+        policy_name: tempData?.name,
+        policy_addons: formatedAddons,
+        promotion_coupon_id: tempData?.promotion_coupon_id,
+        promotion_discount_type: tempData?.promotion_discount_type,
+        promotion_discount_value: tempData?.promotion_discount_value,
+      }),
+    );
     if (!user) {
       router.push({
-        pathname: '/auth/auth',
+        pathname: '/auth',
         query: {
           redirect: '/payment',
         },
       })
     } else {
-      const tempData = compareData.filter(item => item.id === id)[0]
-      let formatedAddons = []
-      if (addon_ids.length !== 0) {
-        const selectedAddons = tempData?.PolicyAddons?.filter((item, index) => {
-          for (let i = 0; i < addon_ids.length; i++) {
-            if (addon_ids[i] === item.addon_id) return true
-          }
-        })
-
-        formatedAddons = selectedAddons.map(item => {
-          if (item.type === 'fixed') {
-            return { addon_id: item.addon_id, amount: parseFloat(item.value) + tempData?.annual_contribution }
-          }
-          if (item.type === 'percentage') {
-            return { addon_id: item.addon_id, amount: tempData?.annual_contribution * (parseFloat(item.value) / 100) }
-          }
-        })
-      }
-
-      dispatch(clearBuyNow())
-      dispatch(clearPurchaseInfo())
-
-      if (tempData?.promotion_coupon_id !== 0) {
-        Api('GET', `verify-promotion/${tempData?.promotion_coupon_id}`).then((response: any) => {
-          if (response.success) {
-            dispatch(
-              setBuyNowData({
-                policy_id: tempData?.id.split('/')[0],
-                policy_type_id: tempData?.PolicyType?.id,
-                annual_contribution: calculateAmountAfterPromotion(
-                  tempData?.annual_contribution + (tempData?.addon_amount || 0),
-                  tempData?.promotion_discount_value,
-                  tempData?.promotion_discount_type,
-                ),
-                insurance_rate: tempData?.insurance_rate,
-                company_logo_url: tempData?.CompanySetup?.logo,
-                policy_name: tempData?.name,
-                policy_addons: formatedAddons,
-                promotion_coupon_id: tempData?.promotion_coupon_id,
-                promotion_discount_type: tempData?.promotion_discount_type,
-                promotion_discount_value: tempData?.promotion_discount_value,
-                total_discount_value: calculateDiscountAmount(
-                  tempData?.annual_contribution + (tempData?.addon_amount || 0),
-                  tempData?.promotion_discount_value,
-                  tempData?.promotion_discount_type,
-                ),
-              }),
-            )
-
-            router.push({
-              pathname: '/payment',
-            })
-          } else {
-            alert(response.message)
-            dispatch(
-              setBuyNowData({
-                policy_id: tempData?.id.split('/')[0],
-                policy_type_id: tempData?.PolicyType?.id,
-                annual_contribution: tempData?.annual_contribution + (tempData?.addon_amount || 0),
-                insurance_rate: tempData?.insurance_rate,
-                company_logo_url: tempData?.CompanySetup?.logo,
-                policy_name: tempData?.name,
-                policy_addons: formatedAddons,
-                promotion_coupon_id: tempData?.promotion_coupon_id,
-                promotion_discount_type: tempData?.promotion_discount_type,
-                promotion_discount_value: tempData?.promotion_discount_value,
-              }),
-            )
-
-            router.push({
-              pathname: '/payment',
-            })
-          }
-        })
-      } else {
-        dispatch(
-          setBuyNowData({
-            policy_id: tempData?.id.split('/')[0],
-            policy_type_id: tempData?.PolicyType?.id,
-            annual_contribution: tempData?.annual_contribution + (tempData?.addon_amount || 0),
-            insurance_rate: tempData?.insurance_rate,
-            company_logo_url: tempData?.CompanySetup?.logo,
-            policy_name: tempData?.name,
-            policy_addons: formatedAddons,
-            promotion_coupon_id: tempData?.promotion_coupon_id,
-            promotion_discount_type: tempData?.promotion_discount_type,
-            promotion_discount_value: tempData?.promotion_discount_value,
-          }),
-        )
-
-        router.push({
-          pathname: '/payment',
-        })
-      }
+      router.push({
+        pathname: '/payment',
+      })
     }
   }
   return (
@@ -205,7 +150,7 @@ const StickyDiv = ({ data, deleteFromCompareState }: { data: any; deleteFromComp
               <div className={styles['gobackarrow']}>
                 <Image src={GoBack} alt="backarrow" />
               </div>
-              <p className={`mt-3 ${styles['gobacktxt']}`}>Back to Policy</p>
+              <p className={`mt-3 ${styles['gobacktxt']}`}>Back to Search</p>
             </div>
             <div className={`p-0 m-0 d-flex flex-wrap ${styles['para']}`}>
               <p className="m-0">
@@ -213,9 +158,8 @@ const StickyDiv = ({ data, deleteFromCompareState }: { data: any; deleteFromComp
                 {data?.map((each, index) => (
                   <span key={index}>
                     <span className={`m-0 ${styles['redTxt']}`}>{`${each?.heading}`}</span>
-                    <span className={`m-0`}>{`${
-                      index === data?.length - 1 ? '' : index === data?.length - 2 ? ' & ' : ', '
-                    }`}</span>
+                    <span className={`m-0`}>{`${index === data?.length - 1 ? '' : index === data?.length - 2 ? ' & ' : ', '
+                      }`}</span>
                   </span>
                 ))}
               </p>
@@ -239,7 +183,7 @@ const StickyDiv = ({ data, deleteFromCompareState }: { data: any; deleteFromComp
                   <div className={styles['cardimagecontainer']}>
                     <Image
                       alt=""
-                      src={`${process.env['NEXT_PUBLIC_IMAGE_ORIGIN']}${each?.img}`}
+                      src={`${each?.img}`}
                       width={'100%'}
                       height={'100%'}
                       objectFit={'contain'}
@@ -254,7 +198,7 @@ const StickyDiv = ({ data, deleteFromCompareState }: { data: any; deleteFromComp
                       onClick={() => deleteFromCompareState(each?.id)}
                       className={` d-flex justify-content-center align-items-center ${styles['cross']}`}
                     >
-                      <div onClick={() => {}} className={` d-flex  align-items-center ${styles['crossimg']}`}>
+                      <div onClick={() => { }} className={` d-flex  align-items-center ${styles['crossimg']}`}>
                         <Image src={Cross} alt="cross" />
                       </div>
                     </div>
@@ -308,9 +252,8 @@ const WebRow = ({
               setSelectedTabObj(new Set(selectedTabObj.add(each.heading)))
             }
           }}
-          className={`d-flex align-items-center position-relative ${!heading && 'justify-content-center'} ${
-            styles['headingColumn']
-          }`}
+          className={`d-flex align-items-center position-relative ${!heading && 'justify-content-center'} ${styles['headingColumn']
+            }`}
         >
           {heading && !isLength2 ? (
             <div className={`d-flex align-items-center justify-content-center`}>
@@ -325,9 +268,8 @@ const WebRow = ({
                 </div>
               }
               <p
-                className={`${styles[isLength2 ? 'transparentTxt' : 'eachHeading']} ${
-                  heading && styles['headingColumnLong']
-                }`}
+                className={`${styles[isLength2 ? 'transparentTxt' : 'eachHeading']} ${heading && styles['headingColumnLong']
+                  }`}
               >
                 {each?.heading}
               </p>
@@ -345,9 +287,8 @@ const WebRow = ({
             {selectedTabObj.has(each?.heading) && (
               <div
                 key={index2}
-                className={`d-flex align-items-center ${''} ${
-                  styles[index2 === each?.subInfo.length - 1 ? 'bodyColumnLast' : 'bodyColumn']
-                }`}
+                className={`d-flex align-items-center ${''} ${styles[index2 === each?.subInfo.length - 1 ? 'bodyColumnLast' : 'bodyColumn']
+                  }`}
               >
                 {heading ? (
                   <div className="w-100">

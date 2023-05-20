@@ -1,10 +1,12 @@
 import Image from 'next/image'
 import { Container } from 'react-bootstrap'
 import MediaQuery from 'react-responsive'
-
+import Lottie from 'react-lottie'
 import ClaimProcessImage from '../../../public/assets/claimprocess.png'
 import ClaimProcessImageMob from '../../../public/assets/mobAutoClaim.png'
 import styles from './ClaimProcess.module.scss'
+import ClaimTakaful from '../../../public/assets/3_step_claims_animation.gif'
+import AutoTakafull from '../../../public/assets/autotakaful.json'
 
 const ClaimProcess = () => (
   <div className={styles['wrapper']}>
@@ -12,11 +14,11 @@ const ClaimProcess = () => (
       <p className={styles['heading']}>
         Auto Takaful <span className={styles['headingInRed']}> Claim Process </span>
       </p>
-      <p className={styles['paragraph']}>
-        From the moment you make a takaful auto claim, TB aims to be fast, supportive and fair so you can get back on
-        track as soon as possible.
-      </p>
-      <MediaQuery minWidth={430}>
+      {/* <p className={styles['paragraph']}>
+        To ensure you get the fastest service on your auto claims, we have supportive, fast & fair staff that works round the clock so you can get back on track as soon as possible.
+      </p> */}
+      
+      {/* <MediaQuery minWidth={430}>
         <div className={styles['imageContainer']}>
           <Image src={ClaimProcessImage} alt="autotakafulbanner" />
         </div>
@@ -25,8 +27,16 @@ const ClaimProcess = () => (
         <div className={styles['mimageContainer']}>
           <Image src={ClaimProcessImageMob} alt="autotakafulbanner" />
         </div>
-      </MediaQuery>
+      </MediaQuery> */}
     </Container>
+    <div>
+      <Image src={ClaimTakaful}     
+        alt ="ClaimTakaful"                    
+        // layout="fill"
+        height={600}        
+        objectFit='scale-down'
+     />
+      </div>
   </div>
 )
 

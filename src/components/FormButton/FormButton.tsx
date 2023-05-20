@@ -8,7 +8,7 @@ const FormButton = ({ btnTxt, onClick }: { btnTxt: string; onClick: Function }) 
       onClick={() => onClick()}
       className={`d-flex align-items-center justify-content-center ${styles['mcontactadvisor']}`}
     >
-      <Link href="/products/health">
+      <Link href="/">
         <p className={`m-0 ${styles['madvisorpara']}`}>{btnTxt}</p>
       </Link>
     </div>

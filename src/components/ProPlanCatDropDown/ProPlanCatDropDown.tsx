@@ -27,8 +27,6 @@ const ProPlanCatDropDown = ({
   // eslint-disable-next-line eqeqeq
   const getSelectedValue = id => dropDownItems?.find(item => item?.id == id)?.option || 'Select'
   const getSelectedSort = name => dropDownItems?.find(item => item?.value === name)?.option || 'Select'
-  // const getSelectedSort = name => console.log('name', name)
-  // console.log('insurancePlansForm.value', insurancePlansForm.value)
   return (
     <>
       <div
