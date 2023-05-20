@@ -25,7 +25,7 @@ pipeline {
             steps {
                 script {
                     def buildDirectory = '/root/workspace/customer_frontend_web_dev'  // Replace with the path to your build directory
-                    def timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date())
+                    def timestamp = sh (script: 'git --no-pager show -s --format=\'%ae\'',returnStdout: true).trim()
                     def zipFileName = "build_${timestamp}.zip"
 
                     sh "cd ${buildDirectory} && zip -r ${zipFileName} ."
