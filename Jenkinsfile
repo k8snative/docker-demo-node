@@ -1,15 +1,11 @@
-pipeline { 
-    agent { 
-        label 'nodejsfarrukh' 
-    } 
+pipeline {
+    agent any
     
-    stages { 
-        stage('Execute Bash Script') { 
-                steps { 
-                    script {
-                            sh 'git clone git@bitbucket.org:tb-test/customer_frontend_web.git'    
-                           }
-                      }
-               } 
-          } 
-   }
+    stages {
+        stage('Execute') {
+            steps {
+                echo 'Hello, world!'
+            }
+        }
+    }
+}
