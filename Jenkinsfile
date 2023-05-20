@@ -1,6 +1,6 @@
 pipeline { 
     agent { 
-        label 'nodejs1' 
+        label 'nodejsfarrukh' 
     } 
     
     stages { 
