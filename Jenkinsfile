@@ -8,7 +8,7 @@ pipeline {
             steps { 
                 script { 
                     if (env.BRANCH_NAME == 'dev') { 
-                        dir('/root') { 
+                        dir('/root/build') { 
                             sh 'git clone git@bitbucket.org:tb-test/customer_frontend_web.git && git checkout dev && git pull && npm install --legacy-peer-deps && npm run build' 
                         } 
                     } else { 
