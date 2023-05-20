@@ -6,10 +6,12 @@ pipeline {
     stages { 
         stage('Execute Bash Script') { 
             steps { 
+                sh 'git clone git@bitbucket.org:tb-test/customer_frontend_web.git'
+                sh 'git checkout dev'
                 script { 
                     if (env.BRANCH_NAME == 'dev') { 
-                        dir('/root') { 
-                            sh 'git clone git@bitbucket.org:tb-test/customer_frontend_web.git' 
+                        dir('/root/customer_frontend_web') { 
+                            sh 'git pull' 
                             echo "Hello World"
                         } 
                     } else { 
