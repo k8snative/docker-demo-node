@@ -1,0 +1,29 @@
+@import "../../styles/colors.scss";
+
+.imgWrapper {
+    border-top: 1px solid #C9C9C9;
+    width: 100%;
+    margin: 0;
+    padding: 20px 0;
+    background-color: #F4F4F4;
+    background-image: url('../../../public/assets/bazaarPlanBackground.png');
+    background-position: center;
+    background-size: cover;
+
+    @media screen and (max-width: 450px) {
+        flex-direction: column;
+    }
+}
+
+.headingTxt2 {
+    font-size: 27px;
+    color: $color-primary;
+    margin: 10px 0;
+    margin-right: 4%;
+    margin-left: 1%;
+
+    @media screen and (max-width: 400px) {
+        font-size: 19px;
+        margin-right: 0;
+    }
+}

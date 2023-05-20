@@ -1,0 +1,73 @@
+@import '../../styles/colors.scss';
+
+
+
+.col {
+    margin: 5% 0 2% 0;
+    padding: 0 4%;
+
+
+}
+
+.headingText {
+    font-size: 18.43px;
+    margin-top: 30px;
+    text-align: center;
+    font-weight: 500;
+
+}
+
+.paraText {
+    font-size: 18px;
+    color: $color-primary;
+    text-align: center;
+}
+
+.whychoosetxtRed {
+    color: $color-text-secondary;
+    font-size: 16px;
+    padding: 0;
+    font-style: italic;
+
+    &:hover {
+        cursor: pointer;
+        opacity: 0.5;
+    }
+
+    @media (max-width: 450px) {
+        margin-top: 5%;
+        font-size: 18px;
+        text-align: center;
+    }
+}
+
+.modalHeading {
+    color: $color-primary;
+    font-size: 26px;
+}
+
+.modalTxt {
+    color: $color-primary;
+    font-size: 20px;
+}
+
+
+.modalsubTxt {
+    color: $color-primary;
+    font-size: 18px;
+}
+
+.modalContainer {
+    // border: 2px solid #707070;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+}
+
+.modalsubTxtRed {
+    font-style: italic;
+    font-size: 20px;
+    color: $color-text-secondary;
+    cursor: pointer;
+}

@@ -1,0 +1,84 @@
+@import '../../styles/colors.scss';
+
+.wrapper {
+
+    background-color: #fff;
+    width: 100%;
+    margin: 0;
+    margin-bottom: 3%;
+}
+
+.container {
+    width: 100%;
+
+    @media screen and (max-width: 600px) {
+        padding: 0 10%;
+    }
+}
+
+.mainHeading {
+    font-size: 24px;
+    color: $color-primary;
+    // font-weight: 500;
+    margin: 5% 0 1% 0;
+
+    .mainHeadingRed {
+        color: $color-text-secondary;
+    }
+
+    @media screen and (max-width: 600px) {
+        font-size: 25px;
+        text-align: center;
+
+        .mainHeadingRed {
+            color: $color-primary;
+        }
+    }
+}
+
+.mainTxt {
+
+    color: $color-primary;
+    font-size: 18px;
+    text-align: center;
+    margin: 0 10%;
+    margin-bottom: 5%;
+
+}
+
+.eachWrapper {
+    border-top: 0.4px solid #B2B2B2;
+    width: 100%;
+}
+
+.eachTopRow {
+
+    width: 100%;
+}
+
+.eachImgContainer {
+    // border: 2px solid indigo;
+    max-width: 22px;
+}
+
+.eachImgContainerAbsolute {
+    // border: 10px solid indigo;
+    width: 18px;
+
+}
+
+.eachQuestion {
+    margin: 13px 0 15px 25px;
+    color: $color-primary;
+    font-size: 20px;
+
+    @media screen and (max-width: 600px) {
+        font-size: 18px;
+    }
+}
+
+.eachAnswer {
+    margin: 0 10% 0 0;
+    color: $color-primary;
+    font-size: 18px;
+}

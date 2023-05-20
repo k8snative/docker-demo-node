@@ -1,0 +1,52 @@
+@import "../../styles/colors.scss";
+
+.wrapper {
+    border: 2px solid #E2E2E3;
+    border-bottom: 2px solid #fff;
+    margin: 0;
+    border-top-left-radius: 5px;
+    border-top-Right-radius: 5px;
+    background-color: rgba(149, 151, 154, 0.2);
+}
+.wrapper2 {
+    margin: 0;
+    background-color:#fff;
+}
+
+.eachTabContainer {
+    padding: 5px 10px;
+    margin-bottom: -2px;
+}
+
+.eachTabContainerActive {
+    border-bottom: 2px solid $color-text-secondary;
+    z-index: 1;
+    &:hover{
+        cursor: pointer;
+    }
+}
+
+.eachTabContainerInactive {
+    border-bottom: 2px solid transparent;
+    &:hover{
+        cursor: pointer;
+    }
+}
+
+.eachTabTxt {
+    margin: 5px 0;
+    font-size: 16px;
+  
+
+    @media screen and (max-width: 992px) {
+        font-size: 13px;
+    }
+}
+
+.eachTabTxtActive {
+    color: $color-text-secondary;
+}
+
+.eachTabTxtInactive {
+    color: $color-primary;
+}

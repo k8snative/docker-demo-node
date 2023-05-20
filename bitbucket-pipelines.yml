@@ -1,0 +1,14 @@
+image: node:14.19.0
+
+# Workflow Configuration
+pipelines:
+  pull-requests:
+    '**':
+      - step:
+          name: Lint the node package
+          script:
+            # Run your linter of choice here
+            - yarn 
+            - yarn lint
+          caches:
+            - node

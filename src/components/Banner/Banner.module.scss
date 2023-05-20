@@ -1,0 +1,121 @@
+@import '../../styles/colors.scss';
+
+.wrapper {
+    // min-height: 500px;
+    // max-height: 700px;
+    position: relative;
+    z-index: 1;
+
+    .background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: #80828510;
+        background-image: url('../../../public/assets/banner-background.png');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+    }
+
+    .slider-wrapper {
+        height: 600px;
+    }
+
+    .image-wrapper {
+        height: 600px;
+        display: flex;
+        align-items: flex-end;
+
+
+    }
+
+
+
+
+}
+
+@media screen and (max-width: 1000px) {
+    .wrapper {
+        height: 220px;
+
+        .image-wrapper {
+            height: 220px;
+        }
+
+        .slider-wrapper {
+            height: 220px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            justify-content: flex-end;
+        }
+    }
+}
+
+.selector-wrapper {
+    position: relative;
+}
+
+.selectors {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 0;
+
+    .selector {
+        border: 1px solid #3D3D3D;
+        background: none;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        margin: 5px 0;
+        opacity: 0.6;
+        cursor: pointer;
+        transition: background .3s ease-in-out, opacity .3s ease-in-out;
+
+        &:hover,
+        &.active {
+            background: #A2222D;
+            cursor: pointer;
+            opacity: 1;
+            border: 1px solid #A2222D;
+        }
+    }
+}
+
+.formdiv {
+    width: 95%;
+    z-index: 2;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+@media screen and (max-width: 1000px) {
+    .selector-wrapper {
+        position: absolute;
+        bottom: 20px;
+        right: 25%;
+    }
+
+    .selectors {
+        width: 100%;
+        height: 100%;
+        display: block;
+        flex-direction: row;
+        align-items: unset;
+        justify-content: unset;
+        position: relative;
+
+        .selector {
+            margin: 0 3px;
+            width: 10px;
+            height: 10px;
+        }
+    }
+}

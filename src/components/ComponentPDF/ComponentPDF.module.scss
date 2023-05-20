@@ -1,0 +1,144 @@
+@import "../../styles/colors.scss";
+
+//
+.pdfcontainer {
+    display: flex;
+    flex-direction: column;
+
+    // justify-content: center;
+    // align-items: center;
+    background-image: url('~public/assets/pdfdownloadbg.png');
+    background-position: stretch;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 10px;
+    background-color: #FFF;
+    // width: 1200px;
+
+}
+
+.invoicelogoContainer {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.takafullogo {
+    width: 161px;
+}
+
+.invoicelogo {
+    width: 256px;
+}
+
+.invoicevalueContainer {
+    display: flex;
+    flex-direction: column;
+    margin-top: auto;
+
+}
+
+.invoicenoText {
+    font-size: 12px;
+    color: $color-primary;
+    font-weight: 600;
+    margin: 0
+}
+
+.invoiceValue {
+    font-size: 12px;
+    margin: 0;
+    color: $color-text-secondary;
+}
+
+.invoiceplainText {
+    font-size: 12px;
+    margin: 0;
+
+}
+
+.invoiceBigText {
+    font-size: 14px;
+    color: $color-primary;
+    font-weight: 600;
+    margin: 0
+}
+
+.invoiceplainBigText {
+    font-size: 14px;
+    margin: 0;
+
+}
+
+.totalContainer {
+    background-color: #ECEBEB;
+    align-items: center;
+    padding: 20px 10px;
+}
+
+.totalText {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0;
+    color: $color-text-secondary
+}
+
+.thankyouText {
+    font-size: 16px;
+    color: $color-primary;
+    margin: 0;
+}
+
+.thankyouTextRed {
+    font-size: 16px;
+    color: $color-text-secondary;
+    margin: 0;
+}
+
+.border {
+    border-top: 1px solid $color-primary;
+    margin-top: 10px;
+}
+
+.numberRedtext {
+    color: $color-text-secondary;
+    font-size: 18px;
+    margin: 0;
+    font-weight: 600;
+}
+
+.footer {
+    display: flex;
+    flex-direction: column;
+    margin: auto 0;
+}
+
+.blackbg {
+    background-color: #000;
+    display: flex;
+    padding: 10px 0
+}
+
+.mapImg {
+    width: 10px;
+    margin-right: 4px;
+}
+
+.addresstxtbold {
+    color: #fff;
+    font-size: 10px;
+    margin: 0;
+    font-weight: bold;
+}
+
+.addresstxt {
+    color: #fff;
+    font-size: 9px;
+    margin: 0
+}
+
+.seperator {
+    border-right: 1px solid #fff;
+    margin: 0 4px;
+    height: 10px;
+}

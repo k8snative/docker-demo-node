@@ -1,0 +1,188 @@
+@import "colors";
+
+.wrapper {
+    // border: 10px solid black;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+}
+
+.wrapperMobile {
+    /* border: 10px solid black; */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.whatIsTakaful {
+    /* border: 10px solid blue; */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.whychoosetxtRed {
+    color: $color-text-secondary;
+    font-size: 16px;
+    padding: 0;
+    font-style: italic;
+
+    &:hover {
+        cursor: pointer;
+        opacity: 0.5;
+    }
+
+    @media (max-width: 450px) {
+        margin-top: 5%;
+        font-size: 18px;
+        text-align: center;
+    }
+}
+
+.whatIsTakafulHeading {
+    font-size: 24px;
+    color: #515151;
+    margin: 30px 0;
+    font-weight: bold;
+}
+
+.whatIsTakafulHeadingMobile {
+    font-size: 26px;
+    color: #515151;
+    margin: 30px 0;
+    font-weight: 700;
+}
+
+.whatIsTakafulHeadingRed {
+    color: #D5132D;
+}
+
+.whatIsTakafultxt {
+    font-size: 18px;
+    color: #515151;
+    margin: 0;
+    text-align: center;
+}
+
+.whatIsTakafultxtMobile {
+    font-size: 18px;
+    color: #515151;
+    margin: 0;
+    text-align: center;
+    margin: 0 30px;
+}
+
+.imgContainer {
+    //border: 10px solid green;
+    width: 100%;
+    display: flex;
+    margin: 30px 0;
+    align-items: center;
+    justify-content: center;
+}
+
+.imgContainerMobile {
+    /* border: 10px solid green; */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin: 30px 0 0 0;
+    /* align-items: center; */
+    justify-content: flex-end;
+}
+
+.imgContainerMobileBottom {
+    /* border: 10px solid purple; */
+    width: 100%;
+    position: absolute;
+    /* bottom: 0; */
+    right: 0;
+    left: 0;
+    height: 10%;
+    background-color: #fff;
+}
+
+.modalContainer {
+    // border: 2px solid #707070;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+}
+
+.modalContainer2 {
+    // border: 2px solid #707070;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+
+}
+
+.empty {
+    margin: 0;
+    padding: 0;
+}
+
+
+.modalHeading {
+    color: $color-primary;
+    font-size: 26px;
+}
+
+.modalTxt {
+    color: $color-primary;
+    font-size: 20px;
+}
+
+.modalTxt2 {
+
+    color: $color-primary;
+    font-size: 18px;
+    text-align: center;
+    margin-top: 5px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.lists {
+    margin-left: 25px;
+    margin-right: 25px;
+}
+
+
+.modalLi {
+    color: $color-primary;
+    font-size: 16px;
+}
+
+.modalsubTxt {
+    color: $color-primary;
+    font-size: 12px;
+}
+
+.modalsubTxt2 {
+    color: $color-primary;
+    font-size: 16px;
+    margin-right: 18px;
+    margin-left: 18px;
+
+
+}
+
+.signUpText {
+    color: $color-text-secondary;
+    font-size: 18px;
+    cursor: pointer;
+    font-style: italic;
+
+    @media (max-width: 450px) {
+        margin-top: 5%;
+
+        text-align: center;
+    }
+
+}

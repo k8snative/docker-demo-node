@@ -1,0 +1,141 @@
+@import "../../styles/colors.scss";
+
+.iconhover {
+    &:hover {
+        filter: invert(27%) sepia(88%) saturate(7323%) hue-rotate(346deg) brightness(104%) contrast(97%);
+    }
+
+}
+
+
+.navOption {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 2%;
+
+    @media screen and (max-width: 1440px) {
+        // margin: 0 5px 0 5px;
+    }
+
+    &:hover {
+        cursor: pointer;
+
+    }
+
+    @media screen and (max-width: 1350px) {}
+
+    @media screen and (max-width: 1270px) {}
+
+    >p {
+        margin: 0;
+    }
+
+}
+
+.navTitle {
+    padding: 0;
+    margin-right: 10px;
+}
+
+
+.navOptionTxt {
+    padding: 0;
+    color: #58595B;
+    font-weight: 400;
+    font-size: 18px;
+    position: relative;
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+        color: #E91431;
+    }
+
+    a {
+        padding: 0;
+        color: #58595B;
+        font-weight: 400;
+        font-size: 18px;
+        width: 100%;
+
+        &::after {
+            display: none;
+            padding: 0;
+        }
+
+        &:hover {
+            color: #58595B;
+        }
+
+        &:focus {
+            color: #E91431;
+            filter: invert(27%) sepia(88%) saturate(7323%) hue-rotate(346deg) brightness(104%) contrast(97%);
+
+
+        }
+
+        &:active {
+            color: #E91431 !important;
+        }
+    }
+
+    div {
+        position: absolute;
+        border-radius: 0;
+        inset: 73% auto auto 0px !important;
+        border-top: 3px solid #707070;
+        text-align: inherit;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+        padding: 5px 0 8px 0;
+
+        @media screen and (max-width: 1300px) {
+            inset: 65% auto auto 0px !important;
+            min-width: 7rem;
+        }
+
+        a {
+            font-size: 16px;
+            color: #58595B;
+            padding-left: 15px;
+            padding-bottom: 2px;
+
+
+            &:hover {
+                color: #E91431;
+
+            }
+
+            &:focus {
+                background-color: transparent;
+            }
+
+            &:active {
+                color: #E91431
+            }
+        }
+    }
+
+}
+
+
+
+
+.rotate {
+    transform: rotate(-180deg);
+    transition: transform 0.2s linear;
+
+
+}
+
+.default {
+    transform: rotate(0deg);
+    transition: transform 0.2s linear;
+}

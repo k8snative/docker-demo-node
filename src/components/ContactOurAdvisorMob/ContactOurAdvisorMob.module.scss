@@ -1,0 +1,34 @@
+@import '../../styles/colors.scss';
+
+.mwrapper {
+    width: 100%;
+    // position: relative;
+    // z-index: 1;
+}
+
+.mcontactadvisor {
+    width: 100%;
+    // position: absolute;
+    // left: 0;
+    // bottom: 0;
+    padding: 10px;
+    border-radius: 4px;
+    background: linear-gradient(180deg, rgba(233, 20, 49, 1) 0%, rgba(162, 34, 45, 1) 100%);
+    box-shadow: 0px 4px 20px 0px #E7090936;
+    -webkit-box-shadow: 0px 4px 20px 0px #E7090936;
+    -moz-box-shadow: 0px 4px 20px 0px #E7090936;
+}
+
+.micon {
+    width: 20px;
+    margin-right: 15px
+}
+
+.madvisorpara {
+    color: #fff;
+    font-size: 20px;
+
+    @media screen and (max-width: 330px) {
+        font-size: 18px;
+    }
+}

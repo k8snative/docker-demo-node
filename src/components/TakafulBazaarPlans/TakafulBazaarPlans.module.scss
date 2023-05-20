@@ -1,0 +1,164 @@
+@import "../../styles/colors.scss";
+
+.wrapper {
+    // border: 10px solid black;
+    width: 100%;
+    background-color: #F4F4F4;
+    background-image: url('../../../public/assets/bazaarPlanBackground.png');
+    background-position: center;
+    background-size: contain;
+}
+
+.container {
+    // border: 10px solid green;
+    padding: 1px;
+}
+
+.row {
+    // border: 10px solid red;
+    justify-content: space-between;
+    margin: 30px 0;
+    padding: 30px 0;
+}
+
+.col {
+    // border: 10px solid purple;
+    margin: 1px;
+}
+
+.colImgCont {
+    //  border: 10px solid blue;
+    // height: 300px;
+    height: 70%;
+    // width: 95%;
+
+    @media screen and (max-width: 1190px) {
+        height: 65%;
+    }
+
+    @media screen and (max-width: 990px) {
+        height: 60%;
+    }
+
+    @media screen and (max-width: 770px) {
+        height: 65%;
+    }
+}
+
+.col2ndRow {
+    width: 75%;
+
+    @media screen and (max-width: 990px) {
+        width: 85%;
+    }
+}
+
+.colHeading {
+    font-size: 24px;
+    color: $color-primary;
+    margin: 0;
+    text-align: center;
+    font-weight: bold;
+
+    .redTxt {
+        color: $color-text-secondary;
+    }
+}
+
+.subTxt {
+    margin: 0;
+    color: $color-primary;
+    font-size: 18px;
+}
+
+.stepRow {
+    width: 30px;
+    // border: 1px solid blue;
+    display: flex;
+}
+
+.stepHeading {
+    margin: 0 5px;
+    font-size: 30px;
+    color: $color-primary;
+
+    @media screen and (max-width: 990px) {
+        font-size: 18px;
+        margin: 5px;
+
+    }
+
+    @media screen and (max-width: 770px) {
+        font-size: 16px;
+    }
+}
+
+.stepTxt {
+    border: 1px;
+    margin: 0 5px;
+    font-size: 20px;
+    color: $color-primary;
+    height: '20%';
+
+    @media screen and (max-width: 990px) {
+        font-size: 12px;
+    }
+}
+
+.mobContain {
+    width: 100%;
+    // border: 10px solid black;
+    background-color: #F4F4F4;
+    padding: 0 20px;
+}
+
+.mobHeading {
+    font-size: 25px;
+    font-weight: bold;
+    color: $color-primary;
+    text-align: center;
+    margin: 40px 0;
+}
+
+.mobtxt {
+    font-size: 20px;
+    color: $color-primary;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.triStepMob {
+    // border: 5px solid green;
+    width: 100%;
+    padding: 25px 7px;
+}
+
+.triStepMobImgContainer {
+    // border: 1px solid black;
+    width: 50%;
+}
+
+.triStepMobRightContainer {
+    // border: 5px solid black;
+    width: 40%;
+}
+
+.stepRowMob {
+    // border: 5px solid yellow;
+    display: flex;
+    width: 20%;
+}
+
+.stepHeadingMob {
+    margin: 0 10px;
+    font-size: 22px;
+    color: $color-primary;
+}
+
+.stepTxtMob {
+    // border: 1px solid black;
+    // margin: 0 5px;
+    font-size: 18px;
+    color: $color-primary;
+    // height: '20%';
+}

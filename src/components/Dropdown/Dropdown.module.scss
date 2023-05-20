@@ -1,0 +1,82 @@
+@import "../../styles/colors.scss";
+
+.mainWrapper {
+    position: relative;
+}
+
+.dropDownContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 0.7px solid $border;
+    border-radius: 5px;
+    height: 40px;
+    padding: 0 10px;
+    background-color: #fff;
+    position: relative;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.labelTxt {
+    font-size: 16px;
+    color: #727272;
+
+    @media screen and (max-width:430px) {
+        font-size: 15px;
+    }
+}
+
+.selectedTxt {
+    font-size: 16px;
+    color: #000000;
+
+    @media screen and (max-width:430px) {
+        font-size: 15px;
+    }
+}
+
+.formImageContainer {
+    width: 14px;
+}
+
+.dropContainer {
+    border: 1px solid #8E8E8E;
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+    background-color: #fff;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-top: 0;
+
+
+}
+
+.dropMenuItems {
+    color: $color-primary;
+    padding: 3px 10px;
+    background-color: #fff;
+
+
+    &:hover {
+        cursor: pointer;
+        color: $color-text-secondary;
+    }
+}
+
+.inputError {
+    color: #ff3333;
+    font-size: 12px;
+    padding-left: 2px
+}
+
+.disabled {
+    background-color: #DCDCDC;
+
+    &:hover {
+        cursor: unset;
+    }
+}

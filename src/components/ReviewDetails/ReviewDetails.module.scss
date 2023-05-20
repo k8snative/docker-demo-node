@@ -1,0 +1,113 @@
+@import "../../styles/colors.scss";
+
+.maincontainer {
+    padding-left: 30px;
+    padding-right: 30px;
+    width: 100%;
+
+    @media screen and (max-width:430px) {
+        padding: 0 15px;
+        background-color: #fff;
+    }
+}
+
+.txtFieldsRow {
+    margin-bottom: 1.5%;
+
+    @media screen and (max-width:770px) {
+        margin-bottom: 2%;
+    }
+}
+
+.PersonalDetailsheading {
+    font-size: 22px;
+    color: $color-text-secondary;
+
+    @media screen and (max-width:430px) {
+        display: none;
+    }
+}
+
+.heading {
+    font-size: 16px;
+    color: #565656;
+    font-weight: 400;
+}
+
+.heading2 {
+    font-size: 16px;
+    color: #565656;
+    font-weight: 400;
+    width: 70%;
+
+}
+
+.text {
+    font-size: 18px;
+    color: #565656;
+    font-weight: 300;
+
+    @media screen and (max-width:430px) {
+        font-size: 16px;
+
+    }
+}
+
+.text2 {
+    font-size: 18px;
+    color: #565656;
+    width: 85%;
+    font-weight: 300;
+
+    @media screen and (max-width:430px) {
+        font-size: 16px;
+        width: 100%;
+
+    }
+}
+
+.filestxt {
+    font-size: 18px;
+    color: #1BC967;
+    font-weight: 300;
+    margin-right: 10px;
+}
+
+.seperator {
+    border-bottom: 1px solid #707070;
+}
+
+.sigPad {
+    width: 100%;
+    height: 90%;
+
+    @media screen and (max-width:770px) {
+        width: 90%;
+        height: 200px
+    }
+}
+
+.sigContainer {
+    width: 50%;
+    height: 90%;
+    margin: 0 auto;
+    background-color: #E0E0E0;
+    justify-content: center;
+
+    @media screen and (max-width:770px) {
+        width: 90%;
+        height: 100%
+    }
+}
+
+.submitButton {
+    width: 30%;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    margin: 0 auto;
+
+    @media screen and (max-width: 770px) {
+        width: 100%;
+    }
+}
