@@ -33,7 +33,7 @@ pipeline {
         stage('Upload to Nexus3') {
             steps {
                 script {
-                    def nexusUrl = 'http://nexus:8081'  // Replace with your Nexus 3 URL
+                    def nexusUrl = 'http://nexus:8081/repository/customer_frontend_web_dev/'  // Replace with your Nexus 3 URL
                     def repository = 'customer_frontend_web_dev'  // Replace with your Nexus repository name
                     def zipFilePath = "/root/workspace/customer_frontend_web_dev/test1.zip"
 
